@@ -1,0 +1,14 @@
+# Add new domain in format:IP_Address,username,password
+# Add comma between items
+# Do not leave whitespaces between items
+# Do not leave an empty line
+# Lines starting with # are ignored
+# Text between [] is location
+[US]
+192.168.1.1,admin,passwd
+[UK]
+192.168.1.1,admin,passwd
+[Italy]
+192.168.1.1,admin,passwd
+[China]
+192.168.1.1,admin,passwd
