@@ -3,11 +3,13 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
+        "datasource": "$data_source",
+        "enable": false,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -15,13 +17,13 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1576393867927,
+  "id": null,
+  "iteration": 1586700439898,
   "links": [],
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -34,10 +36,10 @@
       "type": "row"
     },
     {
-      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h2 style=\"text-align: center;\"><span style=\"text-decoration: underline; color: #299c46;\"><strong>(your name) - UCS Traffic Monitoring - Chassis</strong></span></h2>\r\n<p style=\"text-align: center;\">Use this page for detailed traffic monitoring of the selected UCS Chassis</p>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"top\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
-      "datasource": null,
+      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h2 style=\"text-align: center;\"><span style=\"text-decoration: underline; color: #299c46;\"><strong>Cisco Systems - UCS Traffic Monitoring - Chassis</strong></span></h2>\r\n<p style=\"text-align: center;\">Use this page for detailed traffic monitoring of the selected UCS Chassis</p>\r\n<h3 style=\"text-align: center;\"><span style=\"color: #FFFFFF;\"><span style=\"color: #B877D9;\">$chassis </span>in UCS Domain<span style=\"color: #B877D9;\"> $domain_name</span> with IP <span style=\"color: #B877D9;\"> $domain</span> located in <span style=\"color: #B877D9;\"> $domain_location</span></span></h3>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"top\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
+      "datasource": "$data_source",
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 24,
         "x": 0,
         "y": 1
@@ -53,58 +55,11 @@
       "type": "text"
     },
     {
-      "cacheTimeout": null,
-      "content": "<h1 style=\"text-align: center;\"><span style=\"color: #FFFFFF;\"><span style=\"color: #B877D9;\">$chassis </span>in UCS Domain<span style=\"color: #B877D9;\"> $domain_name</span> with IP <span style=\"color: #B877D9;\"> $domain</span> located in <span style=\"color: #B877D9;\"> $domain_location</span></span></h1>\n",
-      "datasource": null,
-      "gridPos": {
-        "h": 2,
-        "w": 24,
-        "x": 0,
-        "y": 4
-      },
-      "id": 73,
-      "links": [],
-      "mode": "html",
-      "options": {},
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "FIEnvStats",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "name"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "domain",
-              "operator": "=~",
-              "value": "/^$domain$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "transparent": true,
-      "type": "text"
-    },
-    {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "<span style=\"color:orange\">**Use Case**</span>: Most and least busy service profiles, AKA top-talker and bottom-talker blades\n\n<span style=\"color:orange\">**How to use**</span>: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or current.",
       "fill": 1,
       "fillGradient": 0,
@@ -112,9 +67,11 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 5
       },
+      "hiddenSeries": false,
       "id": 117,
+      "interval": "[[polling_interval]]s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -230,7 +187,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "<span style=\"color:orange\">**Use Case**</span>: Most and least busy service profiles, AKA top-talker and bottom-talker blades\n\n<span style=\"color:orange\">**How to use**</span>: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or current.",
       "fill": 1,
       "fillGradient": 0,
@@ -238,9 +195,11 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 5
       },
+      "hiddenSeries": false,
       "id": 171,
+      "interval": "[[polling_interval]]s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -356,7 +315,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "<span style=\"color:orange\">**Use Case**</span>: Most and least busy service profiles, AKA top-talker and bottom-talker blades\n\n<span style=\"color:orange\">**How to use**</span>: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or current.",
       "fill": 1,
       "fillGradient": 0,
@@ -364,9 +323,11 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 13
       },
+      "hiddenSeries": false,
       "id": 170,
+      "interval": "[[polling_interval]]s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -482,7 +443,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "<span style=\"color:orange\">**Use Case**</span>: Most and least busy service profiles, AKA top-talker and bottom-talker blades\n\n<span style=\"color:orange\">**How to use**</span>: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or current.",
       "fill": 1,
       "fillGradient": 0,
@@ -490,9 +451,11 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 13
       },
+      "hiddenSeries": false,
       "id": 169,
+      "interval": "[[polling_interval]]s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -605,30 +568,31 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 21
       },
       "id": 157,
       "panels": [
         {
           "columns": [],
-          "datasource": null,
+          "datasource": "$data_source",
           "description": "<span style=\"color:orange\">**Use Case**</span>: Find links between Fabric Interconnect server ports and fabric ports on IOM in a UCS Chassis\n\n<span style=\"color:orange\">**How to use**</span>: The table is a quick-reference which can further be used at other places for detailed troubleshooting.",
           "fontSize": "100%",
           "gridPos": {
-            "h": 9,
+            "h": 13,
             "w": 12,
             "x": 0,
             "y": 2
           },
           "id": 152,
+          "interval": "[[polling_interval]]s",
           "links": [],
           "options": {},
-          "pageSize": null,
+          "pageSize": 10,
           "scroll": true,
           "showHeader": true,
           "sort": {
@@ -638,12 +602,14 @@
           "styles": [
             {
               "alias": "Time",
+              "align": "auto",
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "pattern": "Time",
               "type": "hidden"
             },
             {
               "alias": "FI",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -653,11 +619,12 @@
               "decimals": 0,
               "pattern": "fi_id",
               "thresholds": [],
-              "type": "number",
+              "type": "hidden",
               "unit": "short"
             },
             {
               "alias": "FI server port",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -671,63 +638,6 @@
               "thresholds": [],
               "type": "number",
               "unit": "short"
-            },
-            {
-              "alias": "Connected to - IOM slot",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 0,
-              "mappingType": 1,
-              "pattern": "to_iom_slot",
-              "thresholds": [],
-              "type": "number",
-              "unit": "short"
-            },
-            {
-              "alias": "Connected to - IOM port",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 0,
-              "mappingType": 1,
-              "pattern": "to_iom_port",
-              "thresholds": [],
-              "type": "number",
-              "unit": "short"
-            },
-            {
-              "alias": "",
-              "colorMode": "value",
-              "colors": [
-                "rgba(50, 172, 45, 0.97)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(245, 54, 54, 0.9)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 2,
-              "mappingType": 1,
-              "pattern": "oper_state",
-              "thresholds": [
-                "2",
-                "3"
-              ],
-              "type": "string",
-              "unit": "short",
-              "valueMaps": [
-                {
-                  "text": "1",
-                  "value": "up"
-                }
-              ]
             }
           ],
           "targets": [
@@ -749,7 +659,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(oper_state) as \"Operational State\",to_iom_slot , to_iom_port  FROM \"autogen\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"to_chassis\" =~ /^$chassis$/) AND fi_id = 'A' AND $timeFilter GROUP BY \"fi_id\",port ",
+              "query": "SELECT last(oper_state) as \"Operational State\", channel as \"Port-Chanel\",peer_chassis as \"Peer chassis\", peer_slot as \"Peer Slot\", peer_port as \"Peer port\",oper_speed as \"Speed\"  FROM \"autogen\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY port ",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -772,25 +682,26 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "FI-A Server ports connected to [[chassis]]",
+          "title": "FI-A Server ports",
           "transform": "table",
           "type": "table"
         },
         {
           "columns": [],
-          "datasource": null,
+          "datasource": "$data_source",
           "description": "<span style=\"color:orange\">**Use Case**</span>: Find links between Fabric Interconnect server ports and fabric ports on IOM in a UCS Chassis\n\n<span style=\"color:orange\">**How to use**</span>: The table is a quick-reference which can further be used at other places for detailed troubleshooting.",
           "fontSize": "100%",
           "gridPos": {
-            "h": 9,
+            "h": 13,
             "w": 12,
             "x": 12,
             "y": 2
           },
           "id": 153,
+          "interval": "[[polling_interval]]s",
           "links": [],
           "options": {},
-          "pageSize": null,
+          "pageSize": 10,
           "scroll": true,
           "showHeader": true,
           "sort": {
@@ -800,12 +711,14 @@
           "styles": [
             {
               "alias": "Time",
+              "align": "auto",
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "pattern": "Time",
               "type": "hidden"
             },
             {
               "alias": "FI",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -820,6 +733,7 @@
             },
             {
               "alias": "FI server port",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -836,6 +750,7 @@
             },
             {
               "alias": "Connected to - IOM slot",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -852,6 +767,7 @@
             },
             {
               "alias": "Connected to - IOM port",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -885,7 +801,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT  last(oper_state) as \"Operational State\",to_iom_slot , to_iom_port  FROM \"autogen\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"to_chassis\" =~ /^$chassis$/) AND fi_id = 'B' AND $timeFilter GROUP BY \"fi_id\",port",
+              "query": "SELECT last(oper_state) as \"Operational State\", channel as \"Port-Channel\",peer_chassis as \"Peer Chassis\",peer_slot as \"Peer Slot\", peer_port as \"Peer port\",oper_speed as \"Speed\"  FROM \"autogen\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY port ",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -908,7 +824,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "FI-B Server ports connected to [[chassis]]",
+          "title": "FI-B Server ports",
           "transform": "table",
           "type": "table"
         }
@@ -918,30 +834,31 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 22
       },
       "id": 161,
       "panels": [
         {
           "columns": [],
-          "datasource": null,
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find links between IOM backplane ports and blade server within a UCS chassis\n\n<span style=\"color:orange\">**How to use**</span>: The table is a quick-reference which can further be used at other places for detailed troubleshooting.\n\n<span style=\"color:orange\">**Details**</span>: A blade server can have multiple adaptors. Each adaptor may have multiple ports. Each adaptor port has one-to-one connectivity to IOM backplane port. These connections may or may not be be aggregated under a port-channel.",
+          "datasource": "$data_source",
+          "description": "<span style=\"color:orange\">**Use Case**</span>: Find links between IOM/FEX backplane ports and server\n\n<span style=\"color:orange\">**How to use**</span>: The table is a quick-reference which can further be used at other places for detailed troubleshooting.\n\n<span style=\"color:orange\">**Details**</span>: A blade or rack server can have multiple adaptors. Each adaptor may have multiple ports. Each adaptor port has one-to-one connectivity to IOM/FEX backplane port. These connections may or may not be aggregated under a port-channel.",
           "fontSize": "100%",
           "gridPos": {
-            "h": 17,
+            "h": 13,
             "w": 12,
             "x": 0,
             "y": 3
           },
           "id": 158,
+          "interval": "[[polling_interval]]s",
           "links": [],
           "options": {},
-          "pageSize": null,
+          "pageSize": 10,
           "scroll": true,
           "showHeader": true,
           "sort": {
@@ -951,12 +868,14 @@
           "styles": [
             {
               "alias": "Time",
+              "align": "auto",
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "pattern": "Time",
               "type": "hidden"
             },
             {
               "alias": "FI",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -971,6 +890,7 @@
             },
             {
               "alias": "FI server port",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -1005,7 +925,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT bp_port as \"IOM backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", to_blade as \"To blade\", to_adaptor as \"To adaptor\", adaptor_port as \"To adaptor port\", to_service_profile as \"To Service Profile\" FROM \"autogen\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY \"fi_id\",bp_port",
+              "query": "SELECT bp_port as \"Backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", peer_server as \"Peer Server\", peer_adaptor as \"Peer adaptor\", peer_port as \"Peer port\", peer_service_profile as \"Peer Service Profile\" FROM \"autogen\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY bp_port",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1028,25 +948,26 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "FI-A Server ports connected to [[chassis]]",
+          "title": "Backplane ports on [[chassis]] (connected to FI-A)",
           "transform": "table",
           "type": "table"
         },
         {
           "columns": [],
-          "datasource": null,
+          "datasource": "$data_source",
           "description": "<span style=\"color:orange\">**Use Case**</span>: Find links between IOM backplane ports and blade server within a UCS chassis\n\n<span style=\"color:orange\">**How to use**</span>: The table is a quick-reference which can further be used at other places for detailed troubleshooting.\n\n<span style=\"color:orange\">**Details**</span>: A blade server can have multiple adaptors. Each adaptor may have multiple ports. Each adaptor port has one-to-one connectivity to IOM backplane port. These connections may or may not be be aggregated under a port-channel.",
           "fontSize": "100%",
           "gridPos": {
-            "h": 17,
+            "h": 13,
             "w": 12,
             "x": 12,
             "y": 3
           },
           "id": 159,
+          "interval": "[[polling_interval]]s",
           "links": [],
           "options": {},
-          "pageSize": null,
+          "pageSize": 10,
           "scroll": true,
           "showHeader": true,
           "sort": {
@@ -1056,12 +977,14 @@
           "styles": [
             {
               "alias": "Time",
+              "align": "auto",
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "pattern": "Time",
               "type": "hidden"
             },
             {
               "alias": "FI",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -1076,6 +999,7 @@
             },
             {
               "alias": "FI server port",
+              "align": "auto",
               "colorMode": null,
               "colors": [
                 "rgba(245, 54, 54, 0.9)",
@@ -1109,9 +1033,9 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT bp_port as \"IOM backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", to_blade as \"To blade\", to_adaptor as \"To adaptor\", adaptor_port as \"To adaptor port\", to_service_profile as \"To Service Profile\" FROM \"autogen\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY \"fi_id\",bp_port",
+              "query": "SELECT bp_port as \"Backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", peer_server as \"Peer Server\", peer_adaptor as \"Peer adaptor\", peer_port as \"Peer port\", peer_service_profile as \"Peer Service Profile\" FROM \"autogen\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY bp_port",
               "rawQuery": true,
-              "refId": "B",
+              "refId": "C",
               "resultFormat": "table",
               "select": [
                 [
@@ -1132,7 +1056,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "FI-B Server ports connected to [[chassis]]",
+          "title": "Backplane ports on [[chassis]] (connected to FI-B)",
           "transform": "table",
           "type": "table"
         }
@@ -1142,12 +1066,12 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 23
       },
       "id": 175,
       "panels": [
@@ -1161,8 +1085,8 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": null,
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Monitor the utilization of IOM backplane ports\n\n<span style=\"color:orange\">**How to use**</span>: Start by selecting a UCS domain and chassis. Finally, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n<span style=\"color:orange\">**Details**</span>: An IOM backplane port has one-to-one connectivity to a single adaptor port on a blade server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
+          "datasource": "$data_source",
+          "description": "<span style=\"color:orange\">**Use Case**</span>: Monitor the utilization of IOM backplane ports\n\n<span style=\"color:orange\">**How to use**</span>: Start by selecting a UCS domain and chassis. Finally, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n<span style=\"color:orange\">**Details**</span>: An IOM backplane port has one-to-one connectivity to a single adaptor port on a server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1171,7 +1095,9 @@
             "x": 0,
             "y": 4
           },
+          "hiddenSeries": false,
           "id": 173,
+          "interval": "[[polling_interval]]s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1431,8 +1357,8 @@
           "bars": true,
           "dashLength": 10,
           "dashes": false,
-          "datasource": null,
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Monitor the utilization of IOM backplane ports\n\n<span style=\"color:orange\">**How to use**</span>: Start by selecting a UCS domain and chassis. Finally, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n<span style=\"color:orange\">**Details**</span>: An IOM backplane port has one-to-one connectivity to a single adaptor port on a blade server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
+          "datasource": "$data_source",
+          "description": "<span style=\"color:orange\">**Use Case**</span>: Monitor the utilization of IOM backplane ports\n\n<span style=\"color:orange\">**How to use**</span>: Start by selecting a UCS domain and chassis. Finally, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n<span style=\"color:orange\">**Details**</span>: An IOM backplane port has one-to-one connectivity to a single adaptor port on a server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1441,7 +1367,9 @@
             "x": 12,
             "y": 4
           },
+          "hiddenSeries": false,
           "id": 176,
+          "interval": "[[polling_interval]]s",
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -1705,11 +1633,31 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 20,
+  "schemaVersion": 22,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "Cisco",
+    "UTM"
+  ],
   "templating": {
     "list": [
+      {
+        "current": {
+          "text": "InfluxDB",
+          "value": "InfluxDB"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Data Source",
+        "multi": false,
+        "name": "data_source",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "current": {
           "text": "60",
@@ -1732,20 +1680,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "172.28.225.20",
-          "value": "172.28.225.20"
+          "selected": false,
+          "text": "172.22.163.59",
+          "value": "172.22.163.59"
         },
-        "datasource": "InfluxDB",
-        "definition": "show tag values from FIEnvStats with key=domain",
+        "datasource": "$data_source",
+        "definition": "show tag values from FIEnvStats with key=domain where $timeFilter",
         "hide": 0,
         "includeAll": false,
         "label": "UCS Domain",
         "multi": false,
         "name": "domain",
         "options": [],
-        "query": "show tag values from FIEnvStats with key=domain",
-        "refresh": 1,
+        "query": "show tag values from FIEnvStats with key=domain where $timeFilter",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1761,16 +1709,16 @@
           "text": "chassis-1",
           "value": "chassis-1"
         },
-        "datasource": "InfluxDB",
-        "definition": "show tag values from BackplanePortStats with key=chassis where domain =~ /$domain/",
+        "datasource": "$data_source",
+        "definition": "show tag values from BackplanePortStats with key=chassis where domain =~ /$domain/ and  $timeFilter",
         "hide": 0,
         "includeAll": false,
         "label": "Chassis",
         "multi": false,
         "name": "chassis",
         "options": [],
-        "query": "show tag values from BackplanePortStats with key=chassis where domain =~ /$domain/",
-        "refresh": 1,
+        "query": "show tag values from BackplanePortStats with key=chassis where domain =~ /$domain/ and  $timeFilter",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1788,16 +1736,16 @@
             "1/01"
           ]
         },
-        "datasource": "InfluxDB",
-        "definition": "show tag values from BackplanePortStats with key=bp_port where domain =~ /$domain/ and chassis =~ /$chassis/",
+        "datasource": "$data_source",
+        "definition": "show tag values from BackplanePortStats with key=bp_port where domain =~ /$domain/ and chassis =~ /$chassis/ and  $timeFilter",
         "hide": 0,
         "includeAll": true,
         "label": "Backplane Ports",
         "multi": true,
         "name": "bp_port",
         "options": [],
-        "query": "show tag values from BackplanePortStats with key=bp_port where domain =~ /$domain/ and chassis =~ /$chassis/",
-        "refresh": 1,
+        "query": "show tag values from BackplanePortStats with key=bp_port where domain =~ /$domain/ and chassis =~ /$chassis/ and  $timeFilter",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1810,19 +1758,19 @@
       {
         "allValue": null,
         "current": {
-          "text": "CC7UCS-13",
-          "value": "CC7UCS-13"
+          "text": "FI6248-1",
+          "value": "FI6248-1"
         },
-        "datasource": "InfluxDB",
-        "definition": "SELECT \"name\" FROM \"autogen\".\"FIEnvStats\" WHERE \"domain\" =~ /^$domain$/",
+        "datasource": "$data_source",
+        "definition": "SELECT \"name\" FROM \"autogen\".\"FIEnvStats\" WHERE \"domain\" =~ /^$domain$/  and $timeFilter",
         "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "domain_name",
         "options": [],
-        "query": "SELECT \"name\" FROM \"autogen\".\"FIEnvStats\" WHERE \"domain\" =~ /^$domain$/",
-        "refresh": 1,
+        "query": "SELECT \"name\" FROM \"autogen\".\"FIEnvStats\" WHERE \"domain\" =~ /^$domain$/  and $timeFilter",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1835,19 +1783,19 @@
       {
         "allValue": null,
         "current": {
-          "text": "China",
-          "value": "China"
+          "text": "US",
+          "value": "US"
         },
-        "datasource": "InfluxDB",
-        "definition": "select location from (select location,last(load) from FIEnvStats where (\"domain\" =~ /^$domain$/))",
+        "datasource": "$data_source",
+        "definition": "select location from (select location,last(load) from FIEnvStats where (\"domain\" =~ /^$domain$/)) where  $timeFilter",
         "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "domain_location",
         "options": [],
-        "query": "select location from (select location,last(load) from FIEnvStats where (\"domain\" =~ /^$domain$/))",
-        "refresh": 1,
+        "query": "select location from (select location,last(load) from FIEnvStats where (\"domain\" =~ /^$domain$/)) where  $timeFilter",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1888,8 +1836,9 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "browser",
   "title": "UCS Chassis - traffic",
   "uid": "KOM8ZHNWz",
-  "version": 1
+  "tags": ["cisco","UCS"],
+  "version": 3
 }

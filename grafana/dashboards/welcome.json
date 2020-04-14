@@ -4,10 +4,12 @@
       {
         "builtIn": 1,
         "datasource": "-- Grafana --",
-        "enable": true,
+        "enable": false,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -15,12 +17,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1576391833753,
+  "id": null,
+  "iteration": 1586700129350,
   "links": [],
   "panels": [
     {
-      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h1 style=\"text-align: center;\"><span style=\"color: #299c46;\"><strong>Welcome to UCS Traffic Monitoring at (your name)</strong></span></h1>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"top\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
+      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h1 style=\"text-align: center;\"><span style=\"color: #299c46;\"><strong>Welcome to UCS Traffic Monitoring at Cisco Systems</strong></span></h1>\r\n<h3 style=\"text-align: center;\"><span style=\"color: #FFFFFF;\">Monitoring <span style=\"color: #B877D9;\">$num_domain</span> UCS domains containing <span style=\"color: #B877D9;\">$num_chassis</span> chassis with </span><span style=\"color: #B877D9;\">$num_servers</span>  servers across <span style=\"color: #B877D9;\">$num_locations</span> locations</span></h3>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"top\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
       "datasource": null,
       "gridPos": {
         "h": 3,
@@ -40,61 +42,15 @@
     },
     {
       "cacheTimeout": null,
-      "content": "<h1 style=\"text-align: center;\"><span style=\"color: #FFFFFF;\"><span style=\"color: #B877D9;\">$num_domain</span> UCS domains containing <span style=\"color: #B877D9;\">$num_chassis</span> chassis with </span><span style=\"color: #B877D9;\">$num_blades</span> blade servers across <span style=\"color: #B877D9;\">$num_locations</span> locations</span></h1>",
-      "datasource": null,
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 3
-      },
-      "id": 12,
-      "links": [],
-      "mode": "html",
-      "options": {},
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "FIEnvStats",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "name"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "domain",
-              "operator": "=~",
-              "value": "/^$domain$/"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Monitoring Scope",
-      "type": "text"
-    },
-    {
-      "cacheTimeout": null,
       "dashboardFilter": "",
       "dashboardTags": [],
       "datasource": null,
-      "folderId": null,
+      "folderId": 1,
       "gridPos": {
-        "h": 11,
+        "h": 7,
         "w": 8,
         "x": 0,
-        "y": 6
+        "y": 3
       },
       "id": 30,
       "limit": 10,
@@ -130,10 +86,10 @@
             }
           ],
           "hide": false,
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'US') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'US') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -176,10 +132,10 @@
             }
           ],
           "hide": false,
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'China') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'China') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -222,10 +178,10 @@
             }
           ],
           "hide": false,
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'Italy') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'Italy') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -268,10 +224,10 @@
             }
           ],
           "hide": false,
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'UK') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'UK') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -315,7 +271,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'US') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
+          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'US') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
           "rawQuery": true,
           "refId": "E",
           "resultFormat": "time_series",
@@ -353,7 +309,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'UK') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
+          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'UK') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
           "rawQuery": true,
           "refId": "F",
           "resultFormat": "time_series",
@@ -391,7 +347,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'Italy') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
+          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'Italy') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
           "rawQuery": true,
           "refId": "G",
           "resultFormat": "time_series",
@@ -429,7 +385,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"location\" = 'China') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
+          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"location\" = 'China') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
           "rawQuery": true,
           "refId": "H",
           "resultFormat": "time_series",
@@ -457,14 +413,14 @@
     },
     {
       "columns": [],
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Monitor UCS domains at a specific location by clicking any of the links below",
       "fontSize": "100%",
       "gridPos": {
-        "h": 11,
+        "h": 13,
         "w": 3,
         "x": 8,
-        "y": 6
+        "y": 3
       },
       "id": 6,
       "links": [],
@@ -479,12 +435,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "key",
           "type": "hidden"
         },
         {
           "alias": " Location",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -550,14 +508,14 @@
     },
     {
       "columns": [],
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Get an overview (inventory, status, etc.) of a specific UCS domain by clicking any of the links below",
       "fontSize": "100%",
       "gridPos": {
-        "h": 11,
+        "h": 13,
         "w": 3,
         "x": 11,
-        "y": 6
+        "y": 3
       },
       "id": 7,
       "links": [],
@@ -572,12 +530,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "key",
           "type": "hidden"
         },
         {
           "alias": "Domains",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -643,14 +603,14 @@
     },
     {
       "columns": [],
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Monitor traffic on a specific UCS domain by clicking any of the links below",
       "fontSize": "100%",
       "gridPos": {
-        "h": 11,
+        "h": 13,
         "w": 3,
         "x": 14,
-        "y": 6
+        "y": 3
       },
       "id": 26,
       "links": [],
@@ -665,12 +625,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "key",
           "type": "hidden"
         },
         {
           "alias": "Domains",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -730,20 +692,20 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "UCS Domain traffic monitoring",
+      "title": "Domain traffic monitoring",
       "transform": "table",
       "type": "table"
     },
     {
       "columns": [],
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Monitor traffic on a chassis in a UCS domain by clicking any of the links below",
       "fontSize": "100%",
       "gridPos": {
-        "h": 11,
+        "h": 13,
         "w": 3,
         "x": 17,
-        "y": 6
+        "y": 3
       },
       "id": 28,
       "links": [],
@@ -758,12 +720,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "key",
           "type": "hidden"
         },
         {
           "alias": "Domains",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -829,34 +793,37 @@
     },
     {
       "columns": [],
-      "datasource": null,
-      "description": "Monitor a specific Service Profile (blade server) by clicking any of the links below. You can click on any link and search for a specific service profile later.\n\nNote: Blade servers only with a valid service profile are displayed here. For a complete inventory, go to the specific domain page.",
+      "datasource": "$data_source",
+      "description": "Monitor a specific Service Profile (server) by clicking any of the links below. You can click on any link and search for a specific service profile later.\n\n*Note*: Servers only with a valid service profile are displayed here. For a complete inventory, go to the specific domain page.",
       "fontSize": "100%",
       "gridPos": {
-        "h": 11,
+        "h": 13,
         "w": 4,
         "x": 20,
-        "y": 6
+        "y": 3
       },
       "id": 8,
+      "interval": "",
       "links": [],
       "options": {},
       "pageSize": 10,
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 0,
+        "col": 2,
         "desc": true
       },
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "key",
+          "pattern": "Time",
           "type": "hidden"
         },
         {
           "alias": "Service Profiles",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -867,10 +834,44 @@
           "link": true,
           "linkTargetBlank": true,
           "linkTooltip": "Details of blade server associated with service profile [[__cell]]",
-          "linkUrl": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-service_profile=[[__cell]]",
-          "pattern": "value",
+          "linkUrl": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=[[__cell_1]]&var-service_profile=[[__cell]]",
+          "pattern": "service_profile",
           "thresholds": [],
           "type": "string",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "domain",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "model",
+          "thresholds": [],
+          "type": "hidden",
           "unit": "short"
         }
       ],
@@ -890,12 +891,11 @@
               "type": "fill"
             }
           ],
-          "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "show tag values from BladeServers with key=service_profile where value != 'Unknown' and $timeFilter\n",
+          "query": "SELECT model FROM \"autogen\".\"Servers\" WHERE service_profile != 'Unknown' and $timeFilter GROUP BY \"service_profile\",domain order by time desc limit 1",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "table",
           "select": [
             [
@@ -926,9 +926,9 @@
       "datasource": null,
       "gridPos": {
         "h": 2,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 17
+        "y": 10
       },
       "id": 23,
       "links": [],
@@ -972,9 +972,9 @@
       "datasource": null,
       "gridPos": {
         "h": 2,
-        "w": 12,
-        "x": 12,
-        "y": 17
+        "w": 8,
+        "x": 0,
+        "y": 12
       },
       "id": 32,
       "links": [],
@@ -1009,7 +1009,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Congestion monitoring - If you don't know where to start but still have symptoms of potential bottleneck",
+      "title": "Congestion monitoring - If you don't know where to start but still have congestion",
       "type": "text"
     },
     {
@@ -1018,9 +1018,9 @@
       "datasource": null,
       "gridPos": {
         "h": 2,
-        "w": 12,
-        "x": 6,
-        "y": 19
+        "w": 8,
+        "x": 0,
+        "y": 14
       },
       "id": 31,
       "links": [],
@@ -1059,27 +1059,30 @@
       "type": "text"
     }
   ],
-  "schemaVersion": 20,
+  "schemaVersion": 22,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "Cisco",
+    "UTM"
+  ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {
-          "text": "4",
-          "value": "4"
+          "text": "9",
+          "value": "9"
         },
-        "datasource": "InfluxDB",
-        "definition": " SHOW TAG VALUES CARDINALITY FROM \"autogen\".\"FIEnvStats\" WITH KEY=domain ",
+        "datasource": "$data_source",
+        "definition": "select count(domain) from (SELECT last(\"model\") FROM \"autogen\".\"FIEnvStats\" WHERE $timeFilter GROUP BY domain)",
         "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "num_domain",
         "options": [],
-        "query": " SHOW TAG VALUES CARDINALITY FROM \"autogen\".\"FIEnvStats\" WITH KEY=domain ",
-        "refresh": 1,
+        "query": "select count(domain) from (SELECT last(\"model\") FROM \"autogen\".\"FIEnvStats\" WHERE $timeFilter GROUP BY domain)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1092,19 +1095,19 @@
       {
         "allValue": null,
         "current": {
-          "text": "6",
-          "value": "6"
+          "text": "12",
+          "value": "12"
         },
-        "datasource": "InfluxDB",
-        "definition": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" GROUP BY service_profile,domain,chassis,blade) group by domain)",
+        "datasource": "$data_source",
+        "definition": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (chassis!='') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
         "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "num_chassis",
         "options": [],
-        "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" GROUP BY service_profile,domain,chassis,blade) group by domain)",
-        "refresh": 1,
+        "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (chassis!='') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1117,19 +1120,19 @@
       {
         "allValue": null,
         "current": {
-          "text": "36",
-          "value": "36"
+          "text": "74",
+          "value": "74"
         },
-        "datasource": "InfluxDB",
-        "definition": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" GROUP BY service_profile,domain,chassis,blade)",
+        "datasource": "$data_source",
+        "definition": "select count(id) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE $timeFilter GROUP BY domain,chassis,blade,id)",
         "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "num_blades",
+        "name": "num_servers",
         "options": [],
-        "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" GROUP BY service_profile,domain,chassis,blade)",
-        "refresh": 1,
+        "query": "select count(id) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE $timeFilter GROUP BY domain,chassis,blade,id)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1145,16 +1148,16 @@
           "text": "4",
           "value": "4"
         },
-        "datasource": "InfluxDB",
-        "definition": " SHOW TAG VALUES CARDINALITY FROM \"autogen\".\"FIEnvStats\" WITH KEY=location ",
+        "datasource": "$data_source",
+        "definition": " SHOW TAG VALUES CARDINALITY FROM \"autogen\".\"FIEnvStats\" WITH KEY=location",
         "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "num_locations",
         "options": [],
-        "query": " SHOW TAG VALUES CARDINALITY FROM \"autogen\".\"FIEnvStats\" WITH KEY=location ",
-        "refresh": 1,
+        "query": " SHOW TAG VALUES CARDINALITY FROM \"autogen\".\"FIEnvStats\" WITH KEY=location",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1163,6 +1166,23 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "text": "InfluxDB",
+          "value": "InfluxDB"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Data Source",
+        "multi": false,
+        "name": "data_source",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
       }
     ]
   },
@@ -1195,8 +1215,9 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "browser",
   "title": "Welcome",
   "uid": "8dhtjXDZk",
-  "version": 2
+  "tags": ["cisco","UCS"],
+  "version": 3
 }

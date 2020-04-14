@@ -3,11 +3,12 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
+        "datasource": "$data_source",
+        "enable": false,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -15,13 +16,13 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1576393851072,
+  "id": null,
+  "iteration": 1586700147810,
   "links": [],
   "panels": [
     {
-      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h2 style=\"text-align: center;\"><span style=\"text-decoration: underline; color: #299c46;\"><strong>(your name) - UCS Traffic Monitoring - UCS Domain overview</strong></span></h2>\r\n<p style=\"text-align: center;\">Overview of the selected UCS Domain</p>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"top\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
-      "datasource": null,
+      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h2 style=\"text-align: center;\"><span style=\"text-decoration: underline; color: #299c46;\"><strong>Cisco Systems - UCS Traffic Monitoring - UCS Domain overview</strong></span></h2>\r\n<p style=\"text-align: center;\">Overview of the selected UCS Domain</p>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"top\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
+      "datasource": "$data_source",
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -47,7 +48,7 @@
         "#B877D9",
         "#B877D9"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -58,7 +59,7 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 5,
+        "w": 6,
         "x": 0,
         "y": 3
       },
@@ -153,8 +154,8 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
-      "decimals": 5,
+      "datasource": "$data_source",
+      "decimals": 4,
       "format": "dtdurations",
       "gauge": {
         "maxValue": 100,
@@ -165,8 +166,8 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 10,
-        "x": 5,
+        "w": 8,
+        "x": 6,
         "y": 3
       },
       "id": 80,
@@ -202,7 +203,7 @@
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "show": true
       },
       "tableColumn": "",
       "targets": [
@@ -280,7 +281,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -291,8 +292,8 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 3,
-        "x": 15,
+        "w": 2,
+        "x": 14,
         "y": 3
       },
       "id": 40,
@@ -348,10 +349,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
+          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND chassis!='') AND $timeFilter GROUP BY service_profile,domain,chassis,blade) group by domain)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -400,27 +401,29 @@
       "valueName": "avg"
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "Blade Servers": "#A352CC",
+        "Rack Servers": "#3274D9"
+      },
       "breakPoint": "50%",
       "cacheTimeout": null,
       "combine": {
         "label": "Others",
         "threshold": 0
       },
-      "datasource": null,
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 18,
+        "w": 4,
+        "x": 16,
         "y": 3
       },
-      "id": 12,
+      "id": 106,
       "interval": null,
       "legend": {
         "show": true,
-        "sortDesc": false,
         "values": true
       },
       "legendType": "Right side",
@@ -442,16 +445,158 @@
             },
             {
               "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "Servers",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(id) AS \"Blade Servers\" from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND \"type\" = 'blade') AND $timeFilter GROUP BY domain,chassis,blade,id)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "model"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              },
+              {
+                "params": [
+                  "Number of servers"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            }
+          ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "[[polling_interval]]s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "Servers",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(id) AS \"Rack Servers\" from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND \"type\" = 'rack') AND $timeFilter GROUP BY domain,chassis,blade,id)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "model"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              },
+              {
+                "params": [
+                  "Number of servers"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Server types",
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "$data_source",
+      "fontSize": "80%",
+      "format": "short",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 3
+      },
+      "id": 12,
+      "interval": null,
+      "legend": {
+        "show": true,
+        "sideWidth": null,
+        "sortDesc": false,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "options": {},
+      "pieType": "donut",
+      "strokeWidth": "1",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "[[polling_interval]]s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
           "hide": false,
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) AS \"OK\" from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/ AND \"oper_state\" = 'ok') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select count(id) AS \"OK\" from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND \"oper_state\" = 'ok') AND $timeFilter GROUP BY domain,chassis,blade,id)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -506,10 +651,10 @@
             }
           ],
           "hide": false,
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) AS \"Other\" from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/ AND \"oper_state\" != 'ok') AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select count(id) AS \"Other\" from (SELECT last(\"model\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND \"oper_state\" != 'ok') AND $timeFilter GROUP BY domain,chassis,blade,id)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -550,20 +695,20 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Blade servers and operational state",
+      "title": "Server operational state",
       "type": "grafana-piechart-panel",
       "valueName": "current"
     },
     {
       "cacheTimeout": null,
       "colorBackground": false,
-      "colorValue": true,
+      "colorValue": false,
       "colors": [
         "#299c46",
-        "#299c46",
-        "#299c46"
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -574,8 +719,122 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 2,
+        "w": 3,
         "x": 0,
+        "y": 5
+      },
+      "id": 105,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "FIEnvStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ucsm_fw_ver"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "UCSM version"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "domain",
+              "operator": "=~",
+              "value": "/^$domain$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "UCSM version",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "first"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#299c46",
+        "#299c46",
+        "#299c46"
+      ],
+      "datasource": "$data_source",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 3,
         "y": 5
       },
       "id": 3,
@@ -633,7 +892,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select location from (select location,last(load) from FIEnvStats where (\"domain\" =~ /^$domain$/))",
+          "query": "SELECT mean(\"value\") FROM \"autogen\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -684,7 +943,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -696,250 +955,6 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 2,
-        "y": 5
-      },
-      "id": 6,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "[[polling_interval]]s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "BladeServers",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "query": "select sum(last) from (SELECT last(\"num_cpus\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "num_cpus"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "location",
-              "operator": "=~",
-              "value": "/^$location$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "1",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "# CPUs - $domain",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "#299c46",
-        "#299c46"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 4,
-        "y": 5
-      },
-      "id": 8,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "[[polling_interval]]s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "BladeServers",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "query": "select sum(last) from (SELECT last(\"num_cores\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "num_cores"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "location",
-              "operator": "=~",
-              "value": "/^$location$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": "1",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "# CPU cores - $domain",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "#299c46",
-        "#299c46"
-      ],
-      "datasource": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 3,
         "x": 6,
         "y": 5
       },
@@ -996,10 +1011,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(last) from (SELECT last(\"num_vFCs\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select sum(last) from (SELECT last(\"num_vFCs\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,blade,id)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1050,7 +1065,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1061,8 +1076,8 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 3,
-        "x": 9,
+        "w": 2,
+        "x": 8,
         "y": 5
       },
       "id": 9,
@@ -1118,10 +1133,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(last) from (SELECT last(\"num_vEths\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select sum(last) from (SELECT last(\"num_vEths\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,blade,id)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1172,8 +1187,9 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
-      "format": "decgbytes",
+      "datasource": "$data_source",
+      "decimals": 2,
+      "format": "mbytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -1183,8 +1199,8 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 3,
-        "x": 12,
+        "w": 2,
+        "x": 10,
         "y": 5
       },
       "id": 7,
@@ -1240,10 +1256,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(last) from (SELECT last(\"memory\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select sum(last) from (SELECT last(\"memory\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,blade,id)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1294,7 +1310,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1305,11 +1321,11 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 3,
-        "x": 15,
+        "w": 2,
+        "x": 12,
         "y": 5
       },
-      "id": 2,
+      "id": 8,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -1362,10 +1378,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(service_profile) from (SELECT last(\"model\") FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,domain,chassis,blade)",
+          "query": "select sum(last) from (SELECT last(\"num_cores\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,blade,id)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1373,19 +1389,13 @@
             [
               {
                 "params": [
-                  "model"
+                  "num_cores"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "count"
-              },
-              {
-                "params": [
-                  "Number of servers"
-                ],
-                "type": "alias"
+                "type": "sum"
               }
             ]
           ],
@@ -1401,7 +1411,129 @@
       "thresholds": "1",
       "timeFrom": null,
       "timeShift": null,
-      "title": "# blades - $domain",
+      "title": "# CPU cores - $domain",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#299c46",
+        "#299c46",
+        "#299c46"
+      ],
+      "datasource": "$data_source",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 14,
+        "y": 5
+      },
+      "id": 6,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "[[polling_interval]]s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "Servers",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select sum(last) from (SELECT last(\"num_cpus\") FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,blade,id)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "num_cpus"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": "1",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "# CPUs - $domain",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1415,7 +1547,7 @@
     },
     {
       "content": "<h1 style=\"text-align: center;\">FI-A</h1>",
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 2,
         "w": 12,
@@ -1470,7 +1602,7 @@
     },
     {
       "content": "<h1 style=\"text-align: center;\">FI-B</h1>",
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 2,
         "w": 12,
@@ -1525,15 +1657,15 @@
     },
     {
       "columns": [],
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "100%",
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 4,
         "x": 0,
         "y": 9
       },
-      "id": 78,
+      "id": 103,
       "links": [],
       "options": {},
       "pageSize": null,
@@ -1546,12 +1678,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "hidden"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -1579,7 +1713,7 @@
             [
               {
                 "params": [
-                  "model"
+                  "oob_if_ip"
                 ],
                 "type": "field"
               },
@@ -1589,7 +1723,7 @@
               },
               {
                 "params": [
-                  "Model"
+                  "OOB IP Address"
                 ],
                 "type": "alias"
               }
@@ -1615,7 +1749,7 @@
             [
               {
                 "params": [
-                  "oob_if_ip"
+                  "model"
                 ],
                 "type": "field"
               },
@@ -1625,7 +1759,25 @@
               },
               {
                 "params": [
-                  "OOB IP Address"
+                  "Model"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "fi_fw_sys_ver"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "System version"
                 ],
                 "type": "alias"
               }
@@ -1654,73 +1806,62 @@
       "type": "table"
     },
     {
+      "aliasColors": {},
+      "bars": false,
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$data_source",
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 3,
         "x": 4,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 83,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
       },
-      "tableColumn": "",
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.6.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
+          "alias": "FI-$tag_fi_id $col",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "fi_id"
+              ],
+              "type": "tag"
             },
             {
               "params": [
@@ -1748,9 +1889,9 @@
               },
               {
                 "params": [
-                  "*100"
+                  "Load"
                 ],
-                "type": "math"
+                "type": "alias"
               }
             ]
           ],
@@ -1769,20 +1910,46 @@
           ]
         }
       ],
-      "thresholds": "60,80",
+      "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "FI-A Load",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
         {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
-      "valueName": "avg"
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "cacheTimeout": null,
@@ -1793,7 +1960,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -1803,7 +1970,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 3,
         "x": 7,
         "y": 9
@@ -1926,7 +2093,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "decmbytes",
       "gauge": {
         "maxValue": 100,
@@ -1936,7 +2103,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 2,
         "x": 10,
         "y": 9
@@ -1994,7 +2161,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
           "query": "SELECT last(\"total_memory\")  FROM \"autogen\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval) fill(null)",
@@ -2035,7 +2202,7 @@
       "timeShift": null,
       "title": "FI-A Mem total",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "70%",
       "valueMaps": [
         {
           "op": "=",
@@ -2047,15 +2214,15 @@
     },
     {
       "columns": [],
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "100%",
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 4,
         "x": 12,
         "y": 9
       },
-      "id": 81,
+      "id": 78,
       "links": [],
       "options": {},
       "pageSize": null,
@@ -2068,12 +2235,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "hidden"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -2095,13 +2264,13 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "model"
+                  "oob_if_ip"
                 ],
                 "type": "field"
               },
@@ -2111,7 +2280,7 @@
               },
               {
                 "params": [
-                  "Model"
+                  "OOB IP Address"
                 ],
                 "type": "alias"
               }
@@ -2137,7 +2306,7 @@
             [
               {
                 "params": [
-                  "oob_if_ip"
+                  "model"
                 ],
                 "type": "field"
               },
@@ -2147,7 +2316,25 @@
               },
               {
                 "params": [
-                  "OOB IP Address"
+                  "Model"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "fi_fw_sys_ver"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "System version"
                 ],
                 "type": "alias"
               }
@@ -2176,73 +2363,62 @@
       "type": "table"
     },
     {
+      "aliasColors": {},
+      "bars": false,
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": null,
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$data_source",
+      "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 3,
         "x": 16,
         "y": 9
       },
-      "id": 84,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
+      "hiddenSeries": false,
+      "id": 102,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
       },
-      "tableColumn": "",
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.6.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
       "targets": [
         {
+          "alias": "FI-$tag_fi_id $col",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "fi_id"
+              ],
+              "type": "tag"
             },
             {
               "params": [
@@ -2270,9 +2446,9 @@
               },
               {
                 "params": [
-                  "*100"
+                  "Load"
                 ],
-                "type": "math"
+                "type": "alias"
               }
             ]
           ],
@@ -2291,20 +2467,46 @@
           ]
         }
       ],
-      "thresholds": "60,80",
+      "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "FI-B Load",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
         {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
-      "valueName": "avg"
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "cacheTimeout": null,
@@ -2315,7 +2517,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -2325,7 +2527,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 3,
         "x": 19,
         "y": 9
@@ -2448,7 +2650,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "decmbytes",
       "gauge": {
         "maxValue": 100,
@@ -2458,7 +2660,7 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 2,
         "x": 22,
         "y": 9
@@ -2516,7 +2718,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
           "query": "SELECT last(\"total_memory\")  FROM \"autogen\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval) fill(null)",
@@ -2557,7 +2759,7 @@
       "timeShift": null,
       "title": "FI-B Mem total",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "70%",
       "valueMaps": [
         {
           "op": "=",
@@ -2576,7 +2778,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "decmbytes",
       "gauge": {
         "maxValue": 100,
@@ -2589,7 +2791,7 @@
         "h": 3,
         "w": 2,
         "x": 10,
-        "y": 11
+        "y": 12
       },
       "id": 87,
       "interval": null,
@@ -2644,7 +2846,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
           "query": "SELECT last(\"mem_available\")  FROM \"autogen\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval) fill(null)",
@@ -2704,7 +2906,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": null,
+      "datasource": "$data_source",
       "format": "decmbytes",
       "gauge": {
         "maxValue": 100,
@@ -2717,7 +2919,7 @@
         "h": 3,
         "w": 2,
         "x": 22,
-        "y": 11
+        "y": 12
       },
       "id": 89,
       "interval": null,
@@ -2772,7 +2974,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "BladeServers",
+          "measurement": "Servers",
           "orderByTime": "ASC",
           "policy": "autogen",
           "query": "SELECT last(\"mem_available\")  FROM \"autogen\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval) fill(null)",
@@ -2832,7 +3034,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2845,7 +3047,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "id": 27,
       "interval": null,
@@ -2959,7 +3161,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2972,7 +3174,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 15
       },
       "id": 90,
       "interval": null,
@@ -3087,14 +3289,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 16
+        "y": 17
       },
       "id": 31,
       "interval": null,
@@ -3231,14 +3433,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 16
+        "y": 17
       },
       "id": 32,
       "interval": null,
@@ -3374,14 +3576,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 16
+        "y": 17
       },
       "id": 91,
       "interval": null,
@@ -3518,14 +3720,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 16
+        "y": 17
       },
       "id": 92,
       "interval": null,
@@ -3663,14 +3865,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 21
+        "y": 22
       },
       "id": 34,
       "interval": null,
@@ -3839,6 +4041,57 @@
               "value": " "
             }
           ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIServerPortStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"autogen\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND \"oper_speed\" = 25) and $timeFilter group by domain,fi_id,port)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            },
+            {
+              "condition": "AND",
+              "key": "channel",
+              "operator": "!=",
+              "value": " "
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -3862,14 +4115,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 21
+        "y": 22
       },
       "id": 35,
       "interval": null,
@@ -4038,6 +4291,57 @@
               "value": " "
             }
           ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIServerPortStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"autogen\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 32 AND \"fi_id\" = 'A' ) and $timeFilter group by domain,fi_id,port)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            },
+            {
+              "condition": "AND",
+              "key": "channel",
+              "operator": "!=",
+              "value": " "
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -4058,14 +4362,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 21
+        "y": 22
       },
       "id": 93,
       "interval": null,
@@ -4234,6 +4538,57 @@
               "value": " "
             }
           ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIServerPortStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"autogen\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND \"oper_speed\" = 25) and $timeFilter group by domain,fi_id,port)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            },
+            {
+              "condition": "AND",
+              "key": "channel",
+              "operator": "!=",
+              "value": " "
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -4257,14 +4612,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 21
+        "y": 22
       },
       "id": 94,
       "interval": null,
@@ -4433,6 +4788,57 @@
               "value": " "
             }
           ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIServerPortStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"autogen\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 32 AND \"fi_id\" = 'B' ) and $timeFilter group by domain,fi_id,port)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            },
+            {
+              "condition": "AND",
+              "key": "channel",
+              "operator": "!=",
+              "value": " "
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -4450,7 +4856,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -4463,7 +4869,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 27
       },
       "id": 26,
       "interval": null,
@@ -4577,7 +4983,7 @@
         "#299c46",
         "#299c46"
       ],
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -4590,7 +4996,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 27
       },
       "id": 95,
       "interval": null,
@@ -4705,14 +5111,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "100%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 28
+        "y": 29
       },
       "id": 29,
       "interval": null,
@@ -4849,14 +5255,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 28
+        "y": 29
       },
       "id": 33,
       "interval": null,
@@ -5025,6 +5431,57 @@
               "value": " "
             }
           ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIServerPortStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"autogen\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 25 AND fi_id = 'A') and $timeFilter group by domain,fi_id,port)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            },
+            {
+              "condition": "AND",
+              "key": "channel",
+              "operator": "!=",
+              "value": " "
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -5043,14 +5500,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "100%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 28
+        "y": 29
       },
       "id": 96,
       "interval": null,
@@ -5187,14 +5644,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "InfluxDB",
+      "datasource": "$data_source",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 28
+        "y": 29
       },
       "id": 97,
       "interval": null,
@@ -5363,6 +5820,57 @@
               "value": " "
             }
           ]
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIServerPortStats",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"autogen\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 25 AND fi_id = 'B') and $timeFilter group by domain,fi_id,port)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "location",
+              "operator": "=~",
+              "value": "/^$location$/"
+            },
+            {
+              "condition": "AND",
+              "key": "channel",
+              "operator": "!=",
+              "value": " "
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -5373,13 +5881,13 @@
     },
     {
       "columns": [],
-      "datasource": null,
+      "datasource": "$data_source",
       "fontSize": "100%",
       "gridPos": {
-        "h": 11,
+        "h": 13,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 34
       },
       "id": 38,
       "links": [],
@@ -5394,12 +5902,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "hidden"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5414,6 +5924,7 @@
         },
         {
           "alias": "Service Profile",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5424,8 +5935,8 @@
           "decimals": 2,
           "link": true,
           "linkTargetBlank": true,
-          "linkTooltip": "Service profile [[__cell_3]] details",
-          "linkUrl": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=[[__cell_5]]&var-service_profile=[[__cell]]&var-vif=All&var-bp_port=All",
+          "linkTooltip": "Service profile [[__cell]] details",
+          "linkUrl": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=[[__cell_2]]&var-service_profile=[[__cell]]&var-vif=All&var-bp_port=All",
           "mappingType": 1,
           "pattern": "service_profile",
           "thresholds": [],
@@ -5434,6 +5945,7 @@
         },
         {
           "alias": "--",
+          "align": "auto",
           "colorMode": "cell",
           "colors": [
             "rgba(50, 172, 45, 0.97)",
@@ -5463,6 +5975,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5479,6 +5992,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5489,8 +6003,8 @@
           "decimals": 2,
           "link": true,
           "linkTargetBlank": true,
-          "linkTooltip": "Details of [[__cell]] in UCS Domain [[__cell_5]]",
-          "linkUrl": "d/KOM8ZHNWz/ucs-chassis-traffic?orgId=1&var-domain=[[__cell_5]]&var-chassis=[[__cell]]",
+          "linkTooltip": "Details of [[__cell]] in UCS Domain [[__cell_2]]",
+          "linkUrl": "d/KOM8ZHNWz/ucs-chassis-traffic?orgId=1&var-domain=[[__cell_2]]&var-chassis=[[__cell]]",
           "mappingType": 1,
           "pattern": "/Chassis/",
           "thresholds": [],
@@ -5499,6 +6013,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5518,6 +6033,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5538,6 +6054,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5547,13 +6064,14 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "mappingType": 1,
-          "pattern": "blade",
+          "pattern": "id",
           "thresholds": [],
           "type": "hidden",
           "unit": "short"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -5564,6 +6082,23 @@
           "decimals": 2,
           "mappingType": 1,
           "pattern": "chassis",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "domain",
           "thresholds": [],
           "type": "hidden",
           "unit": "short"
@@ -5587,7 +6122,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT location as \"Location\", domain as \"Domain\",  chassis as \"Chassis ID\", blade as \"Blade\", model as \"Model\", serial as \"Serial\", num_cpus as \"# CPU\", num_cores as \"# Cores\", memory as \"Memory\", operability as \"Operability\", oper_state as \"Operational State\", oper_state_code, num_vEths as \"# vEth\", num_vFCs as \"# vFC\" FROM \"autogen\".\"BladeServers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY \"service_profile\",chassis,blade order by time desc limit 1",
+          "query": "SELECT location as \"Location\", domain as \"Domain\",  chassis as \"Chassis ID\", id as \"Server\", model as \"Model\", serial as \"Serial\", num_cpus as \"# CPU\", num_cores as \"# Cores\", memory as \"Memory\", operability as \"Operability\", oper_state as \"Operational State\", oper_state_code, num_vEths as \"# vEth\", num_vFCs as \"# vFC\" FROM \"autogen\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY \"service_profile\",domain,chassis,id order by time desc limit 1",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -5613,14 +6148,88 @@
       "title": "Blade servers",
       "transform": "table",
       "type": "table"
+    },
+    {
+      "content": "",
+      "datasource": "$data_source",
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 47
+      },
+      "id": 101,
+      "mode": "markdown",
+      "options": {},
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Intentionally left blank",
+      "type": "text"
     }
   ],
   "refresh": false,
-  "schemaVersion": 20,
+  "schemaVersion": 22,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "Cisco",
+    "UCS"
+  ],
   "templating": {
     "list": [
+      {
+        "current": {
+          "text": "InfluxDB",
+          "value": "InfluxDB"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Data Source",
+        "multi": false,
+        "name": "data_source",
+        "options": [],
+        "query": "influxdb",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
       {
         "current": {
           "text": "60",
@@ -5647,16 +6256,16 @@
           "text": "172.28.225.20",
           "value": "172.28.225.20"
         },
-        "datasource": "InfluxDB",
-        "definition": "show tag values from FIEnvStats with key=domain",
+        "datasource": "$data_source",
+        "definition": "show tag values from FIEnvStats with key=domain where $timeFilter",
         "hide": 0,
         "includeAll": false,
         "label": "UCS Domain",
         "multi": false,
         "name": "domain",
         "options": [],
-        "query": "show tag values from FIEnvStats with key=domain",
-        "refresh": 1,
+        "query": "show tag values from FIEnvStats with key=domain where $timeFilter",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -5697,8 +6306,9 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "browser",
   "title": "UCS Domain - Overview",
   "uid": "Inte2EIWk",
-  "version": 6
+  "tags": ["cisco","UCS"],
+  "version": 3
 }
