@@ -13,9 +13,9 @@ import json
 import time
 import random
 from collections import Counter
+import concurrent.futures
 from ucsmsdk.ucshandle import UcsHandle
 from netmiko import ConnectHandler
-import concurrent.futures
 
 HOURS_IN_DAY = 24
 MINUTES_IN_HOUR = 60
@@ -108,7 +108,7 @@ def pre_checks_passed(argv):
         print('Unsupported with Python 2. Must use Python 3')
         logger.error('Unsupported with Python 2. Must use Python 3')
         return False
-    if (len(argv) <= 1):
+    if len(argv) <= 1:
         print('Try -h option for usage help')
         return False
 
@@ -185,7 +185,7 @@ def setup_logging():
         os.mkdir(logfile_location)
     except FileExistsError:
         pass
-    except Exception as e:
+    except Exception:
         # Log in local directory if can't be created in LOGFILE_LOCATION
         logfile_prefix = FILENAME_PREFIX
     finally:
@@ -264,7 +264,7 @@ def get_ucs_domains():
 
                 conn_dict[domain[0]] = {}
 
-                response_time_dict[domain[0]] =  {}
+                response_time_dict[domain[0]] = {}
                 response_time_dict[domain[0]]['cli_start'] = 0
                 response_time_dict[domain[0]]['cli_login'] = 0
                 response_time_dict[domain[0]]['cli_end'] = 0
@@ -415,8 +415,6 @@ def set_ucs_connection(domain_ip, conn_type):
             logger.info('Connection type {} UP for {} in {}s' \
                         .format(conn_type, domain_ip, round(( \
                                 time_d['cli_login'] - time_d['cli_start']), 2)))
-        finally:
-            return handle
     if conn_type == 'sdk':
         try:
             handle = UcsHandle(domain_ip, user, passwd)
@@ -434,8 +432,8 @@ def set_ucs_connection(domain_ip, conn_type):
             else:
                 logger.info('Connection type {} UP for {}' \
                             .format(conn_type, domain_ip))
-        finally:
-            return handle
+
+    return handle
 
 def connect_and_pull_stats(handle_list):
     """
@@ -465,8 +463,8 @@ def connect_and_pull_stats(handle_list):
 
     if handle_type == 'cli':
         if user_args.get('no_ssh'):
-            logger.warning('Skipping CLI metrics due to --no-ssh flag'. \
-                        format(domain_ip))
+            logger.warning('Skipping CLI metrics due to --no-ssh flag for {}'. \
+                           format(domain_ip))
             return
         time_d['cli_start'] = time.time()
         cli_handle = handle_list[2]
@@ -487,7 +485,7 @@ def connect_and_pull_stats(handle_list):
             logger.info('Connect to NX-OS FI-{} for {}'.format(fi_id, domain_ip))
             cli_handle.send_command('connect nxos ' + fi_id, expect_string='#')
             logger.info('Connected. Now run commands FI-{} {}' \
-                         .format(fi_id,domain_ip))
+                         .format(fi_id, domain_ip))
             raw_cli_stats[domain_ip][fi_id] = {}
             for stats_type, stats_item in cli_stats_types.items():
                 raw_cli_stats[domain_ip][fi_id][stats_type] = \
@@ -497,8 +495,9 @@ def connect_and_pull_stats(handle_list):
             cli_handle.send_command('exit', expect_string='#')
 
         time_d['cli_end'] = time.time()
-        logger.info('CLI pull completed on {} in {}s'.format(domain_ip,
-                    round((time_d['cli_end'] - time_d['cli_login']), 2)))
+        logger.info('CLI pull completed on {} in {}s'. \
+                    format(domain_ip, round((time_d['cli_end'] - \
+                                             time_d['cli_login']), 2)))
 
     if handle_type == 'sdk':
         sdk_handle = handle_list[2]
@@ -509,11 +508,11 @@ def connect_and_pull_stats(handle_list):
             conn_time = pickled_connections[domain_ip]['sdk_time']
             # Do no refresh all the connections at the same time
             conn_refresh_time = CONNECTION_REFRESH_INTERVAL + \
-                                    random.randint(1,1500)
+                                    random.randint(1, 1500)
             logger.info('SDK connection for {}. Time:{}, Elapsed:{},' \
                         ' Refresh:{}'.format(domain_ip, conn_time, \
                          ((int(time.time())) - conn_time), conn_refresh_time))
-            if ((int(time.time())) - conn_time > conn_refresh_time):
+            if (int(time.time())) - conn_time > conn_refresh_time:
                 logger.info('SDK connection refresh time for {}'. \
                             format(domain_ip))
                 sdk_handle.logout()
@@ -707,7 +706,7 @@ def get_speed_num_from_string(speed, item):
             logger.warning('Unable to parse speed:auto:{}:\n{}-----Ignoring ' \
                             'for now and continuing with 0-----\n----------'\
                             'REPORT THIS ISSUE----------'.format(speed, item),
-                            stack_info=True)
+                           stack_info=True)
             return 0
 
 def fill_fi_port_common_items(port_dict, item):
@@ -716,13 +715,13 @@ def fill_fi_port_common_items(port_dict, item):
     port_dict['admin_state'] = item.admin_state
     # name carries description
     port_dict['name'] = item.name
-    port_dict['oper_speed'] = get_speed_num_from_string(item.oper_speed,item)
+    port_dict['oper_speed'] = get_speed_num_from_string(item.oper_speed, item)
 
 def get_vif_dict_from_dn(domain_ip, dn):
     global stats_dict
-    domain_dict = stats_dict[domain_ip]
-    chassis_dict = domain_dict['chassis']
-    ru_dict = domain_dict['ru']
+    d_dict = stats_dict[domain_ip]
+    chassis_dict = d_dict['chassis']
+    ru_dict = d_dict['ru']
 
     # dn:sys/chassis-1/blade-2/fabric-A/path-1/vc-1355
     # dn:sys/rack-unit-5/fabric-B/path-1/vc-1324
@@ -821,7 +820,7 @@ def fill_ru_dict(item, ru_dict):
     else:
         logger.info('Unable to decode peer_dn:{}, dn:{}'. \
                     format(item.peer_dn, item.dn))
-        peer_slot,peer_port = '0','0'
+        peer_slot, peer_port = '0', '0'
 
     # Store the port in x/y format in iom_port
     peer_port = peer_slot + '/' + peer_port
@@ -849,10 +848,8 @@ def fill_chassis_dict(item, domain_ip):
         logger.warning('Not allocated lc:{} for DN:{}'.format(item.lc, item.dn))
         return
 
-    domain_dict = stats_dict[domain_ip]
-    chassis_dict = domain_dict['chassis']
-    ru_dict = domain_dict['ru']
-
+    d_dict = stats_dict[domain_ip]
+    chassis_dict = d_dict['chassis']
 
     # dn format: sys/chassis-1/blade-2/adaptor-1/host-fc-4
     # vnic_dn format: org-root/ls-SP-blade-m200-2/fc-vHBA-B2
@@ -866,7 +863,7 @@ def fill_chassis_dict(item, domain_ip):
     adaptor = (str)(dn_list[3])
     vif_name = (str)(item.name)
     fi_id = (str)(item.switch_id)
-    fi_dict = domain_dict[fi_id]
+    fi_dict = d_dict[fi_id]
 
     '''
     Initiatize dictionary structure in following format
@@ -901,13 +898,13 @@ def fill_chassis_dict(item, domain_ip):
         vif_dict[vif_name] = {}
     per_vif_dict = vif_dict[vif_name]
 
-    peer_slot,peer_port = '0','0'
+    peer_slot, peer_port = '0', '0'
     peer_type = 'unknown'
     if 'model' in per_blade_dict:
         if 'UCS-S' in per_blade_dict['model']:
             logger.debug('Found S-series {} for dn:{}'. \
-                            format(per_blade_dict['model'],item.dn))
-            slot = adaptor.replace('adaptor-','')
+                            format(per_blade_dict['model'], item.dn))
+            slot = adaptor.replace('adaptor-', '')
             fi_port_dict = fi_dict['fi_ports']
             for fi_port, per_fi_port_dict in fi_port_dict.items():
                 if 'peer_chassis' in per_fi_port_dict and \
@@ -931,7 +928,7 @@ def fill_chassis_dict(item, domain_ip):
             else:
                 logger.info('Unable to decode peer_dn:{}, dn:{}'. \
                             format(item.peer_dn, item.dn))
-                peer_slot,peer_port = '0','0'
+                peer_slot, peer_port = '0', '0'
             # Store the port in x/y format in iom_port
             peer_port = peer_slot + '/' + peer_port
             peer_type = 'IOM'
@@ -973,6 +970,7 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
         Handle class EtherServerIntFIoPc for PC between IOM and server
         dn in EtherServerIntFIoPc sys/chassis-1/blade-7/fabric-A/pc-1290
         '''
+
         port_id = (dn_list[4]).upper()
     else:
         port_id = (dn_list[4]).replace('port-', '')
@@ -995,6 +993,7 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
             '22':
               'channel':'no'
     '''
+
     # dn:sys/chassis-1/slot-1/host/port-14
     # dn:sys/fex-2/slot-1/host/port-1
     if 'chassis' in dn:
@@ -1058,6 +1057,7 @@ def get_fi_port_dict(d_dict, dn, transport):
         dn in FabricDceSwSrvPc fabric/server/sw-B/pc-1154
         dn in FabricFcSanPc fabric/san/B/pc-3
         '''
+
         pc_id = ((str)(dn_list[3])).upper()
         if 'FC' in transport:
             pc_id = 'SAN-' + pc_id
@@ -1090,17 +1090,18 @@ def get_fi_port_dict(d_dict, dn, transport):
          With breakout dn example:
            sys/switch-A/slot-1/switch-ether/aggr-port-25/port-1
         '''
+
         if 'aggr-port' in dn:
             port_id = ((str)(dn_list[4])).replace('aggr-port-', '')
-            if len(port_id) is 1:
+            if len(port_id) == 1:
                 port_id = '0' + port_id
             sub_port_id = ((str)(dn_list[5])).replace('port-', '')
-            if len(sub_port_id) is 1:
+            if len(sub_port_id) == 1:
                 sub_port_id = '0' + sub_port_id
             port_id = port_id + '/' + sub_port_id
         else:
             port_id = ((str)(dn_list[4])).replace('port-', '')
-            if len(port_id) is 1:
+            if len(port_id) == 1:
                 port_id = '0' + port_id
 
         if (slot_id + '/' + port_id) not in fi_port_dict:
@@ -1110,7 +1111,7 @@ def get_fi_port_dict(d_dict, dn, transport):
 
     return port_dict
 
-def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats,fw):
+def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw):
     """
     Use the output of query_classid from UCS to update global stats_dict
 
@@ -1131,7 +1132,7 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats,fw):
 
     logger.info('Parse env_stats for {}'.format(domain_ip))
     for item in top_sys:
-        logger.debug('In top_sys for {}:{}'.format(domain_ip,item.name))
+        logger.debug('In top_sys for {}:{}'.format(domain_ip, item.name))
         d_dict['mode'] = item.mode
         d_dict['name'] = item.name
         uptime_list = (item.system_up_time).split(':')
@@ -1141,7 +1142,7 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats,fw):
         d_dict['uptime'] = uptime
 
     for item in net_elem:
-        logger.debug('In net_elem for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In net_elem for {}:{}'.format(domain_ip, item.dn))
         fi_id = get_fi_id_from_dn(item.dn)
         if fi_id is None:
             logger.error('Unknown FI ID from {}\n{}'.format(domain_ip, item))
@@ -1153,7 +1154,7 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats,fw):
         fi_dict['model'] = item.model
 
     for item in system_stats:
-        logger.debug('In system_stats for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In system_stats for {}:{}'.format(domain_ip, item.dn))
         fi_id = get_fi_id_from_dn(item.dn)
         if fi_id is None:
             logger.error('Unknow FI ID from {}\n{}'.format(domain_ip, item))
@@ -1164,13 +1165,13 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats,fw):
 
     for item in fw:
         if 'sys/mgmt/fw-system' in item.dn:
-            logger.debug('In fw for {}:{}'.format(domain_ip,item.dn))
+            logger.debug('In fw for {}:{}'.format(domain_ip, item.dn))
             d_dict['ucsm_fw_ver'] = item.version
         if 'sys/switch-A/mgmt/fw-system' in item.dn:
-            logger.debug('In fw for {}:{}'.format(domain_ip,item.dn))
+            logger.debug('In fw for {}:{}'.format(domain_ip, item.dn))
             d_dict['A']['fi_fw_sys_ver'] = item.version
         if 'sys/switch-B/mgmt/fw-system' in item.dn:
-            logger.debug('In fw for {}:{}'.format(domain_ip,item.dn))
+            logger.debug('In fw for {}:{}'.format(domain_ip, item.dn))
             d_dict['B']['fi_fw_sys_ver'] = item.version
 
     logger.info('Done: Parse env_stats for {}'.format(domain_ip))
@@ -1208,12 +1209,12 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
     """
 
     global stats_dict
-    domain_dict = stats_dict[domain_ip]
+    d_dict = stats_dict[domain_ip]
 
     logger.info('Parse fi_stats for {}'.format(domain_ip))
     for item in fcpio:
-        logger.debug('In fcpio for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'FC')
+        logger.debug('In fcpio for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'FC')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip,
                                                                item))
@@ -1222,8 +1223,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         fill_fi_port_common_items(port_dict, item)
 
     for item in sanpc:
-        logger.debug('In sanpc for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'FC')
+        logger.debug('In sanpc for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'FC')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip,
                                                                item))
@@ -1240,8 +1241,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         For non-member or a port-channel, set channel=No
         For PC interfaces, do not set channel at all
         '''
-        logger.debug('In sanpcep for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.ep_dn, 'FC')
+        logger.debug('In sanpcep for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.ep_dn, 'FC')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1254,8 +1255,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # handle them in parse_backplane_port_stats
         if 'switch-' not in item.dn:
             continue
-        logger.debug('In ethpio for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In ethpio for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip,
                                                                item))
@@ -1268,26 +1269,26 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # peer_dn: sys/fex-3/slot-1/fabric/port-1 (F)
         if 'server' in (str)(item.if_role):
             peer_dn_list = (item.peer_dn).split('/')
-            peer_chassis, peer_slot, peer_port = '0','0','0'
+            peer_chassis, peer_slot, peer_port = '0', '0', '0'
             if 'rack-unit' in (str)(item.peer_dn):
                 peer_chassis = (str)(peer_dn_list[1])
                 peer_slot = (str)(peer_dn_list[-2])
-                peer_port = ((str)(peer_dn_list[-1])).replace('ext-eth-','')
+                peer_port = ((str)(peer_dn_list[-1])).replace('ext-eth-', '')
             if 'chassis' in (str)(item.peer_dn):
                 peer_chassis = (str)(peer_dn_list[1])
-                peer_slot = ((str)(peer_dn_list[2])).replace('slot-','')
-                peer_port = ((str)(peer_dn_list[-1])).replace('port-','')
+                peer_slot = ((str)(peer_dn_list[2])).replace('slot-', '')
+                peer_port = ((str)(peer_dn_list[-1])).replace('port-', '')
             if 'fex' in (str)(item.peer_dn):
                 peer_chassis = (str)(peer_dn_list[1])
-                peer_slot = ((str)(peer_dn_list[2])).replace('slot-','')
-                peer_port = ((str)(peer_dn_list[-1])).replace('port-','')
+                peer_slot = ((str)(peer_dn_list[2])).replace('slot-', '')
+                peer_port = ((str)(peer_dn_list[-1])).replace('port-', '')
             port_dict['peer_chassis'] = peer_chassis
             port_dict['peer_slot'] = peer_slot
             port_dict['peer_port'] = peer_port
 
     for item in lanpc:
-        logger.debug('In lanpc for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In lanpc for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1303,8 +1304,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         For non-member or a port-channel, set channel=No
         For PC interfaces, do not set channel at all
         '''
-        logger.debug('In lanpcep for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.ep_dn, 'Eth')
+        logger.debug('In lanpcep for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.ep_dn, 'Eth')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1312,8 +1313,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
                                     +(item.dn.split('/'))[3]).upper()
 
     for item in srvpc:
-        logger.debug('In srvpc for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In srvpc for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1329,16 +1330,16 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         For non-member or a port-channel, set channel=No
         For PC interfaces, do not set channel at all
         '''
-        logger.debug('In srvpcep for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.ep_dn, 'Eth')
+        logger.debug('In srvpcep for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.ep_dn, 'Eth')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
         port_dict['channel'] = ((item.dn.split('/'))[3]).upper()
 
     for item in fcstats:
-        logger.debug('In fcstats for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'FC')
+        logger.debug('In fcstats for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'FC')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1346,8 +1347,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         port_dict['bytes_tx_delta'] = item.bytes_tx_delta
 
     for item in fcerr:
-        logger.debug('In fcerr for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'FC')
+        logger.debug('In fcerr for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'FC')
         if port_dict is None:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1363,8 +1364,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # handle them in parse_backplane_port_stats
         if 'switch-' not in item.dn:
             continue
-        logger.debug('In ethrx for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In ethrx for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if not port_dict:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1375,8 +1376,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # handle them in parse_backplane_port_stats
         if 'switch-' not in item.dn:
             continue
-        logger.debug('In ethtx for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In ethtx for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if not port_dict:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1387,8 +1388,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # handle them in parse_backplane_port_stats
         if 'switch-' not in item.dn:
             continue
-        logger.debug('In etherr for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In etherr for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if not port_dict:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1400,8 +1401,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # handle them in parse_backplane_port_stats
         if 'switch-' not in item.dn:
             continue
-        logger.debug('In ethloss for {}:{}'.format(domain_ip,item.dn))
-        port_dict = get_fi_port_dict(domain_dict, item.dn, 'Eth')
+        logger.debug('In ethloss for {}:{}'.format(domain_ip, item.dn))
+        port_dict = get_fi_port_dict(d_dict, item.dn, 'Eth')
         if not port_dict:
             logger.error('Invalid port_dict for {}\n{}'.format(domain_ip, item))
             continue
@@ -1433,13 +1434,13 @@ def parse_compute_inventory(domain_ip, blade, ru):
     # dn format: sys/chassis-1/blade-8
     # assigned_to_dn format: org-root/ls-SP-blade-m200-8
     for item in blade:
-        logger.debug('In blade for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In blade for {}:{}'.format(domain_ip, item.dn))
         dn_list = (item.dn).split('/')
         chassis = (str)(dn_list[1])
         blade = (str)(dn_list[2])
 
         service_profile = (((item.assigned_to_dn).split('/'))[-1]).strip('ls-')
-        if 'none' in item.association or len(service_profile) is 0:
+        if 'none' in item.association or len(service_profile) == 0:
             service_profile = 'Unknown'
         # Numbers might be handy in front-end representations/color coding
         if 'ok' in item.oper_state:
@@ -1479,11 +1480,11 @@ def parse_compute_inventory(domain_ip, blade, ru):
     # dn format: sys/rack-unit-2
     # assigned_to_dn format: org-root/org-HX3AF240b/ls-rack-unit-8
     for item in ru:
-        logger.debug('In ru for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In ru for {}:{}'.format(domain_ip, item.dn))
         dn_list = (item.dn).split('/')
         ru = (str)(dn_list[-1])
         service_profile = (((item.assigned_to_dn).split('/'))[-1]).strip('ls-')
-        if 'none' in item.association or len(service_profile) is 0:
+        if 'none' in item.association or len(service_profile) == 0:
             service_profile = 'Unknown'
         # Numbers might be handy in front-end representations/color coding
         if 'ok' in item.oper_state:
@@ -1529,20 +1530,19 @@ def parse_vnic_stats(domain_ip, vnic_stats, host_ethif, host_fcif, dcxvc):
     """
 
     global stats_dict
-    domain_dict = stats_dict[domain_ip]
-    chassis_dict = domain_dict['chassis']
-    ru_dict = domain_dict['ru']
+    d_dict = stats_dict[domain_ip]
+    ru_dict = d_dict['ru']
 
     logger.info('Parse vnic_stats for {}'.format(domain_ip))
     for item in host_fcif:
-        logger.debug('In host_fcif for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In host_fcif for {}:{}'.format(domain_ip, item.dn))
         if 'rack-unit' in item.dn:
             fill_ru_dict(item, ru_dict)
         else:
             fill_chassis_dict(item, domain_ip)
 
     for item in host_ethif:
-        logger.debug('In host_ethif for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In host_ethif for {}:{}'.format(domain_ip, item.dn))
         if 'rack-unit' in item.dn:
             fill_ru_dict(item, ru_dict)
         else:
@@ -1557,11 +1557,12 @@ def parse_vnic_stats(domain_ip, vnic_stats, host_ethif, host_fcif, dcxvc):
     Important: Even though dcxvc contains fi_id, do not use it. Fill fi_id from
     host_ethif or host_fcif due to failover scenario and active VC
     '''
+
     for item in dcxvc:
         if item.vnic == '' or (int)(item.oper_border_port_id) == 0:
             continue
 
-        logger.debug('In dcxvc for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In dcxvc for {}:{}'.format(domain_ip, item.dn))
         vif_name = item.vnic
 
         vif_dict = get_vif_dict_from_dn(domain_ip, item.dn)
@@ -1597,10 +1598,9 @@ def parse_vnic_stats(domain_ip, vnic_stats, host_ethif, host_fcif, dcxvc):
     # dn format: sys/chassis-1/blade-2/adaptor-1/host-fc-4/vnic-stats
     # dn format: sys/rack-unit-5/adaptor-1/host-eth-6/vnic-stats
     for item in vnic_stats:
-        logger.debug('In vnic_stats for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In vnic_stats for {}:{}'.format(domain_ip, item.dn))
         rn = (((str)(item.dn)).split('/'))[-2]
         vif_dict = get_vif_dict_from_dn(domain_ip, item.dn)
-        #vif_dict = get_vif_dict(chassis_dict, chassis, blade, adaptor)
         if vif_dict is None:
             logger.debug('vif_dict is None')
             continue
@@ -1663,7 +1663,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         port_dict['channel'] = 'No'
 
         peer_dn_list = (item.peer_dn).split('/')
-        peer_server, peer_adaptor, peer_port = '0','0','0'
+        peer_server, peer_adaptor, peer_port = '0', '0', '0'
         if 'chassis' in item.peer_dn or 'rack-unit' in item.peer_dn:
             peer_server = ((item.peer_dn).split('/'))[-3]
             peer_adaptor = ((item.peer_dn).split('/'))[-2]
@@ -1674,7 +1674,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
 
     # dn format: sys/chassis-1/slot-1/host/pc-1290
     for item in srv_fiopc:
-        logger.debug('In srv_fiopc for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In srv_fiopc for {}:{}'.format(domain_ip, item.dn))
         port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
         if port_dict is None:
             logger.error('Invalid bp_port_dict for {}:{}' \
@@ -1687,7 +1687,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
 
     # dn format: sys/chassis-1/slot-1/host/pc-1290/ep-slot-1-port-27
     for item in srv_fiopcep:
-        logger.debug('In srv_fiopcep for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In srv_fiopcep for {}:{}'.format(domain_ip, item.dn))
         '''
         Populate port-channel information for this port
         Passon ep_dn from EtherServerIntFIoPcEp which contains the dn of the
@@ -1696,6 +1696,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         For non-member or a port-channel, set channel=No
         For PC interfaces, do not set channel at all
         '''
+
         port_dict = get_bp_port_dict_from_dn(domain_ip, item.ep_dn)
         if port_dict is None:
             logger.error('Invalid bp_port_dict for {}:{}' \
@@ -1707,7 +1708,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
     for item in ethrx:
         # ethrx also contains stats of FI ports. Handle them with FI ports
         if 'chassis-' in item.dn or 'fex' in item.dn:
-            logger.debug('In ethrx for {}:{}'.format(domain_ip,item.dn))
+            logger.debug('In ethrx for {}:{}'.format(domain_ip, item.dn))
             port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
             if port_dict is None:
                 logger.error('Invalid bp_port_dict for {}:{}' \
@@ -1719,7 +1720,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
     for item in ethtx:
         # ethrx also contains stats of FI ports. Handle them with FI ports
         if 'chassis-' in item.dn or 'fex' in item.dn:
-            logger.debug('In ethtx for {}:{}'.format(domain_ip,item.dn))
+            logger.debug('In ethtx for {}:{}'.format(domain_ip, item.dn))
             port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
             if port_dict is None:
                 logger.error('Invalid bp_port_dict for {}:{}' \
@@ -1730,7 +1731,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
     for item in etherr:
         # etherr also contains stats of FI ports. Handle them with FI ports
         if 'chassis-' in item.dn or 'fex' in item.dn:
-            logger.debug('In etherr for {}:{}'.format(domain_ip,item.dn))
+            logger.debug('In etherr for {}:{}'.format(domain_ip, item.dn))
             port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
             if not port_dict:
                 logger.error('Invalid port_dict for {}:{}'.format(domain_ip, item))
@@ -1745,9 +1746,10 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
     server
     Read the documentation to understand the logic. It takes a while ...
     '''
+
     path_dict = {}
     for item in pathep:
-        logger.debug('In pathep for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In pathep for {}:{}'.format(domain_ip, item.dn))
         if 'fex' in item.dn:
             continue
         # dn format: sys/chassis-1/blade-3/fabric-A/path-1/ep-mux
@@ -1755,7 +1757,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         if item.locale == 'chassis' and 'blade' in item.dn:
             dn_list = (item.dn).split('/')
             peer_dn_list = (item.peer_dn).split('/')
-            fi_id = (dn_list[3]).replace('fabric-', '')
+            #fi_id = (dn_list[3]).replace('fabric-', '')
             chassis = dn_list[1]
             path = chassis + '/' + dn_list[2] + '/' + dn_list[3] + \
                                 '/' + dn_list[4]
@@ -1770,7 +1772,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
             path_dict[path] = slot_id + '/host/' + port_id
 
     for item in pathep:
-        logger.debug('In pathep - 2 for {}:{}'.format(domain_ip,item.dn))
+        logger.debug('In pathep - 2 for {}:{}'.format(domain_ip, item.dn))
         if 'fex' in item.dn:
             continue
         # dn format: sys/chassis-1/blade-3/fabric-A/path-1/ep-mux-fabric
@@ -1778,7 +1780,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         if item.locale == 'server' and 'blade' in item.dn:
             dn_list = (item.dn).split('/')
             peer_dn_list = (item.peer_dn).split('/')
-            fi_id = (dn_list[3]).replace('fabric-', '')
+            #fi_id = (dn_list[3]).replace('fabric-', '')
             chassis = dn_list[1]
             path = chassis + '/' + dn_list[2] + '/' + dn_list[3] + \
                                 '/' + dn_list[4]
@@ -1835,10 +1837,10 @@ def parse_raw_sdk_stats():
 
         try:
             parse_fi_env_stats(domain_ip,
-                           obj['TopSystem'],
-                           obj['NetworkElement'],
-                           obj['SwSystemStats'],
-                           obj['FirmwareRunning'])
+                               obj['TopSystem'],
+                               obj['NetworkElement'],
+                               obj['SwSystemStats'],
+                               obj['FirmwareRunning'])
         except Exception as e:
             s = ''
             for item in obj['TopSystem']:
@@ -1849,24 +1851,24 @@ def parse_raw_sdk_stats():
                 s = s + (str)(item)
             for item in obj['FirmwareRunning']:
                 s = s + (str)(item)
-            logger.exception('parse_fi_env_stats:{}\n{}'.format(e,s))
+            logger.exception('parse_fi_env_stats:{}\n{}'.format(e, s))
 
         try:
             parse_fi_stats(domain_ip,
-                       obj['FcPIo'],
-                       obj['FabricFcSanPc'],
-                       obj['FabricFcSanPcEp'],
-                       obj['FcStats'],
-                       obj['FcErrStats'],
-                       obj['EtherPIo'],
-                       obj['FabricEthLanPc'],
-                       obj['FabricEthLanPcEp'],
-                       obj['EtherRxStats'],
-                       obj['EtherTxStats'],
-                       obj['EtherErrStats'],
-                       obj['EtherLossStats'],
-                       obj['FabricDceSwSrvPc'],
-                       obj['FabricDceSwSrvPcEp'])
+                           obj['FcPIo'],
+                           obj['FabricFcSanPc'],
+                           obj['FabricFcSanPcEp'],
+                           obj['FcStats'],
+                           obj['FcErrStats'],
+                           obj['EtherPIo'],
+                           obj['FabricEthLanPc'],
+                           obj['FabricEthLanPcEp'],
+                           obj['EtherRxStats'],
+                           obj['EtherTxStats'],
+                           obj['EtherErrStats'],
+                           obj['EtherLossStats'],
+                           obj['FabricDceSwSrvPc'],
+                           obj['FabricDceSwSrvPcEp'])
         except Exception as e:
             s = ''
             for item in obj['FcPIo']:
@@ -1897,26 +1899,26 @@ def parse_raw_sdk_stats():
                 s = s + (str)(item)
             for item in obj['FabricDceSwSrvPcEp']:
                 s = s + (str)(item)
-            logger.exception('parse_fi_stats:{}\n{}'.format(e,s))
+            logger.exception('parse_fi_stats:{}\n{}'.format(e, s))
 
         try:
             parse_compute_inventory(domain_ip,
-                                obj['ComputeBlade'],
-                                obj['ComputeRackUnit'])
+                                    obj['ComputeBlade'],
+                                    obj['ComputeRackUnit'])
         except Exception as e:
             s = ''
             for item in obj['ComputeBlade']:
                 s = s + (str)(item)
             for item in obj['ComputeRackUnit']:
                 s = s + (str)(item)
-            logger.exception('parse_compute_inventory:{}\n{}'.format(e,s))
+            logger.exception('parse_compute_inventory:{}\n{}'.format(e, s))
 
         try:
             parse_vnic_stats(domain_ip,
-                         obj['AdaptorVnicStats'],
-                         obj['AdaptorHostEthIf'],
-                         obj['AdaptorHostFcIf'],
-                         obj['DcxVc'])
+                             obj['AdaptorVnicStats'],
+                             obj['AdaptorHostEthIf'],
+                             obj['AdaptorHostFcIf'],
+                             obj['DcxVc'])
         except Exception as e:
             s = ''
             for item in obj['AdaptorVnicStats']:
@@ -1927,18 +1929,18 @@ def parse_raw_sdk_stats():
                 s = s + (str)(item)
             for item in obj['DcxVc']:
                 s = s + (str)(item)
-            logger.exception('parse_vnic_stats:{}\n{}'.format(e,s))
+            logger.exception('parse_vnic_stats:{}\n{}'.format(e, s))
 
         try:
             parse_backplane_port_stats(domain_ip,
-                                   obj['EtherServerIntFIo'],
-                                   obj['EtherServerIntFIoPc'],
-                                   obj['EtherServerIntFIoPcEp'],
-                                   obj['EtherRxStats'],
-                                   obj['EtherTxStats'],
-                                   obj['EtherErrStats'],
-                                   obj['EtherLossStats'],
-                                   obj['FabricPathEp'])
+                                       obj['EtherServerIntFIo'],
+                                       obj['EtherServerIntFIoPc'],
+                                       obj['EtherServerIntFIoPcEp'],
+                                       obj['EtherRxStats'],
+                                       obj['EtherTxStats'],
+                                       obj['EtherErrStats'],
+                                       obj['EtherLossStats'],
+                                       obj['FabricPathEp'])
         except Exception as e:
             s = ''
             for item in obj['EtherServerIntFIo']:
@@ -1957,7 +1959,7 @@ def parse_raw_sdk_stats():
                 s = s + (str)(item)
             for item in obj['FabricPathEp']:
                 s = s + (str)(item)
-            logger.exception('parse_backplane_port_stats:{}\n{}'.format(e,s))
+            logger.exception('parse_backplane_port_stats:{}\n{}'.format(e, s))
 
 def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     """
@@ -2013,10 +2015,10 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     """
 
     global stats_dict
-    domain_dict = stats_dict[domain_ip]
-    fi_port_dict = domain_dict[fi_id]['fi_ports']
-    chassis_dict = domain_dict['chassis']
-    fex_dict = domain_dict['fex']
+    d_dict = stats_dict[domain_ip]
+    fi_port_dict = d_dict[fi_id]['fi_ports']
+    chassis_dict = d_dict['chassis']
+    fex_dict = d_dict['fex']
     iom_slot_id = 0 # Invalid. Update it later
     chassis_id = 0 # Invalid. Update it later
 
@@ -2040,7 +2042,7 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
                 key = slot_id + '/' + port_id
                 if key not in fi_port_dict:
                     fi_port_dict[key] = {}
-                logger.debug('FI port {}:{}:{}'.format(key,domain_ip,fi_id))
+                logger.debug('FI port {}:{}:{}'.format(key, domain_ip, fi_id))
                 fi_port_dict[key]['pause_rx'] = line[-2]
                 fi_port_dict[key]['pause_tx'] = line[-1]
             elif len(port_list) == 3:
@@ -2064,8 +2066,8 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
                         continue
                     bp_port_dict = per_fex_dict['bp_ports']
                 else:
-                    logger.warning('Unable to find chassis or FEX with id {}' \
-                                    '{}'.format(c_id))
+                    logger.warning('Unable to find chassis or FEX with id {}'. \
+                                    format(c_id))
                     continue
                 for iom_slot, port_dict in bp_port_dict.items():
                     for iom_port, per_bp_port_dict in port_dict.items():
@@ -2083,8 +2085,8 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
                 if port_id not in iom_slot_dict:
                     continue
                 per_bp_port_dict = iom_slot_dict[port_id]
-                logger.debug('IOM/FEX port {}:{}:{}'.format(domain_ip, \
-                                c_id, iom_slot_id, port_id))
+                logger.debug('IOM/FEX port {}:{}:{}:{}'.format(domain_ip, \
+                             c_id, iom_slot_id, port_id))
                 per_bp_port_dict['pause_rx'] = line[-2]
                 per_bp_port_dict['pause_tx'] = line[-1]
 
@@ -2286,7 +2288,6 @@ def print_output_in_influxdb_lp():
         mode = d_dict['mode']
         name = d_dict['name']
         uptime = d_dict['uptime']
-        ucsm_fw_ver = d_dict['ucsm_fw_ver']
         for fi_id in fi_id_list:
             fi_dict = d_dict[fi_id]
 
@@ -2675,37 +2676,38 @@ def main(argv):
     try:
         print_output()
     except Exception as e:
-        logger.exception('Exception with print_output:\n' + (str)(e))
+        logger.exception('Exception with print_output:{}'.format((str)(e)))
 
     output_time = time.time()
 
     # Final tasks
     pickle_connections()
 
+    # Print response times per domain and total execution time
     time_output = ''
     if not user_args.get('verbose'):
         for domain_ip, time_d in response_time_dict.items():
             if time_d['cli_login'] > time_d['cli_start']:
                 cli_login = (str)(round((time_d['cli_login'] - \
-                                        time_d['cli_start']),2))
+                                        time_d['cli_start']), 2))
             else:
                 cli_login = 'N/A'
 
             if time_d['cli_end'] > time_d['cli_login']:
                 cli_query = (str)(round((time_d['cli_end'] - \
-                                        time_d['cli_login']),2))
+                                        time_d['cli_login']), 2))
             else:
                 cli_query = 'N/A'
 
             if time_d['sdk_login'] > time_d['sdk_start']:
                 sdk_login = (str)(round((time_d['sdk_login'] - \
-                                        time_d['sdk_start']),2))
+                                        time_d['sdk_start']), 2))
             else:
                 sdk_login = 'N/A'
 
             if time_d['sdk_end'] > time_d['sdk_login']:
                 sdk_query = (str)(round((time_d['sdk_end'] - \
-                                        time_d['sdk_login']),2))
+                                        time_d['sdk_login']), 2))
             else:
                 sdk_query = 'N/A'
 
@@ -2724,7 +2726,7 @@ def main(argv):
                     end_t = time_d['sdk_end']
 
             if end_t > start_t:
-                total_t = (str)(round((end_t - start_t),2))
+                total_t = (str)(round((end_t - start_t), 2))
             else:
                 total_t = 'N/A'
 
@@ -2736,10 +2738,10 @@ def main(argv):
                         '    | SDK: Login:{:>8} s  | Query:{:>8} s  |\n'\
                         '    | Total: {:>8} s                          |\n'\
                         '    |--------------------------------------------|'.\
-                        format(domain_ip,cli_login,cli_query,sdk_login,\
-                                sdk_query,total_t)
+                        format(domain_ip, cli_login, cli_query, sdk_login,\
+                               sdk_query, total_t)
 
-    time_output =  time_output + '\n' \
+    time_output = time_output + '\n' \
                    '    |--------------------------------------------|\n'\
                    '    |          Time taken to complete            |\n'\
                    '    |--------------------------------------------|\n'\
@@ -2757,7 +2759,7 @@ def main(argv):
                           (output_time - start_time))
     logger.setLevel(logging.INFO)
     logger.info('{}'.format(time_output))
-    if ((output_time - start_time) > (MASTER_TIMEOUT - 3)):
+    if (output_time - start_time) > (MASTER_TIMEOUT - 3):
         logger.warning('Total time taken to complete is high:{} s'. \
                         format(output_time - start_time))
 
