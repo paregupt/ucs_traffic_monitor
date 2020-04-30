@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.319"
+__version__ = "0.321"
 
 import sys
 import os
@@ -1294,6 +1294,8 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
             continue
         port_dict['transport'] = 'Eth'
         fill_fi_port_common_items(port_dict, item)
+        # FabricEthLanPc does not carry correct oper_speed. Use bandwidth 
+        port_dict['oper_speed'] = get_speed_num_from_string(item.bandwidth, item)
 
     for item in lanpcep:
         '''
@@ -1971,11 +1973,10 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     ============================================================
 
     Ethernet1/1        Auto Off           0          0
-    Ethernet1/2        Auto Off           2          0
-    Ethernet1/3        Auto Off           2          0
     Vethernet9547      Auto Off           0          0
-    Ethernet1/1/1      Auto On  (8)       0          0
     Ethernet1/1/2      Auto Off           0          0
+    Ethernet7/1/33     Auto Off           0          0
+    Br-Ethernet1/17/1  Auto Off           373112640  5422273
 
     backplane port between IOM/FEX and server port
     is reported in x/y/z format, where
@@ -2026,69 +2027,89 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     pfc_op = pfc_output.splitlines()
     for lines in pfc_op:
         line = lines.split()
-        if len(line) < 5:
-            continue
         # skip the Vethernet
-        if line[0].startswith('Eth'):
+        if len(line) < 5 or line[0].startswith('Veth'):
+            continue
+
+        port_list = line[0].split('/')
+        if line[0].startswith('Eth') and len(port_list) == 2:
+            # port on FI
             # line[0] is port name, -2 is RX, -1 is TX PFC stats
-            port_list = line[0].split('/')
-            if len(port_list) == 2:
-                # port on FI
-                slot_id = (port_list[0]).replace('Ethernet', '')
-                port_id = port_list[1]
-                # Prefix single digit port number with 0 to help sorting
-                if len(port_id) == 1:
-                    port_id = '0' + port_id
-                key = slot_id + '/' + port_id
-                if key not in fi_port_dict:
-                    fi_port_dict[key] = {}
-                logger.debug('FI port {}:{}:{}'.format(key, domain_ip, fi_id))
-                fi_port_dict[key]['pause_rx'] = line[-2]
-                fi_port_dict[key]['pause_tx'] = line[-1]
-            elif len(port_list) == 3:
-                c_id = (port_list[0]).replace('Ethernet', '')
-                chassis_id = 'chassis-' + c_id
-                fex_id = 'fex-' + c_id
-                # Do not continue if chassis_dict is not initialized
-                # Something else might be wrong
-                if chassis_id in chassis_dict:
-                    logger.debug('Found {}'.format(chassis_id))
-                    per_chassis_dict = chassis_dict[chassis_id]
-                    if 'bp_ports' not in per_chassis_dict:
-                        logger.warning('...but not bp_ports')
-                        continue
-                    bp_port_dict = per_chassis_dict['bp_ports']
-                elif fex_id in fex_dict:
-                    logger.debug('Found {}'.format(fex_id))
-                    per_fex_dict = fex_dict[fex_id]
-                    if 'bp_ports' not in per_fex_dict:
-                        logger.warning('...but not bp_ports')
-                        continue
-                    bp_port_dict = per_fex_dict['bp_ports']
-                else:
-                    logger.warning('Unable to find chassis or FEX with id {}'. \
-                                    format(c_id))
+            # Ethernet1/3        Auto Off           2          0
+            slot_id = (port_list[0]).replace('Ethernet', '')
+            port_id = port_list[1]
+            # Prefix single digit port number with 0 to help sorting
+            if len(port_id) == 1:
+                port_id = '0' + port_id
+            key = slot_id + '/' + port_id
+            if key not in fi_port_dict:
+                fi_port_dict[key] = {}
+            logger.debug('FI port {}:{}:{}'.format(key, domain_ip, fi_id))
+            fi_port_dict[key]['pause_rx'] = line[-2]
+            fi_port_dict[key]['pause_tx'] = line[-1]
+        elif line[0].startswith('Br-') and len(port_list) == 3:
+            # Breakout port on FI
+            # line[0] is port name, -2 is RX, -1 is TX PFC stats
+            # Br-Ethernet1/17/1  Auto Off           373112640  5422273
+            slot_id = (port_list[0]).replace('Br-Ethernet', '')
+            port_id = port_list[1]
+            # Prefix single digit port number with 0 to help sorting
+            if len(port_id) == 1:
+                port_id = '0' + port_id
+            sub_port_id = port_list[2]
+            if len(sub_port_id) == 1:
+                sub_port_id = '0' + sub_port_id
+            port_id = port_id + '/' + sub_port_id
+            key = slot_id + '/' + port_id
+            if key not in fi_port_dict:
+                fi_port_dict[key] = {}
+            logger.debug('FI port {}:{}:{}'.format(key, domain_ip, fi_id))
+            fi_port_dict[key]['pause_rx'] = line[-2]
+            fi_port_dict[key]['pause_tx'] = line[-1]
+        elif line[0].startswith('Eth') and len(port_list) == 3:
+            c_id = (port_list[0]).replace('Ethernet', '')
+            chassis_id = 'chassis-' + c_id
+            fex_id = 'fex-' + c_id
+            # Do not continue if chassis_dict is not initialized
+            # Something else might be wrong
+            if chassis_id in chassis_dict:
+                logger.debug('Found {}'.format(chassis_id))
+                per_chassis_dict = chassis_dict[chassis_id]
+                if 'bp_ports' not in per_chassis_dict:
+                    logger.warning('...but not bp_ports')
                     continue
-                for iom_slot, port_dict in bp_port_dict.items():
-                    for iom_port, per_bp_port_dict in port_dict.items():
-                        # Do not run this loop more than once. All ports of
-                        # a IOM/FEX are expected to carry same fi_id
-                        if per_bp_port_dict['fi_id'] == fi_id:
-                            iom_slot_id = iom_slot
-                        else:
-                            pass
-                        break
-                port_id = port_list[-1]
-                if len(port_id) == 1:
-                    port_id = '0' + port_id
-                iom_slot_dict = bp_port_dict[iom_slot_id]
-                if port_id not in iom_slot_dict:
+                bp_port_dict = per_chassis_dict['bp_ports']
+            elif fex_id in fex_dict:
+                logger.debug('Found {}'.format(fex_id))
+                per_fex_dict = fex_dict[fex_id]
+                if 'bp_ports' not in per_fex_dict:
+                    logger.warning('...but not bp_ports')
                     continue
-                per_bp_port_dict = iom_slot_dict[port_id]
-                logger.debug('IOM/FEX port {}:{}:{}:{}'.format(domain_ip, \
-                             c_id, iom_slot_id, port_id))
-                per_bp_port_dict['pause_rx'] = line[-2]
-                per_bp_port_dict['pause_tx'] = line[-1]
+                bp_port_dict = per_fex_dict['bp_ports']
+            else:
+                logger.warning('Unable to find chassis or FEX with id {}'. \
+                                format(c_id))
+                continue
+            for iom_slot, port_dict in bp_port_dict.items():
+                for iom_port, per_bp_port_dict in port_dict.items():
+                    # Do not run this loop more than once. All ports of
+                    # a IOM/FEX are expected to carry same fi_id
+                    if per_bp_port_dict['fi_id'] == fi_id:
+                        iom_slot_id = iom_slot
+                    else:
+                        pass
+                    break
+            port_id = port_list[-1]
+            if len(port_id) == 1:
+                port_id = '0' + port_id
+            iom_slot_dict = bp_port_dict[iom_slot_id]
+            if port_id not in iom_slot_dict:
+                continue
+            per_bp_port_dict = iom_slot_dict[port_id]
+            logger.debug('IOM/FEX port {}:{}:{}:{}'.format(domain_ip, \
+                         c_id, iom_slot_id, port_id))
+            per_bp_port_dict['pause_rx'] = line[-2]
+            per_bp_port_dict['pause_tx'] = line[-1]
 
     logger.info('Done: Parse pause stats for {}'.format(domain_ip))
 
