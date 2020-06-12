@@ -14,7 +14,11 @@ Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and T
 - Tested OS: CentOS 7.x. Should work on other OS also.
 - Python version: Version 3 only. Should be able to work on Python 2 also with minor modification.
 
-### Steps
+Two options:
+- DIY Installation: Self install the required pacakges
+- OVA - Required packages are pre-installed on CentOS 7.6 OVA
+
+### DIY Installation
 1. Install Telegraf
 2. Install InfluxDB
 3. Install Grafana. Install following plugins:
@@ -26,8 +30,17 @@ Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and T
 4. Install following Python modules
     1. Cisco UCSM Python SDK
     2. netmiko library
-Also available as an OVA.
     
+### OVA installation
+[Donwload OVA from releases](https://github.com/paregupt/ucs_traffic_monitor/releases).
+This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before.
+Please upgrade to the latest after deploying the OVA. 
+
+## Upgrades
+Replace the existing ucs_traffic_monitor.py file with the later version. You can also upgrade the Grafana dashboards by copy-pasting or importing the JSON.
+
+You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Generally, the upgrade is simple with one or two commands. Please refer to respective packages for upgrade process. Please keep an qye on security vulnerabilities and fixes. Grafana, InfluxDB, etc. are prompt in fixing the CVEs. You may want to run the latest versions to have all the fixes. This may occasionally break a few use-cases. But few broken features are better than security holes.
+
 ## Configuration
 
 [ucs_traffic_monitor.py](https://github.com/paregupt/ucs_traffic_monitor/blob/master/telegraf/ucs_traffic_monitor.py "ucs_traffic_monitor.py") fetches metrics from Cisco UCS and stitches them. This file is invoked by telegraf exec input plugin every 60 seconds. Login credentials of UCS should be available in ucs_domains_group*.txt.
