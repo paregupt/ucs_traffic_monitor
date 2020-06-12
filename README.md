@@ -32,7 +32,7 @@ Two options:
     2. netmiko library
     
 ### OVA installation
-[Donwload OVA from releases](https://github.com/paregupt/ucs_traffic_monitor/releases).
+[Download OVA from releases page](https://github.com/paregupt/ucs_traffic_monitor/releases).
 This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before.
 Please upgrade to the latest after deploying the OVA. 
 
