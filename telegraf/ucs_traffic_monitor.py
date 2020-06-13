@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.321"
+__version__ = "0.4"
 
 import sys
 import os
@@ -12,6 +12,7 @@ import pickle
 import json
 import time
 import random
+import re
 from collections import Counter
 import concurrent.futures
 from ucsmsdk.ucshandle import UcsHandle
@@ -921,7 +922,7 @@ def fill_chassis_dict(item, domain_ip):
         else:
             peer_dn_list = (item.peer_dn).split('/')
             if len(peer_dn_list) > 3:
-                peer_slot = (peer_dn_list[2]).replace('slot-', '')
+                peer_slot = re.sub('.*slot-', '', (str)(peer_dn_list[2]))
                 peer_port = (peer_dn_list[-1]).replace('port-', '')
                 if len(peer_port) == 1:
                     peer_port = '0' + peer_port
@@ -996,6 +997,7 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
 
     # dn:sys/chassis-1/slot-1/host/port-14
     # dn:sys/fex-2/slot-1/host/port-1
+    # dn:sys/chassis-1/sw-slot-1/host/port-6 (UCS Mini)
     if 'chassis' in dn:
         chassis_dict = d_dict['chassis']
         chassis = (str)(dn_list[1])
@@ -1017,7 +1019,7 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
     else:
         return None
 
-    slot_id = ((str)(dn_list[2])).replace('slot-', '')
+    slot_id = re.sub('.*slot-', '', (str)(dn_list[2]))
     if slot_id not in bp_port_dict:
         bp_port_dict[slot_id] = {}
     bp_slot_dict = bp_port_dict[slot_id]
@@ -1294,7 +1296,7 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
             continue
         port_dict['transport'] = 'Eth'
         fill_fi_port_common_items(port_dict, item)
-        # FabricEthLanPc does not carry correct oper_speed. Use bandwidth 
+        # FabricEthLanPc does not carry correct oper_speed. Use bandwidth
         port_dict['oper_speed'] = get_speed_num_from_string(item.bandwidth, item)
 
     for item in lanpcep:
@@ -2022,8 +2024,14 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     fex_dict = d_dict['fex']
     iom_slot_id = 0 # Invalid. Update it later
     chassis_id = 0 # Invalid. Update it later
+    if 'model' in d_dict[fi_id]:
+        fi_model = d_dict[fi_id]['model']
+    else:
+        fi_model = 'unknown'
 
-    logger.info('Parse pause stats for {}'.format(domain_ip))
+    logger.info('Parse pause stats for {}, {}'.format(domain_ip, fi_model))
+    logger.debug('{} - FI-{} - show interface priority\n{}\n'. \
+                 format(domain_ip, fi_id, pfc_output))
     pfc_op = pfc_output.splitlines()
     for lines in pfc_op:
         line = lines.split()
@@ -2043,7 +2051,48 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
                 port_id = '0' + port_id
             key = slot_id + '/' + port_id
             if key not in fi_port_dict:
-                fi_port_dict[key] = {}
+                logger.debug('{} not found in fi_port_dict for {}'. \
+                            format(key, domain_ip))
+                # On UCS mini, FI (server) ports are bp_ports on chassis-1
+                if 'UCS-FI-M-' in fi_model:
+                    c_id = '1'
+                    chassis_id = 'chassis-' + c_id
+                    # Do not continue if chassis_dict is not initialized
+                    # Something else might be wrong
+                    if chassis_id in chassis_dict:
+                        logger.debug('M - Found {} in {}'.format(key, \
+                                                                 chassis_id))
+                        per_chassis_dict = chassis_dict[chassis_id]
+                        if 'bp_ports' not in per_chassis_dict:
+                            logger.warning('...but not bp_ports')
+                            continue
+                        bp_port_dict = per_chassis_dict['bp_ports']
+                    else:
+                        logger.warning('M - Unable to find chassis {}'. \
+                                        format(chassis_id))
+                        continue
+                    for iom_slot, port_dict in bp_port_dict.items():
+                        for iom_port, per_bp_port_dict in port_dict.items():
+                            # Do not run this loop more than once. All ports of
+                            # a IOM are expected to carry same fi_id
+                            if per_bp_port_dict['fi_id'] == fi_id:
+                                iom_slot_id = iom_slot
+                            else:
+                                pass
+                            break
+                    port_id = port_list[-1]
+                    if len(port_id) == 1:
+                        port_id = '0' + port_id
+                    iom_slot_dict = bp_port_dict[iom_slot_id]
+                    if port_id not in iom_slot_dict:
+                        continue
+                    per_bp_port_dict = iom_slot_dict[port_id]
+                    logger.debug('M - {} in {} IOM port {}/{}'. \
+                                format(domain_ip, chassis_id, iom_slot_id, \
+                                       port_id))
+                    per_bp_port_dict['pause_rx'] = line[-2]
+                    per_bp_port_dict['pause_tx'] = line[-1]
+                continue
             logger.debug('FI port {}:{}:{}'.format(key, domain_ip, fi_id))
             fi_port_dict[key]['pause_rx'] = line[-2]
             fi_port_dict[key]['pause_tx'] = line[-1]
@@ -2062,7 +2111,9 @@ def parse_pfc_stats(pfc_output, domain_ip, fi_id):
             port_id = port_id + '/' + sub_port_id
             key = slot_id + '/' + port_id
             if key not in fi_port_dict:
-                fi_port_dict[key] = {}
+                logger.debug('{} not found in fi_port_dict for {}'. \
+                            format(key, domain_ip))
+                continue
             logger.debug('FI port {}:{}:{}'.format(key, domain_ip, fi_id))
             fi_port_dict[key]['pause_rx'] = line[-2]
             fi_port_dict[key]['pause_tx'] = line[-1]
@@ -2663,8 +2714,9 @@ def print_output():
 
 # Key is the name of the stat, value is a list with first member as the NX-OS
 # command and 2nd member as function to process the output (as dispatcher)
-cli_stats_types = {'pfc_stats':['show int pri', parse_pfc_stats]
-                  }
+cli_stats_types = {
+    'pfc_stats':['show interface priority-flow-control', parse_pfc_stats]
+    }
 
 def main(argv):
     # Initial tasks
