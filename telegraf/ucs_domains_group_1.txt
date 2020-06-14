@@ -1,6 +1,6 @@
 # Add new domain in format:IP_Address,username,password
 # Add comma between items
-# Do not leave whitespaces between items
+# Do not leave whitespaces between items or empty lines
 # Do not leave an empty line
 # Lines starting with # are ignored
 # Text between [] is location. At least one location is mandatory.
