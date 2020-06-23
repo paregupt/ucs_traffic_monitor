@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.4"
+__version__ = "0.41"
 
 import sys
 import os
@@ -1603,6 +1603,10 @@ def parse_vnic_stats(domain_ip, vnic_stats, host_ethif, host_fcif, dcxvc):
     # dn format: sys/rack-unit-5/adaptor-1/host-eth-6/vnic-stats
     for item in vnic_stats:
         logger.debug('In vnic_stats for {}:{}'.format(domain_ip, item.dn))
+        if (item.dn).startswith('vmm'):
+            logger.info('VM-FEX not supported. Skipping. {}:{}'. \
+                        format(domain_ip, item.dn))
+            continue
         rn = (((str)(item.dn)).split('/'))[-2]
         vif_dict = get_vif_dict_from_dn(domain_ip, item.dn)
         if vif_dict is None:
