@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.41"
+__version__ = "0.45"
 
 import sys
 import os
@@ -32,8 +32,8 @@ FILENAME_PREFIX = __file__.replace('.py', '')
 INPUT_FILE_PREFIX = ''
 
 LOGFILE_LOCATION = '/var/log/telegraf/'
-LOGFILE_SIZE = 10000000
-LOGFILE_NUMBER = 5
+LOGFILE_SIZE = 20000000
+LOGFILE_NUMBER = 10
 logger = logging.getLogger('UTM')
 
 # Dictionary with key as IP and value as list of user and passwd
@@ -164,6 +164,8 @@ def parse_cmdline_arguments():
                     action='store_true', default=False, help='info and above')
     parser.add_argument('-vvv', '--most_verbose', dest='most_verbose', \
                     action='store_true', default=False, help='debug and above')
+    parser.add_argument('-vvvv', '--raw_dump', dest='raw_dump', \
+                    action='store_true', default=False, help='Dump raw data')
     args = parser.parse_args()
     user_args['input_file'] = args.input_file
     user_args['verify_only'] = args.verify_only
@@ -174,6 +176,7 @@ def parse_cmdline_arguments():
     user_args['verbose'] = args.verbose
     user_args['more_verbose'] = args.more_verbose
     user_args['most_verbose'] = args.most_verbose
+    user_args['raw_dump'] = args.raw_dump
 
     global INPUT_FILE_PREFIX
     INPUT_FILE_PREFIX = ((((user_args['input_file']).split('/'))[-1]).split('.'))[0]
@@ -201,7 +204,7 @@ def setup_logging():
             logger.setLevel(logging.WARNING)
         if user_args.get('more_verbose'):
             logger.setLevel(logging.INFO)
-        if user_args.get('most_verbose'):
+        if user_args.get('most_verbose') or user_args.get('raw_dump'):
             logger.setLevel(logging.DEBUG)
 
 ###############################################################################
@@ -812,37 +815,38 @@ def fill_ru_dict(item, ru_dict):
         vif_dict[vif_name] = {}
     per_vif_dict = vif_dict[vif_name]
 
-    # peer_dn:sys/switch-B/slot-1/switch-ether/port-5
-    # peer_dn:sys/fex-2/slot-1/host/port-29
-    peer_dn_list = (item.peer_dn).split('/')
-    if len(peer_dn_list) > 3:
-        peer_slot = (peer_dn_list[2]).replace('slot-', '')
-        peer_port = (peer_dn_list[-1]).replace('port-', '')
-    else:
-        logger.info('Unable to decode peer_dn:{}, dn:{}'. \
-                    format(item.peer_dn, item.dn))
-        peer_slot, peer_port = '0', '0'
-
-    # Store the port in x/y format in iom_port
-    peer_port = peer_slot + '/' + peer_port
-
-    per_vif_dict['peer_port'] = peer_port
     per_vif_dict['fi_id'] = fi_id
     per_vif_dict['admin_state'] = item.admin_state
     per_vif_dict['link_state'] = item.link_state
     per_vif_dict['rn'] = item.rn
-    if 'fex' in item.peer_dn:
-        per_vif_dict['peer_type'] = 'FEX'
-    elif 'switch-' in item.peer_dn:
-        per_vif_dict['peer_type'] = 'FI'
-    else:
-        logger.info('Unknown peer_type peer_dn:{}, dn:{}'. \
-                    format(item.peer_dn, item.dn))
-        per_vif_dict['peer_type'] = 'unknown'
     if 'eth' in item.dn:
         per_vif_dict['transport'] = 'Eth'
     elif 'fc' in item.dn:
         per_vif_dict['transport'] = 'FC'
+
+    # peer_dn:sys/switch-B/slot-1/switch-ether/port-5
+    # peer_dn:sys/fex-2/slot-1/host/port-29
+    peer_dn_list = (item.peer_dn).split('/')
+    peer, peer_type, peer_port = 'unknown', 'unknown', '0/0'
+    if len(peer_dn_list) > 3:
+        peer_slot = (peer_dn_list[2]).replace('slot-', '')
+        peer_port = (peer_dn_list[-1]).replace('port-', '')
+        if len(peer_port) == 1:
+            peer_port = '0' + peer_port
+        # Store the port in x/y format in iom_port
+        peer_port = peer_slot + '/' + peer_port
+        if 'fex' in item.peer_dn:
+            peer_type = 'FEX'
+            peer = peer_dn_list[1]
+        elif 'switch-' in item.peer_dn:
+            peer_type = 'FI'
+            peer = ((str)(peer_dn_list[1])).replace('switch', 'FI')
+    else:
+        logger.debug('Unable to decode peer_dn:{}, dn:{}'. \
+                    format(item.peer_dn, item.dn))
+    per_vif_dict['peer'] = peer
+    per_vif_dict['peer_type'] = peer_type
+    per_vif_dict['peer_port'] = peer_port
 
 def fill_chassis_dict(item, domain_ip):
     if item.lc != 'allocated':
@@ -854,7 +858,6 @@ def fill_chassis_dict(item, domain_ip):
 
     # dn format: sys/chassis-1/blade-2/adaptor-1/host-fc-4
     # vnic_dn format: org-root/ls-SP-blade-m200-2/fc-vHBA-B2
-    # peer_dn format: sys/chassis-1/slot-1/host/port-3
     dn_list = (item.dn).split('/')
     if len(dn_list) < 4:
         logger.warning('Unable to fill_chassis_dict for dn:{}'.format(item.dn))
@@ -899,27 +902,66 @@ def fill_chassis_dict(item, domain_ip):
         vif_dict[vif_name] = {}
     per_vif_dict = vif_dict[vif_name]
 
-    peer_slot, peer_port = '0', '0'
-    peer_type = 'unknown'
+    peer, peer_type, peer_port = 'unknown', 'unknown', '0/0'
     if 'model' in per_blade_dict:
-        if 'UCS-S' in per_blade_dict['model']:
-            logger.debug('Found S-series {} for dn:{}'. \
-                            format(per_blade_dict['model'], item.dn))
-            slot = adaptor.replace('adaptor-', '')
+        # peer_dn:sys/chassis-17/slot-2/shared-io-module/fabric/port-5
+        if 'UCS-S' in per_blade_dict['model'] or \
+            'UCSC-C3K-M4SRB' in per_blade_dict['model']:
+            logger.debug('Found S-series {} FI-{} for dn:{}'. \
+                            format(per_blade_dict['model'], fi_id, item.dn))
+            slot = blade.replace('blade-', '')
             fi_port_dict = fi_dict['fi_ports']
             for fi_port, per_fi_port_dict in fi_port_dict.items():
-                if 'peer_chassis' in per_fi_port_dict and \
-                    'peer_slot' in per_fi_port_dict:
-                    if per_fi_port_dict['peer_chassis'] == chassis and \
-                        per_fi_port_dict['peer_slot'] == slot:
+                if 'peer_type' in per_fi_port_dict:
+                    if per_fi_port_dict['peer_type'] != 'S-chassis':
+                        continue
+                if 'peer' in per_fi_port_dict and \
+                    'peer_port' in per_fi_port_dict:
+                    fi_port_peer_slot = \
+                        ((per_fi_port_dict['peer_port']).split('/'))[0]
+                    if per_fi_port_dict['peer'] == chassis and \
+                        fi_port_peer_slot == slot:
                         logger.debug('Found peer chassis {} and slot {}'. \
-                            format(chassis, slot))
+                            format(chassis, fi_port_peer_slot))
                         peer_type = 'FI'
-                        peer_port = per_fi_port_dict['channel']
+                        peer_port = fi_port
+                        peer = 'FI-' + fi_id
                         break
-            logger.debug('peer port:{}, peer_type:{}'. \
+            logger.debug('FI Server ports: peer port:{}, peer_type:{}'. \
+                            format(peer_port, peer_type))
+            # If not found connected to FI, try FEX
+            if peer_type == 'unknown':
+                fex_dict = d_dict['fex']
+                slot = blade.replace('blade-', '')
+                for fex_id, per_fex_dict in fex_dict.items():
+                    if 'bp_ports' not in per_fex_dict:
+                        continue
+                    bp_port_dict = per_fex_dict['bp_ports']
+                    for bp_slot_id, bp_slot_dict in bp_port_dict.items():
+                        for bp_port_id, per_bp_port_dict in \
+                                                    bp_slot_dict.items():
+                            if 'fi_id' in per_bp_port_dict:
+                                if per_bp_port_dict['fi_id'] != fi_id:
+                                    continue
+                            if 'peer_type' in per_bp_port_dict:
+                                if per_bp_port_dict['peer_type'] != 'S-chassis':
+                                    continue
+                            if 'peer' in per_bp_port_dict and \
+                                'peer_port' in per_bp_port_dict:
+                                bp_port_peer_slot = \
+                                    ((per_bp_port_dict['peer_port']).split('/'))[0]
+                                if per_bp_port_dict['peer'] == chassis and \
+                                    bp_port_peer_slot == slot:
+                                    logger.debug('Found peer chassis {} and slot {}'. \
+                                        format(chassis, bp_port_peer_slot))
+                                    peer_type = 'FEX'
+                                    peer_port = bp_slot_id + '/' + bp_port_id
+                                    peer = fex_id
+                                    break
+            logger.debug('FEX BP ports: peer port:{}, peer_type:{}'. \
                             format(peer_port, peer_type))
         else:
+            # peer_dn format: sys/chassis-1/slot-1/host/port-3
             peer_dn_list = (item.peer_dn).split('/')
             if len(peer_dn_list) > 3:
                 peer_slot = re.sub('.*slot-', '', (str)(peer_dn_list[2]))
@@ -929,15 +971,17 @@ def fill_chassis_dict(item, domain_ip):
             else:
                 logger.info('Unable to decode peer_dn:{}, dn:{}'. \
                             format(item.peer_dn, item.dn))
-                peer_slot, peer_port = '0', '0'
             # Store the port in x/y format in iom_port
             peer_port = peer_slot + '/' + peer_port
             peer_type = 'IOM'
-        per_vif_dict['peer_port'] = peer_port
+            peer = 'IOM-' + peer_slot
     else:
-        logger.info('Unable to find blade model for dn:{}'.format(item.dn))
+        logger.debug('Unable to find blade model for dn:{}'.format(item.dn))
 
     # Fill up now
+    per_vif_dict['peer_port'] = peer_port
+    per_vif_dict['peer'] = peer
+    per_vif_dict['peer_type'] = peer_type
     per_vif_dict['fi_id'] = fi_id
     per_vif_dict['admin_state'] = item.admin_state
     per_vif_dict['link_state'] = item.link_state
@@ -947,7 +991,7 @@ def fill_chassis_dict(item, domain_ip):
     elif 'fc' in item.dn:
         per_vif_dict['transport'] = 'FC'
 
-def get_bp_port_dict_from_dn(domain_ip, dn):
+def get_bp_port_dict_from_dn(domain_ip, dn, create_new):
     """
     Either makes a new key into bp_port_dict dictionary or return an existing
     key where stats and other values for that port are stored
@@ -955,6 +999,7 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
     Parameters:
     domain_ip (IP Address of the UCS domain)
     dn (DN of the port)
+    create_new (Create new only if set to True)
 
     Returns:
     port_dict (Item in stat_dict for the given dn port)
@@ -1005,15 +1050,21 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
             chassis_dict[chassis] = {}
         per_chassis_dict = chassis_dict[chassis]
         if 'bp_ports' not in per_chassis_dict:
+            if not create_new:
+                return None
             per_chassis_dict['bp_ports'] = {}
         bp_port_dict = per_chassis_dict['bp_ports']
     elif 'fex' in dn:
         fex_dict = d_dict['fex']
         fex = (str)(dn_list[1])
         if fex not in fex_dict:
+            if not create_new:
+                return None
             fex_dict[fex] = {}
         per_fex_dict = fex_dict[fex]
         if 'bp_ports' not in per_fex_dict:
+            if not create_new:
+                return None
             per_fex_dict['bp_ports'] = {}
         bp_port_dict = per_fex_dict['bp_ports']
     else:
@@ -1021,9 +1072,13 @@ def get_bp_port_dict_from_dn(domain_ip, dn):
 
     slot_id = re.sub('.*slot-', '', (str)(dn_list[2]))
     if slot_id not in bp_port_dict:
+        if not create_new:
+            return None
         bp_port_dict[slot_id] = {}
     bp_slot_dict = bp_port_dict[slot_id]
     if port_id not in bp_slot_dict:
+        if not create_new:
+            return None
         bp_slot_dict[port_id] = {}
     per_bp_port_dict = bp_slot_dict[port_id]
 
@@ -1271,21 +1326,36 @@ def parse_fi_stats(domain_ip, fcpio, sanpc, sanpcep, fcstats, fcerr, ethpio,
         # peer_dn: sys/fex-3/slot-1/fabric/port-1 (F)
         if 'server' in (str)(item.if_role):
             peer_dn_list = (item.peer_dn).split('/')
-            peer_chassis, peer_slot, peer_port = '0', '0', '0'
+            peer, peer_type, peer_port = 'unknown', 'unknown', '0/0'
             if 'rack-unit' in (str)(item.peer_dn):
-                peer_chassis = (str)(peer_dn_list[1])
-                peer_slot = (str)(peer_dn_list[-2])
-                peer_port = ((str)(peer_dn_list[-1])).replace('ext-eth-', '')
+                peer = (str)(peer_dn_list[1])
+                peer_type = 'rack'
+                slot = (str)(peer_dn_list[-2]).replace('adaptor-','')
+                port = ((str)(peer_dn_list[-1])).replace('ext-eth-', '')
+                if len(port) == 1:
+                    port = '0' + port
+                peer_port = slot + '/' + port
             if 'chassis' in (str)(item.peer_dn):
-                peer_chassis = (str)(peer_dn_list[1])
-                peer_slot = ((str)(peer_dn_list[2])).replace('slot-', '')
-                peer_port = ((str)(peer_dn_list[-1])).replace('port-', '')
+                peer = (str)(peer_dn_list[1])
+                peer_type = 'chassis'
+                slot = ((str)(peer_dn_list[2])).replace('slot-', '')
+                port = ((str)(peer_dn_list[-1])).replace('port-', '')
+                if len(port) == 1:
+                    port = '0' + port
+                peer_port = slot + '/' + port
+                # For S-series, chassis format: S-chassis
+                if 'shared-io-module' in (str)(item.peer_dn):
+                    peer_type = 'S-chassis'
             if 'fex' in (str)(item.peer_dn):
-                peer_chassis = (str)(peer_dn_list[1])
-                peer_slot = ((str)(peer_dn_list[2])).replace('slot-', '')
-                peer_port = ((str)(peer_dn_list[-1])).replace('port-', '')
-            port_dict['peer_chassis'] = peer_chassis
-            port_dict['peer_slot'] = peer_slot
+                peer = (str)(peer_dn_list[1])
+                peer_type = 'FEX'
+                slot = ((str)(peer_dn_list[2])).replace('slot-', '')
+                port = ((str)(peer_dn_list[-1])).replace('port-', '')
+                if len(port) == 1:
+                    port = '0' + port
+                peer_port = slot + '/' + port
+            port_dict['peer'] = peer
+            port_dict['peer_type'] = peer_type
             port_dict['peer_port'] = peer_port
 
     for item in lanpc:
@@ -1484,7 +1554,7 @@ def parse_compute_inventory(domain_ip, blade, ru):
     # dn format: sys/rack-unit-2
     # assigned_to_dn format: org-root/org-HX3AF240b/ls-rack-unit-8
     for item in ru:
-        logger.debug('In ru for {}:{}'.format(domain_ip, item.dn))
+        logger.debug('In fill_per_ru for {}:{}'.format(domain_ip, item.dn))
         dn_list = (item.dn).split('/')
         ru = (str)(dn_list[-1])
         service_profile = (((item.assigned_to_dn).split('/'))[-1]).strip('ls-')
@@ -1653,12 +1723,10 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
     # dn:sys/chassis-1/slot-2/host/port-30
     # dn:sys/fex-3/slot-1/host/port-29
     # ep_dn: sys/chassis-1/slot-2/host/pc-1285
-    # peer_dn: sys/chassis-1/blade-8/adaptor-2/ext-eth-5
-    # peer_dn: sys/rack-unit-2/adaptor-1/ext-eth-2
     for item in srv_fio:
-        logger.debug('In srv_fio for {}:{}:peer:{}'. \
+        logger.debug('In srv_fio for {}:{}, peer_dn:{}'. \
                     format(domain_ip, item.dn, item.peer_dn))
-        port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
+        port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn, True)
         if port_dict is None:
             logger.error('Invalid bp_port_dict for {}:{}' \
                          .format(domain_ip, item))
@@ -1670,20 +1738,54 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         port_dict['oper_state'] = item.oper_state
         port_dict['channel'] = 'No'
 
+        # peer_dn: sys/chassis-1/blade-8/adaptor-2/ext-eth-5
+        # peer_dn: sys/rack-unit-2/adaptor-1/ext-eth-2
+        # peer_dn: sys/chassis-17/slot-2/shared-io-module/fabric/port-5
         peer_dn_list = (item.peer_dn).split('/')
-        peer_server, peer_adaptor, peer_port = '0', '0', '0'
-        if 'chassis' in item.peer_dn or 'rack-unit' in item.peer_dn:
-            peer_server = ((item.peer_dn).split('/'))[-3]
-            peer_adaptor = ((item.peer_dn).split('/'))[-2]
-            peer_port = ((item.peer_dn).split('/'))[-1]
-        port_dict['peer_server'] = peer_server
-        port_dict['peer_adaptor'] = peer_adaptor
-        port_dict['peer_port'] = peer_port
+        if len(peer_dn_list) < 3:
+            if 'up' in (str)(item.oper_state):
+                logger.warning('oper_state up still unable to decode ' \
+                    'peer_dn:{}, dn:{}'.format(item.peer_dn, item.dn))
+            else:
+                logger.debug('Unable to decode peer_dn:{}, dn:{}, ' \
+                'oper_state:{}'.format(item.peer_dn, item.dn, item.oper_state))
+        else:
+            peer, peer_type, peer_port = 'unknown', 'unknown', '0/0'
+            # FEX connected to rack-unit
+            if 'rack-unit' in (str)(item.peer_dn):
+                peer = (str)(peer_dn_list[-3])
+                peer_type = 'rack'
+                slot = ((str)(peer_dn_list[-2])).replace('adaptor-', '')
+                port = ((str)(peer_dn_list[-1])).replace('ext-eth-', '')
+                if len(port) == 1:
+                    port = '0' + port
+                peer_port = slot + '/' + port
+            # IOM within 5108 chassis
+            if 'chassis' in (str)(item.peer_dn):
+                peer = (str)(peer_dn_list[-3])
+                peer_type = 'blade'
+                slot = ((str)(peer_dn_list[-2])).replace('adaptor-', '')
+                port = ((str)(peer_dn_list[-1])).replace('ext-eth-', '')
+                if len(port) == 1:
+                    port = '0' + port
+                peer_port = slot + '/' + port
+                # FEX Connected to S-series
+                if 'shared-io-module' in (str)(item.peer_dn):
+                    peer = (str)(peer_dn_list[1])
+                    peer_type = 'S-chassis'
+                    slot = ((str)(peer_dn_list[2])).replace('slot-', '')
+                    port = ((str)(peer_dn_list[-1])).replace('port-', '')
+                    if len(port) == 1:
+                        port = '0' + port
+                    peer_port = slot + '/' + port
+            port_dict['peer'] = peer
+            port_dict['peer_type'] = peer_type
+            port_dict['peer_port'] = peer_port
 
     # dn format: sys/chassis-1/slot-1/host/pc-1290
     for item in srv_fiopc:
         logger.debug('In srv_fiopc for {}:{}'.format(domain_ip, item.dn))
-        port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
+        port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn, True)
         if port_dict is None:
             logger.error('Invalid bp_port_dict for {}:{}' \
                          .format(domain_ip, item))
@@ -1705,7 +1807,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         For PC interfaces, do not set channel at all
         '''
 
-        port_dict = get_bp_port_dict_from_dn(domain_ip, item.ep_dn)
+        port_dict = get_bp_port_dict_from_dn(domain_ip, item.ep_dn, False)
         if port_dict is None:
             logger.error('Invalid bp_port_dict for {}:{}' \
                          .format(domain_ip, item))
@@ -1717,7 +1819,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         # ethrx also contains stats of FI ports. Handle them with FI ports
         if 'chassis-' in item.dn or 'fex' in item.dn:
             logger.debug('In ethrx for {}:{}'.format(domain_ip, item.dn))
-            port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
+            port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn, False)
             if port_dict is None:
                 logger.error('Invalid bp_port_dict for {}:{}' \
                          .format(domain_ip, item))
@@ -1729,7 +1831,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         # ethrx also contains stats of FI ports. Handle them with FI ports
         if 'chassis-' in item.dn or 'fex' in item.dn:
             logger.debug('In ethtx for {}:{}'.format(domain_ip, item.dn))
-            port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
+            port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn, False)
             if port_dict is None:
                 logger.error('Invalid bp_port_dict for {}:{}' \
                          .format(domain_ip, item))
@@ -1740,7 +1842,7 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
         # etherr also contains stats of FI ports. Handle them with FI ports
         if 'chassis-' in item.dn or 'fex' in item.dn:
             logger.debug('In etherr for {}:{}'.format(domain_ip, item.dn))
-            port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn)
+            port_dict = get_bp_port_dict_from_dn(domain_ip, item.dn, False)
             if not port_dict:
                 logger.error('Invalid port_dict for {}:{}'.format(domain_ip, item))
                 continue
@@ -1797,10 +1899,10 @@ def parse_backplane_port_stats(domain_ip, srv_fio, srv_fiopc, srv_fiopcep,
             # Construct a DN in sys/chassis-2/slot-1/host/port-29/tx-stats
             # format from slot and port in path_dict
             dn_for_port_dict = 'sys/' + chassis + '/' + path_dict[path]
-            port_dict = get_bp_port_dict_from_dn(domain_ip, dn_for_port_dict)
+            port_dict = get_bp_port_dict_from_dn(domain_ip, dn_for_port_dict, False)
             if port_dict is None:
-                logger.error('Invalid bp_port_dict for {}\n{}' \
-                             .format(domain_ip, item))
+                logger.warning('Invalid bp_port_dict for {}:{}' \
+                             .format(domain_ip, item.dn))
                 continue
 
             fi_slot = ''
@@ -1832,6 +1934,18 @@ def parse_raw_sdk_stats():
 
     global raw_sdk_stats
     global class_ids
+
+    if user_args.get('raw_dump'):
+        current_log_level = logger.level
+        logger.setLevel(logging.DEBUG)
+        logger.info('Printing raw dump')
+        for domain_ip, rsp in raw_sdk_stats.items():
+            for class_id, obj in rsp.items():
+                for items in obj:
+                    logger.debug('{} :\n{}'. \
+                        format(domain_ip, items))
+        logger.info('Printing raw dump - DONE')
+        logger.setLevel(current_log_level)
 
     for domain_ip, obj in raw_sdk_stats.items():
         logger.info('Start parsing SDK stats for {}'.format(domain_ip))
@@ -1922,24 +2036,6 @@ def parse_raw_sdk_stats():
             logger.exception('parse_compute_inventory:{}\n{}'.format(e, s))
 
         try:
-            parse_vnic_stats(domain_ip,
-                             obj['AdaptorVnicStats'],
-                             obj['AdaptorHostEthIf'],
-                             obj['AdaptorHostFcIf'],
-                             obj['DcxVc'])
-        except Exception as e:
-            s = ''
-            for item in obj['AdaptorVnicStats']:
-                s = s + (str)(item)
-            for item in obj['AdaptorHostEthIf']:
-                s = s + (str)(item)
-            for item in obj['AdaptorHostFcIf']:
-                s = s + (str)(item)
-            for item in obj['DcxVc']:
-                s = s + (str)(item)
-            logger.exception('parse_vnic_stats:{}\n{}'.format(e, s))
-
-        try:
             parse_backplane_port_stats(domain_ip,
                                        obj['EtherServerIntFIo'],
                                        obj['EtherServerIntFIoPc'],
@@ -1968,6 +2064,24 @@ def parse_raw_sdk_stats():
             for item in obj['FabricPathEp']:
                 s = s + (str)(item)
             logger.exception('parse_backplane_port_stats:{}\n{}'.format(e, s))
+
+        try:
+            parse_vnic_stats(domain_ip,
+                             obj['AdaptorVnicStats'],
+                             obj['AdaptorHostEthIf'],
+                             obj['AdaptorHostFcIf'],
+                             obj['DcxVc'])
+        except Exception as e:
+            s = ''
+            for item in obj['AdaptorVnicStats']:
+                s = s + (str)(item)
+            for item in obj['AdaptorHostEthIf']:
+                s = s + (str)(item)
+            for item in obj['AdaptorHostFcIf']:
+                s = s + (str)(item)
+            for item in obj['DcxVc']:
+                s = s + (str)(item)
+            logger.exception('parse_vnic_stats:{}\n{}'.format(e, s))
 
 def parse_pfc_stats(pfc_output, domain_ip, fi_id):
     """
@@ -2240,12 +2354,12 @@ def influxdb_lp_server_fields(server_dict, server_fields):
     return server_fields
 
 def influxdb_lp_vnic(per_vif_dict, vnic_tags, vnic_fields):
-    if 'peer_port' in per_vif_dict:
-        vnic_tags = vnic_tags + ',peer_port=' + \
-                        per_vif_dict['peer_port']
     if 'peer_type' in per_vif_dict:
-        vnic_tags = vnic_tags + ',peer_type=' + \
-                        per_vif_dict['peer_type']
+        if per_vif_dict['peer_type'] != 'unknown':
+            vnic_tags = vnic_tags + ',peer_type=' + \
+                per_vif_dict['peer_type'] + \
+                ',peer=' + per_vif_dict['peer'] + \
+                ',peer_port=' + per_vif_dict['peer_port']
     if 'fi_id' in per_vif_dict:
         vnic_tags = vnic_tags + ',fi_id=' + \
                         per_vif_dict['fi_id']
@@ -2283,12 +2397,12 @@ def influxdb_lp_vnic(per_vif_dict, vnic_tags, vnic_fields):
     return (vnic_tags, vnic_fields)
 
 def influxdb_lp_bp_ports(per_bp_port_dict, bp_tags, bp_fields):
-    if 'peer_adaptor' in per_bp_port_dict:
-        bp_tags = bp_tags + ',peer_adaptor=' + \
-                    per_bp_port_dict['peer_adaptor']
-    if 'peer_port' in per_bp_port_dict:
-        bp_tags = bp_tags + ',peer_port=' + \
-                    per_bp_port_dict['peer_port']
+    if 'peer_type' in per_bp_port_dict:
+       if per_bp_port_dict['peer_type'] != 'unknown':
+            bp_tags = bp_tags + ',peer_type=' + \
+                    per_bp_port_dict['peer_type'] + \
+                    ',peer=' + per_bp_port_dict['peer'] + \
+                    ',peer_port=' + per_bp_port_dict['peer_port']
     if 'channel' in per_bp_port_dict:
         bp_tags = bp_tags + ',channel=' + \
                     per_bp_port_dict['channel']
@@ -2412,15 +2526,12 @@ def print_output_in_influxdb_lp():
                     fi_port_tags = fi_port_tags + ',channel=' + \
                                     per_fi_port_dict['channel']
                 fi_port_tags = fi_port_tags + ',location=' + location
-                if 'peer_chassis' in per_fi_port_dict:
-                    fi_port_tags = fi_port_tags + ',peer_chassis=' + \
-                                    per_fi_port_dict['peer_chassis']
-                if 'peer_port' in per_fi_port_dict:
-                    fi_port_tags = fi_port_tags + ',peer_port=' + \
-                                    per_fi_port_dict['peer_port']
-                if 'peer_slot' in per_fi_port_dict:
-                    fi_port_tags = fi_port_tags + ',peer_slot=' + \
-                                    per_fi_port_dict['peer_slot']
+                if 'peer_type' in per_fi_port_dict:
+                    if per_fi_port_dict['peer_type'] != 'unknown':
+                        fi_port_tags = fi_port_tags + ',peer_type=' + \
+                                per_fi_port_dict['peer_type'] + \
+                                ',peer=' + per_fi_port_dict['peer'] + \
+                                ',peer_port=' + per_fi_port_dict['peer_port']
 
                 fi_port_tags = fi_port_tags + ',port=' + fi_port + \
                                 ',transport=' + per_fi_port_dict['transport']
@@ -2473,41 +2584,7 @@ def print_output_in_influxdb_lp():
                     fi_port_prefix = fi_server_port_prefix
                 else:
                     fi_port_prefix = fi_uplink_port_prefix
-                '''
-                if 'PC' not in fi_port:
-                    fi_port_tags = fi_port_tags + ',channel=' + \
-                                        per_fi_port_dict['channel']
 
-                # Ports will role server goes in FIServerPortStats, rest all
-                # ports go into FIUplinkPortStats, including unknown
-                if per_fi_port_dict['if_role'] == 'server':
-                    fi_port_prefix = fi_server_port_prefix
-                    if 'PC' not in fi_port:
-                        fi_port_tags = fi_port_tags + ',peer_chassis=' + \
-                                    per_fi_port_dict['peer_chassis'] + \
-                                    ',peer_slot=' + \
-                                        per_fi_port_dict['peer_slot'] + \
-                                    ',peer_port=' + \
-                                        per_fi_port_dict['peer_port']
-                        fi_port_fields = fi_port_fields + \
-                        'bytes_rx_delta=' + \
-                                per_fi_port_dict['bytes_rx_delta'] + ',' + \
-                        'bytes_tx_delta=' + \
-                                per_fi_port_dict['bytes_tx_delta'] + ',' + \
-                        'pause_rx=' + per_fi_port_dict['pause_rx'] + ',' + \
-                        'pause_tx=' + per_fi_port_dict['pause_tx']
-                else:
-                    fi_port_prefix = fi_uplink_port_prefix
-                    fi_port_fields = fi_port_fields + \
-                    'bytes_rx_delta=' + \
-                            per_fi_port_dict['bytes_rx_delta'] + ',' + \
-                    'bytes_tx_delta=' + \
-                            per_fi_port_dict['bytes_tx_delta']
-                    if 'pause_rx' in per_fi_port_dict:
-                        fi_port_fields = fi_port_fields + \
-                        ',pause_rx=' + per_fi_port_dict['pause_rx'] + ',' + \
-                        'pause_tx=' + per_fi_port_dict['pause_tx']
-                '''
                 fi_port_prefix = fi_port_prefix + domain_ip
                 fi_port_fields = fi_port_fields + '\n'
                 final_print_string = final_print_string + fi_port_prefix + \
@@ -2588,11 +2665,14 @@ def print_output_in_influxdb_lp():
                     bp_tags = bp_tags + 'bp_port=' + iom_slot_id + '/' + \
                         bp_port_id + ',chassis=' + chassis_id + \
                         ',fi_id=' + per_bp_port_dict['fi_id']
-                    if 'peer_server' in per_bp_port_dict:
-                        bp_tags = bp_tags + ',peer_server=' + \
-                                    per_bp_port_dict['peer_server']
+                    if 'peer_type' in per_bp_port_dict:
+                        if per_bp_port_dict['peer_type'] != 'unknown':
+                            bp_tags = bp_tags + ',peer_type=' + \
+                                per_bp_port_dict['peer_type'] + \
+                                ',peer=' + per_bp_port_dict['peer'] + \
+                                ',peer_port=' + per_bp_port_dict['peer_port']
                         per_blade_dict = \
-                                blade_dict[per_bp_port_dict['peer_server']]
+                                blade_dict[per_bp_port_dict['peer']]
                         bp_tags = bp_tags + ',peer_service_profile=' + \
                                     per_blade_dict['service_profile']
                     bp_tags, bp_fields = \
@@ -2672,15 +2752,23 @@ def print_output_in_influxdb_lp():
                     bp_tags = bp_tags + 'bp_port=' + iom_slot_id + '/' + \
                         bp_port_id + ',chassis=' + fex_id + \
                         ',fi_id=' + per_bp_port_dict['fi_id']
-                    if 'peer_server' in per_bp_port_dict:
-                        bp_tags = bp_tags + ',peer_server=' + \
-                                    per_bp_port_dict['peer_server']
-
-                        ru_dict = d_dict['ru']
-                        if per_bp_port_dict['peer_server'] in ru_dict:
-                            per_ru_dict = \
-                                    ru_dict[per_bp_port_dict['peer_server']]
-                            bp_tags = bp_tags + ',peer_service_profile=' + \
+                    if 'peer_type' in per_bp_port_dict:
+                        if per_bp_port_dict['peer_type'] != 'unknown':
+                            if per_bp_port_dict['peer_type'] == 'S-chassis':
+                                s_chassis = per_bp_port_dict['peer']
+                                s_slot = ((per_bp_port_dict['peer_port']). \
+                                            split('/'))[0]
+                                s_blade = 'blade-' + s_slot
+                                per_chassis_dict = chassis_dict[s_chassis]
+                                blade_dict = per_chassis_dict['blades']
+                                per_blade_dict = blade_dict[s_blade]
+                                bp_tags = bp_tags + ',peer_service_profile=' + \
+                                            per_blade_dict['service_profile']
+                            else:
+                                ru_dict = d_dict['ru']
+                                per_ru_dict = \
+                                    ru_dict[per_bp_port_dict['peer']]
+                                bp_tags = bp_tags + ',peer_service_profile=' + \
                                             per_ru_dict['service_profile']
                     bp_tags, bp_fields = \
                                 influxdb_lp_bp_ports(per_bp_port_dict, \
@@ -2696,20 +2784,17 @@ def print_output():
     if user_args['verify_only']:
         logger.info('Skipping output in {} due to -V option' \
                     .format(user_args['output_format']))
-    elif user_args['output_format'] == 'dict':
+    if user_args['output_format'] == 'dict':
         current_log_level = logger.level
         logger.setLevel(logging.DEBUG)
         logger.info('Printing output in dictionary format')
         logger.debug('stats_dict : \n {}'.format(json.dumps(stats_dict, indent=2)))
         logger.info('Printing output - DONE')
         logger.setLevel(current_log_level)
-    elif user_args['output_format'] == 'influxdb-lp':
+    if user_args['output_format'] == 'influxdb-lp':
         logger.info('Printing output in InfluxDB Line Protocol format')
         print_output_in_influxdb_lp()
         logger.info('Printing output - DONE')
-    else:
-        logger.error('Unknown output format type: {}'. \
-        format(user_args['output_format']))
 
 ###############################################################################
 # END: Output functions
