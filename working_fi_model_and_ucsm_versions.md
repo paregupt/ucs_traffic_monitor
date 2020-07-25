@@ -69,3 +69,10 @@ Reported by bynet (from the lab -  1 UCS domain, 9 servers):
 
     UCS-FI-6248UP 	4.1(1c) 	5.0(3)N2(4.11b)
 
+Reported by Tidebinder (1 UCS domain, 10 servers):
+
+    UCS-FI-6248UP   2.2(8l)     5.2(3)N2(2.28l)
+
+Reported by thomsonac
+    
+    UCS-FI-6248UP   3.2(3h)   5.0(3)N2(3.23e)
