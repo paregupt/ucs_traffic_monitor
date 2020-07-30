@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1596067926316,
+  "iteration": 1596120475052,
   "links": [],
   "panels": [
     {
@@ -897,7 +897,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "$domain - FI-$fi_id - Uplink - $uplink - RX Utilization",
+      "title": "$domain - FI-$fi_id - Uplink  - RX Utilization",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -913,7 +913,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:93",
           "decimals": 2,
           "format": "bps",
           "label": null,
@@ -923,7 +922,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:94",
           "decimals": 2,
           "format": "percentunit",
           "label": null,
@@ -944,7 +942,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$data_source",
-      "description": "Assumption: The uplink must be a port-channel. A similar graph can be generated for non-port-channel uplinks",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -1069,7 +1067,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "$domain - FI-$fi_id - Uplink - $uplink - TX Utilization",
+      "title": "$domain - FI-$fi_id - Uplink  - TX Utilization",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1085,7 +1083,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:109",
           "format": "bps",
           "label": null,
           "logBase": 1,
@@ -1094,7 +1091,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:110",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1290,7 +1286,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:219",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -1299,7 +1294,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:220",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -1492,7 +1486,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:257",
               "format": "bps",
               "label": null,
               "logBase": 1,
@@ -1501,7 +1494,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:258",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -1678,7 +1670,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": "chassis-1",
           "value": [
             "chassis-1"
@@ -1707,7 +1698,6 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": "All",
           "value": [
             "$__all"
@@ -1784,5 +1774,5 @@
   "timezone": "browser",
   "title": "FI Uplink port - Ingress congestion monitoring",
   "uid": "Sve32sDZk",
-  "version": 2
+  "version": 4
 }
