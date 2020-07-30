@@ -16,38 +16,67 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1586700162227,
+  "id": 6,
+  "iteration": 1596067926316,
   "links": [],
   "panels": [
     {
-      "collapsed": false,
-      "datasource": "$data_source",
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 1,
+        "h": 2,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 17,
-      "panels": [],
-      "title": "Overview",
-      "type": "row"
-    },
-    {
-      "content": "<table style=\"margin-left: auto; margin-right: auto;\" border=\"0\" width=\"100%\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' width=\"300\" />\r\n<script>\r\n  document.getElementById('your_logo').setAttribute('src', 'http://' + window.location.hostname + \"/your_logo.png\");\r\n</script>\r\n</td>\r\n<td style=\"width: 70%;\">\r\n<h2 style=\"text-align: center;\"><span style=\"text-decoration: underline; color: #299c46;\"><strong>Cisco Systems - UCS Traffic Monitoring - Ingress Congestion</strong></span></h2>\r\n<p style=\"text-align: center;\">This page helps to find the real cause of the ingress traffic congestion on a FI uplink port.</p>\r\n</td>\r\n<td style=\"width: 15%;\" valign=\"middle\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='' alt=\"\" width=\"160\" />\r\n<script>\r\n  document.getElementById('cisco_logo').setAttribute('src', 'http://' + window.location.hostname + \"/cisco_logo.png\");\r\n</script>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p style=\"text-align: left;\"></p>",
-      "datasource": "$data_source",
-      "description": "",
-      "gridPos": {
-        "h": 3,
-        "w": 24,
-        "x": 0,
-        "y": 1
+      "id": 68,
+      "options": {
+        "content": "<table style=\"margin: 0px; padding: 0px; border: 1px; border-collapse: collapse;\" width=\"100%\">\n<tbody>\n<tr style=\"margin: 0px; padding: 0px;\">\n<td style=\"width: 15%; margin: 0px; padding: 0px; border: none;\" valign=\"middle\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='/public/img/utm/cisco_logo.png' width=\"120\" />\n</td>\n<td style=\"width: 70%; margin: 0px; padding: 0px; border: none;\">\n<h2 style=\"text-align: center; margin: 2px;\"><span style=\"color: #0085FC;\"><strong>UTM - UCS Traffic Monitoring</strong></span></h2>\n</td>\n<td style=\"width: 15%; margin: 0px; border: none;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='/public/img/utm/your_logo.png' alt=\"\" width=\"120\"/>\n</td>\n</tr>\n</tbody>\n</table>",
+        "mode": "html"
       },
-      "id": 15,
-      "links": [],
-      "mode": "html",
-      "options": {},
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
       "title": "",
@@ -55,19 +84,707 @@
       "type": "text"
     },
     {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "flowchartsData": {
+        "flowcharts": [
+          {
+            "allowDrawio": false,
+            "bgColor": null,
+            "center": true,
+            "csv": "## See more information for the syntax at https://drawio-app.com/import-from-csv-to-drawio/\n##\n## Example CSV. Use ## for comments and # for configuration.\n## The following names are reserved and should not be used (or ignored):\n## id, tooltip, placeholder(s), link and label (see below)\n##\n#\n## Node label with placeholders and HTML.\n## Default is '%name_of_first_column%'.\n#\n# label: %name%<br><i style=\"color:gray;\">%position%</i><br><a href=\"mailto:%email%\">Email</a>\n#\n## Node style (placeholders are replaced once).\n## Default is the current style for nodes.\n#\n# style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;\n#\n## Parent style for nodes with child nodes (placeholders are replaced once).\n#\n# parentstyle: swimlane;whiteSpace=wrap;html=1;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;\n#\n## Optional column name that contains a reference to a named style in styles.\n## Default is the current style for nodes.\n#\n# stylename: -\n#\n## JSON for named styles of the form {\"name\": \"style\", \"name\": \"style\"} where style is a cell style with\n## placeholders that are replaced once.\n#\n# styles: -\n#\n## Optional column name that contains a reference to a named label in labels.\n## Default is the current label.\n#\n# labelname: -\n#\n## JSON for named labels of the form {\"name\": \"label\", \"name\": \"label\"} where label is a cell label with\n## placeholders.\n#\n# labels: -\n#\n## Uses the given column name as the identity for cells (updates existing cells).\n## Default is no identity (empty value or -).\n#\n# identity: -\n#\n## Uses the given column name as the parent reference for cells. Default is no parent (empty or -).\n## The identity above is used for resolving the reference so it must be specified.\n#\n# parent: -\n#\n## Adds a prefix to the identity of cells to make sure they do not collide with existing cells (whose\n## IDs are numbers from 0..n, sometimes with a GUID prefix in the context of realtime collaboration).\n## Default is csvimport-.\n#\n# namespace: csvimport-\n#\n## Connections between rows (\"from\": source colum, \"to\": target column).\n## Label, style and invert are optional. Defaults are '', current style and false.\n## If placeholders are used in the style, they are replaced with data from the source.\n## An optional placeholders can be set to target to use data from the target instead.\n## In addition to label, an optional fromlabel and tolabel can be used to name the column\n## that contains the text for the label in the edges source or target (invert ignored).\n## The label is concatenated in the form fromlabel + label + tolabel if all are defined.\n## The target column may contain a comma-separated list of values.\n## Multiple connect entries are allowed.\n#\n# connect: {\"from\": \"manager\", \"to\": \"name\", \"invert\": true, \"label\": \"manages\", \\\n#          \"style\": \"curved=1;endArrow=blockThin;endFill=1;fontSize=11;\"}\n# connect: {\"from\": \"refs\", \"to\": \"id\", \"style\": \"curved=1;fontSize=11;\"}\n#\n## Node x-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# left: \n#\n## Node y-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# top: \n#\n## Node width. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the width. Default is auto.\n#\n# width: auto\n#\n## Node height. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the height. Default is auto.\n#\n# height: auto\n#\n## Padding for autosize. Default is 0.\n#\n# padding: -12\n#\n## Comma-separated list of ignored columns for metadata. (These can be\n## used for connections and styles but will not be added as metadata.)\n#\n# ignore: id,image,fill,stroke,refs,manager\n#\n## Column to be renamed to link attribute (used as link).\n#\n# link: url\n#\n## Spacing between nodes. Default is 40.\n#\n# nodespacing: 40\n#\n## Spacing between levels of hierarchical layouts. Default is 100.\n#\n# levelspacing: 100\n#\n## Spacing between parallel edges. Default is 40. Use 0 to disable.\n#\n# edgespacing: 40\n#\n## Name or JSON of layout. Possible values are auto, none, verticaltree, horizontaltree,\n## verticalflow, horizontalflow, organic, circle or a JSON string as used in Layout, Apply.\n## Default is auto.\n#\n# layout: auto\n#\n## ---- CSV below this line. First line are column names. ----\nname,position,id,location,manager,email,fill,stroke,refs,url,image\nEvan Miller,CFO,emi,Office 1,,me@example.com,#dae8fc,#6c8ebf,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-9-2-128.png\nEdward Morrison,Brand Manager,emo,Office 2,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-10-3-128.png\nRon Donovan,System Admin,rdo,Office 3,Evan Miller,me@example.com,#d5e8d4,#82b366,\"emo,tva\",https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-2-128.png\nTessa Valet,HR Director,tva,Office 4,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-3-128.png\n",
+            "download": false,
+            "editorTheme": "dark",
+            "editorUrl": "https://www.draw.io",
+            "enableAnim": true,
+            "grid": false,
+            "lock": true,
+            "name": "Main",
+            "scale": true,
+            "tooltip": true,
+            "type": "xml",
+            "url": "http://<YourUrl>/<Your XML/drawio file/api>",
+            "xml": "<mxGraphModel>\n    <root>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-1\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-6\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#CCFF99;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry y=\"558\" width=\"1220\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations_button\" value=\"Locations\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"40\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-2\" value=\"UCS Domain Overview\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"240\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-3\" value=\"UCS Domain Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"440\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-4\" value=\"UCS Chassis Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"640\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-5\" value=\"Server Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"840\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"30\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <UserObject label=\"\" link=\"/d/Inte2EIWk/ucs-domain-overview\" id=\"domain_overview\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"230\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/W7LSukHWz/ucs-domain-traffic\" id=\"domain_traffic\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"430\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/KOM8ZHNWz/ucs-chassis-traffic\" id=\"chassis\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"630\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/Z0M_N1vWz/service-profile-stats\" id=\"servers\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"830\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <mxCell id=\"3TAq4FZGmTNtiptqA514-0\" value=\"Ingress Traffic Congestion\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#0085FC;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1040\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"ingress_congestion\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1030\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n    </root>\n</mxGraphModel>",
+            "zoom": "100%"
+          }
+        ]
+      },
+      "format": "short",
+      "graphId": "flowchart_75",
+      "gridPos": {
+        "h": 2,
+        "w": 21,
+        "x": 0,
+        "y": 2
+      },
+      "id": 75,
+      "newFlag": false,
+      "pluginVersion": "7.1.0",
+      "rulesData": {
+        "rulesData": [
+          {
+            "aggregation": "current",
+            "alias": "Locations",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/ri2OFp4Wz/locations",
+                "pattern": "locations"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 1,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "domain_overview",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/Inte2EIWk/ucs-domain-overview",
+                "pattern": "domain_overview"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 2,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "domain_traffic",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/W7LSukHWz/ucs-domain-traffic",
+                "pattern": "domain_traffic"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 3,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "chassis",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/KOM8ZHNWz/ucs-chassis-traffic",
+                "pattern": "chassis"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 4,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "servers",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/Z0M_N1vWz/service-profile-stats",
+                "pattern": "servers"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 5,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          },
+          {
+            "aggregation": "current",
+            "alias": "Ingress Congestion",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/Sve32sDZk/fi-uplink-port-ingress-congestion-monitoring",
+                "pattern": "ingress_congestion"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 6,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          }
+        ]
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "FIEnvStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "domain",
+              "operator": "=~",
+              "value": "/^$domain$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "agenty-flowcharting-panel",
+      "valueName": "current",
+      "version": "0.9.0"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "flowchartsData": {
+        "flowcharts": [
+          {
+            "allowDrawio": false,
+            "bgColor": null,
+            "center": true,
+            "csv": "## See more information for the syntax at https://drawio-app.com/import-from-csv-to-drawio/\n##\n## Example CSV. Use ## for comments and # for configuration.\n## The following names are reserved and should not be used (or ignored):\n## id, tooltip, placeholder(s), link and label (see below)\n##\n#\n## Node label with placeholders and HTML.\n## Default is '%name_of_first_column%'.\n#\n# label: %name%<br><i style=\"color:gray;\">%position%</i><br><a href=\"mailto:%email%\">Email</a>\n#\n## Node style (placeholders are replaced once).\n## Default is the current style for nodes.\n#\n# style: label;image=%image%;whiteSpace=wrap;html=1;rounded=1;fillColor=%fill%;strokeColor=%stroke%;\n#\n## Parent style for nodes with child nodes (placeholders are replaced once).\n#\n# parentstyle: swimlane;whiteSpace=wrap;html=1;childLayout=stackLayout;horizontal=1;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;\n#\n## Optional column name that contains a reference to a named style in styles.\n## Default is the current style for nodes.\n#\n# stylename: -\n#\n## JSON for named styles of the form {\"name\": \"style\", \"name\": \"style\"} where style is a cell style with\n## placeholders that are replaced once.\n#\n# styles: -\n#\n## Optional column name that contains a reference to a named label in labels.\n## Default is the current label.\n#\n# labelname: -\n#\n## JSON for named labels of the form {\"name\": \"label\", \"name\": \"label\"} where label is a cell label with\n## placeholders.\n#\n# labels: -\n#\n## Uses the given column name as the identity for cells (updates existing cells).\n## Default is no identity (empty value or -).\n#\n# identity: -\n#\n## Uses the given column name as the parent reference for cells. Default is no parent (empty or -).\n## The identity above is used for resolving the reference so it must be specified.\n#\n# parent: -\n#\n## Adds a prefix to the identity of cells to make sure they do not collide with existing cells (whose\n## IDs are numbers from 0..n, sometimes with a GUID prefix in the context of realtime collaboration).\n## Default is csvimport-.\n#\n# namespace: csvimport-\n#\n## Connections between rows (\"from\": source colum, \"to\": target column).\n## Label, style and invert are optional. Defaults are '', current style and false.\n## If placeholders are used in the style, they are replaced with data from the source.\n## An optional placeholders can be set to target to use data from the target instead.\n## In addition to label, an optional fromlabel and tolabel can be used to name the column\n## that contains the text for the label in the edges source or target (invert ignored).\n## The label is concatenated in the form fromlabel + label + tolabel if all are defined.\n## The target column may contain a comma-separated list of values.\n## Multiple connect entries are allowed.\n#\n# connect: {\"from\": \"manager\", \"to\": \"name\", \"invert\": true, \"label\": \"manages\", \\\n#          \"style\": \"curved=1;endArrow=blockThin;endFill=1;fontSize=11;\"}\n# connect: {\"from\": \"refs\", \"to\": \"id\", \"style\": \"curved=1;fontSize=11;\"}\n#\n## Node x-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# left: \n#\n## Node y-coordinate. Possible value is a column name. Default is empty. Layouts will\n## override this value.\n#\n# top: \n#\n## Node width. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the width. Default is auto.\n#\n# width: auto\n#\n## Node height. Possible value is a number (in px), auto or an @ sign followed by a column\n## name that contains the value for the height. Default is auto.\n#\n# height: auto\n#\n## Padding for autosize. Default is 0.\n#\n# padding: -12\n#\n## Comma-separated list of ignored columns for metadata. (These can be\n## used for connections and styles but will not be added as metadata.)\n#\n# ignore: id,image,fill,stroke,refs,manager\n#\n## Column to be renamed to link attribute (used as link).\n#\n# link: url\n#\n## Spacing between nodes. Default is 40.\n#\n# nodespacing: 40\n#\n## Spacing between levels of hierarchical layouts. Default is 100.\n#\n# levelspacing: 100\n#\n## Spacing between parallel edges. Default is 40. Use 0 to disable.\n#\n# edgespacing: 40\n#\n## Name or JSON of layout. Possible values are auto, none, verticaltree, horizontaltree,\n## verticalflow, horizontalflow, organic, circle or a JSON string as used in Layout, Apply.\n## Default is auto.\n#\n# layout: auto\n#\n## ---- CSV below this line. First line are column names. ----\nname,position,id,location,manager,email,fill,stroke,refs,url,image\nEvan Miller,CFO,emi,Office 1,,me@example.com,#dae8fc,#6c8ebf,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-9-2-128.png\nEdward Morrison,Brand Manager,emo,Office 2,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-10-3-128.png\nRon Donovan,System Admin,rdo,Office 3,Evan Miller,me@example.com,#d5e8d4,#82b366,\"emo,tva\",https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-2-128.png\nTessa Valet,HR Director,tva,Office 4,Evan Miller,me@example.com,#d5e8d4,#82b366,,https://www.draw.io,https://cdn3.iconfinder.com/data/icons/user-avatars-1/512/users-3-128.png\n",
+            "download": false,
+            "editorTheme": "dark",
+            "editorUrl": "https://www.draw.io",
+            "enableAnim": true,
+            "grid": false,
+            "lock": true,
+            "name": "Main",
+            "scale": true,
+            "tooltip": true,
+            "type": "xml",
+            "url": "http://<YourUrl>/<Your XML/drawio file/api>",
+            "xml": "<mxGraphModel dx=\"677\" dy=\"435\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\">\n  <root>\n    <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\" />\n    <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-1\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\" />\n    <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-6\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#CCFF99;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n      <mxGeometry y=\"558\" width=\"180\" height=\"20\" as=\"geometry\" />\n    </mxCell>\n    <mxCell id=\"3TAq4FZGmTNtiptqA514-0\" value=\"Detailed Congestion Monitoring\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n      <mxGeometry x=\"15\" y=\"560\" width=\"150\" height=\"16\" as=\"geometry\" />\n    </mxCell>\n    <mxCell id=\"detailed_congestion\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n      <mxGeometry x=\"10\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\" />\n    </mxCell>\n  </root>\n</mxGraphModel>\n",
+            "zoom": "100%"
+          }
+        ]
+      },
+      "format": "short",
+      "graphId": "flowchart_73",
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 21,
+        "y": 2
+      },
+      "id": 73,
+      "newFlag": false,
+      "pluginVersion": "7.1.0",
+      "rulesData": {
+        "rulesData": [
+          {
+            "aggregation": "current",
+            "alias": "detailed_congestion",
+            "colors": [
+              "rgba(50, 172, 45, 0.97)"
+            ],
+            "column": "Time",
+            "dateFormat": "YYYY-MM-DD HH:mm:ss",
+            "decimals": 2,
+            "eventData": [],
+            "eventProp": "id",
+            "eventRegEx": false,
+            "gradient": false,
+            "hidden": false,
+            "invert": false,
+            "linkData": [
+              {
+                "hidden": false,
+                "linkOn": "a",
+                "linkParams": false,
+                "linkUrl": "/d/SVO-VNiWk/chassis-pause-frame-monitoring",
+                "pattern": "detailed_congestion"
+              }
+            ],
+            "linkProp": "id",
+            "linkRegEx": true,
+            "mappingType": 1,
+            "metricType": "serie",
+            "order": 1,
+            "overlayIcon": false,
+            "pattern": "FIEnvStats.last",
+            "rangeData": [],
+            "reduce": true,
+            "refId": "A",
+            "sanitize": false,
+            "shapeData": [],
+            "shapeProp": "id",
+            "shapeRegEx": true,
+            "stringThresholds": [],
+            "textData": [],
+            "textProp": "id",
+            "textRegEx": true,
+            "thresholds": [],
+            "tooltip": false,
+            "tooltipColors": false,
+            "tooltipLabel": "",
+            "tooltipOn": "a",
+            "tpDirection": "v",
+            "tpGraph": false,
+            "tpGraphHigh": null,
+            "tpGraphLow": null,
+            "tpGraphScale": "linear",
+            "tpGraphSize": "100%",
+            "tpGraphType": "line",
+            "type": "number",
+            "unit": "short",
+            "valueData": []
+          }
+        ]
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "FIEnvStats",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "load"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "domain",
+              "operator": "=~",
+              "value": "/^$domain$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "agenty-flowcharting-panel",
+      "valueName": "current",
+      "version": "0.9.0"
+    },
+    {
+      "datasource": null,
+      "description": "Find the root-cause of the Ingress Traffic Congestion observed on FI Uplink ports",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 70,
+      "options": {
+        "content": "\n<h2 style=\"text-align: center;\"><span style=\"color: #0085FC;\"><strong>Ingress Traffic Congestion - </span><span style=\"color: #ff00ff;\">$domain</span></strong></h2>",
+        "mode": "html"
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "datasource": "$data_source",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 17,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "$data_source",
-      "description": "Assumption: The uplink must be a port-channel. A similar graph can be generated for non-port-channel uplinks",
+      "decimals": 2,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 3,
       "fillGradient": 5,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 4
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 13,
@@ -75,11 +792,13 @@
       "legend": {
         "alignAsTable": true,
         "avg": true,
-        "current": true,
-        "max": false,
+        "current": false,
+        "max": true,
         "min": false,
         "rightSide": true,
         "show": true,
+        "sort": "max",
+        "sortDesc": true,
         "total": false,
         "values": true
       },
@@ -87,10 +806,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -121,10 +838,13 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "FIUplinkPortStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "B",
+          "query": "SELECT mean(\"bytes_rx_delta\") *8 /[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"channel\" != '' and oper_state = 'up') AND $timeFilter GROUP BY time($__interval), \"port\" fill(linear)",
+          "rawQuery": true,
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -193,6 +913,8 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:93",
+          "decimals": 2,
           "format": "bps",
           "label": null,
           "logBase": 1,
@@ -201,11 +923,13 @@
           "show": true
         },
         {
-          "format": "short",
+          "$$hashKey": "object:94",
+          "decimals": 2,
+          "format": "percentunit",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         }
       ],
@@ -221,13 +945,19 @@
       "dashes": false,
       "datasource": "$data_source",
       "description": "Assumption: The uplink must be a port-channel. A similar graph can be generated for non-port-channel uplinks",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 3,
       "fillGradient": 5,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 4
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 45,
@@ -235,11 +965,13 @@
       "legend": {
         "alignAsTable": true,
         "avg": true,
-        "current": true,
-        "max": false,
+        "current": false,
+        "max": true,
         "min": false,
         "rightSide": true,
         "show": true,
+        "sort": "max",
+        "sortDesc": true,
         "total": false,
         "values": true
       },
@@ -247,10 +979,8 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -284,6 +1014,8 @@
           "measurement": "FIUplinkPortStats",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"bytes_tx_delta\") *8 /[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"channel\" != '' and oper_state = 'up') AND $timeFilter GROUP BY time($__interval), \"port\" fill(linear)",
+          "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
@@ -353,6 +1085,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:109",
           "format": "bps",
           "label": null,
           "logBase": 1,
@@ -361,6 +1094,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:110",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -381,7 +1115,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 13
       },
       "id": 5,
       "panels": [
@@ -391,14 +1125,20 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
+          "description": "**Use Case**: Find the root cause of ingress traffic congestion on a FI uplink port. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  \n  - Select a UCS domain, FI ID, and an uplink port. \n  - One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n  - Select All Backplane ports. You can select one Backplane at a time to limit the number of grasp in a single view.\n\nA FI Uplink port does not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands per second, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
+          "fill": 0,
           "fillGradient": 0,
           "gridPos": {
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 2
+            "y": 14
           },
           "hiddenSeries": false,
           "id": 2,
@@ -406,11 +1146,13 @@
           "legend": {
             "alignAsTable": true,
             "avg": true,
-            "current": true,
-            "max": false,
+            "current": false,
+            "max": true,
             "min": false,
             "rightSide": true,
             "show": true,
+            "sort": "max",
+            "sortDesc": true,
             "total": false,
             "values": true
           },
@@ -418,20 +1160,23 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
           "percentage": false,
-          "pointradius": 2,
-          "points": false,
+          "pluginVersion": "7.1.1",
+          "pointradius": 1,
+          "points": true,
           "renderer": "flot",
-          "repeat": null,
+          "repeat": "bp_port",
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": false,
+              "selected": true,
               "text": "2/01",
               "value": "2/01"
+            },
+            "chassis": {
+              "selected": true,
+              "text": "chassis-1",
+              "value": "chassis-1"
             }
           },
           "seriesOverrides": [],
@@ -440,7 +1185,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
+              "alias": "$chassis $col <-- $tag_peer_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -470,6 +1215,8 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
+              "query": "SELECT difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"bp_port\" =~ /^$bp_port$/ and \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"peer_service_profile\" fill(null)",
+              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -543,6 +1290,7 @@
           },
           "yaxes": [
             {
+              "$$hashKey": "object:219",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -551,6 +1299,7 @@
               "show": true
             },
             {
+              "$$hashKey": "object:220",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -570,14 +1319,20 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
-          "description": "",
+          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {}
+            },
+            "overrides": []
+          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 2
+            "y": 14
           },
           "hiddenSeries": false,
           "id": 3,
@@ -585,11 +1340,13 @@
           "legend": {
             "alignAsTable": true,
             "avg": true,
-            "current": true,
-            "max": false,
+            "current": false,
+            "max": true,
             "min": false,
             "rightSide": true,
             "show": true,
+            "sort": "max",
+            "sortDesc": true,
             "total": false,
             "values": true
           },
@@ -597,20 +1354,23 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
           "percentage": false,
+          "pluginVersion": "7.1.1",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
-          "repeat": null,
+          "repeat": "bp_port",
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": false,
+              "selected": true,
               "text": "2/01",
               "value": "2/01"
+            },
+            "chassis": {
+              "selected": true,
+              "text": "chassis-1",
+              "value": "chassis-1"
             }
           },
           "seriesOverrides": [],
@@ -619,7 +1379,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
+              "alias": "$chassis $tag_service_profile $tag_vif_name $col",
               "groupBy": [
                 {
                   "params": [
@@ -655,6 +1415,8 @@
               "measurement": "VnicStats",
               "orderByTime": "ASC",
               "policy": "default",
+              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"peer_port\" =~ /^$bp_port$/ AND \"pinned_uplink\" =~ /^$uplink$/ and \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\", \"chassis\" fill(linear)",
+              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -714,7 +1476,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
+          "title": "RX Traffic to vIFs from backplane port $bp_port ",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -730,6 +1492,7 @@
           },
           "yaxes": [
             {
+              "$$hashKey": "object:257",
               "format": "bps",
               "label": null,
               "logBase": 1,
@@ -738,6 +1501,7 @@
               "show": true
             },
             {
+              "$$hashKey": "object:258",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -752,3601 +1516,69 @@
           }
         }
       ],
-      "repeat": "bp_port",
+      "repeat": "chassis",
       "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/01",
-          "value": "2/01"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 12
-      },
-      "id": 46,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 47,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/03",
-              "value": "2/03"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 48,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/03",
-              "value": "2/03"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/03",
-          "value": "2/03"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 13
-      },
-      "id": 49,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 50,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/05",
-              "value": "2/05"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 51,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/05",
-              "value": "2/05"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/05",
-          "value": "2/05"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 14
-      },
-      "id": 52,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 53,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/07",
-              "value": "2/07"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 54,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/07",
-              "value": "2/07"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/07",
-          "value": "2/07"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 15
-      },
-      "id": 55,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 56,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/09",
-              "value": "2/09"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 57,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/09",
-              "value": "2/09"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/09",
-          "value": "2/09"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 16
-      },
-      "id": 58,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 59,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/13",
-              "value": "2/13"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 60,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/13",
-              "value": "2/13"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/13",
-          "value": "2/13"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 17
-      },
-      "id": 61,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 62,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/17",
-              "value": "2/17"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 63,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/17",
-              "value": "2/17"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/17",
-          "value": "2/17"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 18
-      },
-      "id": 64,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 65,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/21",
-              "value": "2/21"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 66,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/21",
-              "value": "2/21"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/21",
-          "value": "2/21"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
-      "id": 67,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 68,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/25",
-              "value": "2/25"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 69,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/25",
-              "value": "2/25"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/25",
-          "value": "2/25"
-        }
-      },
-      "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$data_source",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 20
-      },
-      "id": 70,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "<span style=\"color:orange\">**Use Case**</span>: Find real cause of  ingress traffic congestion on a FI uplink port\n\n<span style=\"color:orange\">**How to use**</span>: Select a UCS domain, FI ID and an uplink port. Select All Backplane ports. Graphs on the left show PAUSE frame activity on IOM backplane ports. PAUSE frames may be exchanged under normal condition also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is probably fine. Pay attention to thousands or tens-of-thousands per second. Millions per second definitely need investigation.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity? For example, does one FI server port (between FI and IOM) stand out than rest of the other ports connected to the same chassis?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicates that high utilization is the cause of congestion.\n\n<span style=\"color:orange\">**Details**</span>: \n- A blade server sends PAUSE frames to IOM backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. ",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 71,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 2,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/29",
-              "value": "2/29"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "peer_service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on backplane port $bp_port",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hiddenSeries": false,
-          "id": 72,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "v",
-          "repeatIteration": 1586700162227,
-          "repeatPanelId": 3,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "2/29",
-              "value": "2/29"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_chassis $tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "pinned_uplink",
-                  "operator": "=~",
-                  "value": "/^$uplink$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic from backplane port $bp_port to vIFs",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1586700162227,
-      "repeatPanelId": 5,
-      "scopedVars": {
-        "bp_port": {
-          "selected": false,
-          "text": "2/29",
-          "value": "2/29"
+        "chassis": {
+          "selected": true,
+          "text": "chassis-1",
+          "value": "chassis-1"
         }
       },
       "title": "Backplane port $bp_port - PAUSE frames VS ingress traffic on vIF pinned to uplink $uplink on FI-$fi_id - size to side comparison",
       "type": "row"
     }
   ],
-  "schemaVersion": 22,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
-    "Cisco",
-    "UTM"
+    "cisco",
+    "UCS"
   ],
   "templating": {
     "list": [
       {
         "current": {
+          "selected": false,
+          "text": "telegraf",
+          "value": "telegraf"
+        },
+        "hide": 2,
+        "label": "Database",
+        "name": "db",
+        "options": [
+          {
+            "selected": true,
+            "text": "telegraf",
+            "value": "telegraf"
+          }
+        ],
+        "query": "telegraf",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "autogen",
+          "value": "autogen"
+        },
+        "hide": 2,
+        "label": "Retention Policy",
+        "name": "rp",
+        "options": [
+          {
+            "selected": true,
+            "text": "autogen",
+            "value": "autogen"
+          }
+        ],
+        "query": "autogen",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "selected": false,
           "text": "InfluxDB",
           "value": "InfluxDB"
         },
@@ -4365,18 +1597,19 @@
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "text": "172.22.163.59",
           "value": "172.22.163.59"
         },
         "datasource": "$data_source",
-        "definition": "show tag values from FIEnvStats with key=domain where $timeFilter",
+        "definition": "show tag values from \"$db\".\"$rp\".\"FIEnvStats\" with key=domain where $timeFilter",
         "hide": 0,
         "includeAll": false,
         "label": "UCS Domain",
         "multi": false,
         "name": "domain",
         "options": [],
-        "query": "show tag values from FIEnvStats with key=domain where $timeFilter",
+        "query": "show tag values from \"$db\".\"$rp\".\"FIEnvStats\" with key=domain where $timeFilter",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -4418,18 +1651,19 @@
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "text": "SAN-PC-1",
           "value": "SAN-PC-1"
         },
         "datasource": "$data_source",
-        "definition": "show tag values from VnicStats with key=pinned_uplink where domain =~ /$domain/ and fi_id =~ /$fi_id/ and  $timeFilter",
+        "definition": "show tag values from \"$db\".\"$rp\".\"VnicStats\" with key=pinned_uplink where domain =~ /$domain/ and fi_id =~ /$fi_id/ and  $timeFilter",
         "hide": 0,
         "includeAll": false,
         "label": "Uplink Port",
         "multi": false,
         "name": "uplink",
         "options": [],
-        "query": "show tag values from VnicStats with key=pinned_uplink where domain =~ /$domain/ and fi_id =~ /$fi_id/ and  $timeFilter",
+        "query": "show tag values from \"$db\".\"$rp\".\"VnicStats\" with key=pinned_uplink where domain =~ /$domain/ and fi_id =~ /$fi_id/ and  $timeFilter",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -4443,19 +1677,51 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "tags": [],
+          "text": "chassis-1",
+          "value": [
+            "chassis-1"
+          ]
         },
         "datasource": "$data_source",
-        "definition": "show tag values from VnicStats with key=peer_port where domain =~ /$domain/ and fi_id =~ /$fi_id/ and pinned_uplink =~ /$uplink/ and  $timeFilter",
+        "definition": "show tag values from \"$db\".\"$rp\".\"BackplanePortStats\" with key=chassis where domain =~ /$domain/ and  $timeFilter",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Chassis",
+        "multi": true,
+        "name": "chassis",
+        "options": [],
+        "query": "show tag values from \"$db\".\"$rp\".\"BackplanePortStats\" with key=chassis where domain =~ /$domain/ and  $timeFilter",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "tags": [],
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "$data_source",
+        "definition": "show tag values from \"$db\".\"$rp\".\"VnicStats\" with key=peer_port where domain =~ /$domain/ and fi_id =~ /$fi_id/ and pinned_uplink =~ /$uplink/ and chassis =~ /$chassis/ and  $timeFilter",
         "hide": 0,
         "includeAll": true,
         "label": "Backplane Port",
         "multi": true,
         "name": "bp_port",
         "options": [],
-        "query": "show tag values from VnicStats with key=peer_port where domain =~ /$domain/ and fi_id =~ /$fi_id/ and pinned_uplink =~ /$uplink/ and  $timeFilter",
+        "query": "show tag values from \"$db\".\"$rp\".\"VnicStats\" with key=peer_port where domain =~ /$domain/ and fi_id =~ /$fi_id/ and pinned_uplink =~ /$uplink/ and chassis =~ /$chassis/ and  $timeFilter",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -4493,7 +1759,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
       "10s",
       "30s",
       "1m",
@@ -4519,6 +1784,5 @@
   "timezone": "browser",
   "title": "FI Uplink port - Ingress congestion monitoring",
   "uid": "Sve32sDZk",
-  "tags": ["cisco", "UCS"],
-  "version": 3
+  "version": 2
 }
