@@ -1,9 +1,28 @@
 # UCS Traffic Monitoring (UTM)
 Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and Telegraf.
 
-![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/02/g1-scaled.jpg)
-![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/02/g2-scaled.jpg)
-![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/02/g3-scaled.jpg)![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/02/g5-scaled.jpg)![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/02/g6-scaled.jpg)![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/02/g4-scaled.jpg)
+Locations Dashboard
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-1.png)
+
+UCS Domains Overview
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-3.png)
+
+Top 10 ports, service profiles, etc.
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-2.png)
+
+Load Balance verification and root cause
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-4.png)
+
+Congestion Monitoring and detection 
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-9.png)
+
+End-to-end mapping from vHBA/vNIC to FI uplink Port
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-8.png)
+
+Integrated documentation with conceptual drawing and detailed explanations
+![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-10.png)
+
+and much more...
 
 - **Data source**: [Cisco UCS Manager (UCSM)](https://www.cisco.com/c/en/us/products/servers-unified-computing/ucs-manager/index.html), read-only account is enough
 - **Data receiver**: [Telegraf](https://github.com/influxdata/telegraf)
@@ -20,16 +39,15 @@ Two options:
 
 ### DIY Installation
 1. Install Telegraf
-2. Install InfluxDB
-3. Install Grafana. Install following plugins:
+1. Install InfluxDB
+1. Install Grafana. Install following plugins:
     1. Flowchart
-    2. Pie Chart
-    3. ePict panel
-    4. multistat
-4. Install apache webserver (Good to have, not mandatory)
-4. Install following Python modules
+    1. Pie Chart
+    1. ePict panel
+    1. multistat
+1. Install following Python modules
     1. Cisco UCSM Python SDK
-    2. netmiko library
+    1. netmiko library
     
 ### OVA installation
 [Download OVA from releases page](https://github.com/paregupt/ucs_traffic_monitor/releases).
@@ -37,9 +55,7 @@ This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you hav
 Please upgrade to the latest after deploying the OVA. 
 
 ## Upgrades
-Replace the existing ucs_traffic_monitor.py file with the later version. You can also upgrade the Grafana dashboards by copy-pasting or importing the JSON.
-
-You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Generally, the upgrade is simple with one or two commands. Please refer to respective packages for upgrade process. Please keep an qye on security vulnerabilities and fixes. Grafana, InfluxDB, etc. are prompt in fixing the CVEs. You may want to run the latest versions to have all the fixes. This may occasionally break a few use-cases. But few broken features are better than security holes.
+You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Generally, the upgrade is simple with one or two commands. Please refer to respective packages for upgrade process. Please keep an the on security vulnerabilities and fixes.
 
 ## Configuration
 
