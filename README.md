@@ -51,8 +51,7 @@ Two options:
     
 ### OVA installation
 [Download OVA from releases page](https://github.com/paregupt/ucs_traffic_monitor/releases).
-This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before.
-Please upgrade to the latest after deploying the OVA. 
+This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before. [Click here for detailed installation instructions of the UTM OVA](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/#Installing_UTM_using_OVA). 
 
 ## Upgrades
 You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Generally, the upgrade is simple with one or two commands. Please refer to respective packages for upgrade process. Please keep an the on security vulnerabilities and fixes.
