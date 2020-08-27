@@ -1,0 +1,324 @@
+---
+# file: utm.yml (ref: https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation)
+
+- hosts: utm
+  become: yes
+  become_user: root
+  tasks:
+
+
+  - name: Install required package - UTM
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - "@Development tools"
+      - python36
+      - python36-pip
+      - python-setuptools 
+
+  - name: Install ucsmsdk and netmiko package via pip
+    pip:
+      name: "{{ packages }}"
+      executable: pip3.6
+    vars:
+      packages:
+      - ucsmsdk
+      - netmiko
+
+  - name: Enable service chronyd
+    service:
+      name: chronyd
+      enabled: yes
+      state: started
+
+
+  - name: Add YUM repository grafana.repo
+    yum_repository:
+      name: grafana
+      description: https://grafana.com/docs/grafana/latest/installation/rpm/ 
+      baseurl: https://packages.grafana.com/enterprise/rpm
+      repo_gpgcheck: yes
+      gpgcheck: yes
+      gpgkey: https://packages.grafana.com/gpg.key
+      sslverify: yes
+      sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+  - name: Add grafana.repo gpg key
+    rpm_key:
+      state: present
+      key: https://packages.grafana.com/gpg.key
+
+  - name: Install grafana (grafana-enterprise)
+    yum:
+      name: grafana-enterprise
+      state: latest
+
+  - name: Enable service grafana-server
+    service:
+      name: grafana-server
+      enabled: yes
+      state: started
+
+
+  - name: Add YUM repository influxdb.repo (use for influxdb and telegraf)
+    yum_repository:
+      name: influxdb
+      description: https://docs.influxdata.com/influxdb/v1.8/introduction/install/ 
+      baseurl: https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable/
+      gpgcheck: yes
+      gpgkey: https://repos.influxdata.com/influxdb.key
+
+  - name: Install influxdb
+    yum:
+      name: influxdb
+      state: latest
+
+  - name: Enable service influxdb
+    service:
+      name: influxdb
+      enabled: yes
+      state: started
+
+
+  - name: Install telegraf
+    yum:
+      name: telegraf
+      state: latest
+
+  - name: Enable service telegraf
+    service:
+      name: telegraf
+      enabled: yes
+      state: started
+
+
+#  - name: Add InfluxDB datasource in grafana
+#    uri:
+#      url: http://localhost:3000/api/datasources/
+#      url_username: admin
+#      url_password: admin
+#      force_basic_auth: yes
+#      method: POST
+#      body_format: json
+#      body:
+#        name: InfluxDB
+#        type: influxdb
+#        access: proxy
+#        url: http://localhost:8086
+#        database: telegraf
+#      status_code: 200, 409
+#    register: result
+#
+#  - name: Response from /api/datasources/
+#    debug: msg="{{ result.json }}" 
+#
+
+  - name: Check if InfluxDB datasource exists in grafana
+    uri:
+      url_username: admin
+      url_password: admin
+      force_basic_auth: yes
+      url: http://localhost:3000/api/datasources/name/InfluxDB
+      body_format: json
+      status_code: 200, 404
+    register: grafana_ds
+
+  - name: Create influxdb datasource
+    grafana_datasource:
+      url_username: admin
+      url_password: admin
+      grafana_url: "http://localhost:3000"
+      name: "InfluxDB"
+      ds_type: "influxdb"
+      ds_url: "http://localhost:8086"
+      database: "telegraf"
+    when: grafana_ds.status == 404
+
+
+  - name: Create directory /usr/local/telegraf
+    file:
+      path: /usr/local/telegraf
+      state: directory
+      owner: telegraf
+      group: wheel
+      mode: '0775'
+
+  - name: Add default file to /usr/local/telegraf
+    copy:
+      src: "{{ item }}"
+      dest: /usr/local/telegraf
+      owner: telegraf
+      group: wheel
+    with_fileglob:
+      - ucs_traffic_monitor/telegraf/*
+
+  - name: Adjust execution permission on /usr/local/telegraf/ucs_domains_group_1.txt and ucs_domains_group_2.txt
+    file:
+      path: /usr/local/telegraf/{{ item }}
+      mode: '0660'
+    with_items:
+      - ucs_domains_group_1.txt
+      - ucs_domains_group_2.txt
+
+  - name: Adjust execution permission on /usr/local/telegraf/ucs_traffic_monitor.py
+    file:
+      path: /usr/local/telegraf/ucs_traffic_monitor.py
+      mode: '0770'
+
+
+  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - logfile
+    lineinfile:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^  # logfile = ""'
+      line: '  logfile = "/var/log/telegraf/telegraf.log"'
+
+  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - logfile_rotation_max_size
+    lineinfile:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^  # logfile_rotation_max_size = "0MB"'
+      line: '  logfile_rotation_max_size = "10MB"'
+
+  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - logfile_rotation_max_archives
+    lineinfile:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^  # logfile_rotation_max_archives = 5'
+      line: '  logfile_rotation_max_archives = 5'
+
+  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - [[inputs.net]]
+    lineinfile:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^# \[\[inputs.net\]\]'
+      line: '[[inputs.net]]'
+
+  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - ignore_protocol_stats
+    lineinfile:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^#   # ignore_protocol_stats = false'
+      line: '    ignore_protocol_stats = true'
+
+
+  - name: Add /etc/telegraf/telegraf.d/utm.conf
+    copy:
+      dest: /etc/telegraf/telegraf.d/utm.conf
+      content: |
+        [[inputs.exec]]
+           interval = "60s"
+           commands = [
+               "python3 /usr/local/telegraf/ucs_traffic_monitor.py /usr/local/telegraf/ucs_domains_group_1.txt influxdb-lp -vv",
+           ]
+           timeout = "50s"
+           data_format = "influx"
+
+        [[inputs.exec]]
+           interval = "60s"
+           commands = [
+               "python3 /usr/local/telegraf/ucs_traffic_monitor.py /usr/local/telegraf/ucs_domains_group_2.txt influxdb-lp -vv",
+           ]
+           timeout = "50s"
+           data_format = "influx"
+    register: telegraf_cfg
+
+  - name: Restart telegraf service (if /etc/telegraf/telegraf.d/utm.conf has changed)
+    service:
+      name: telegraf
+      state: restarted
+    when: telegraf_cfg.changed
+
+
+  - name: Stop httpd service (if required)
+    service:
+      name: httpd
+      state: stopped
+    when: not enable_httpd|bool
+    failed_when: false
+
+  - name: Uninstall httpd (if required)
+    yum:
+      name: httpd
+      state: absent
+    when: not enable_httpd|bool
+
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: latest
+    when: enable_httpd|bool
+
+  - name: Enable service httpd
+    service:
+      name: httpd
+      enabled: yes
+      state: started
+    when: enable_httpd|bool
+
+  - name: Add images files to /var/www/html
+    copy:
+      src: "{{ item }}"
+      dest: /var/www/html
+    with_fileglob:
+      - ucs_traffic_monitor/images/*
+    when: enable_httpd|bool
+
+
+  - name: Install/update Grafana piechart panel plugin
+    grafana_plugin:
+      name: "{{ item }}"
+    with_items:
+      - agenty-flowcharting-panel
+      - grafana-piechart-panel
+      - larona-epict-panel
+      - michaeldmoore-multistat-panel
+    register: grafana_plugin
+
+  - name: Update grafana base configuration /etc/grafana/grafana.ini - disable_sanitize_html
+    lineinfile:
+      path: /etc/grafana/grafana.ini
+      regexp: '^;disable_sanitize_html = false'
+      line: 'disable_sanitize_html = true'
+    register: grafana_cfg
+
+  - name: Restart grafana service (if plugins has been installed or configuration has changed)
+    service:
+      name: grafana-server
+      state: restarted
+    when: grafana_plugin.changed or grafana_cfg.changed
+
+
+  - name: Create directory /tmp/utm (remote)
+    file:
+      path: /tmp/utm
+      state: directory
+
+  - name: Location of grafana dashboards that will be use (local)...
+    debug: msg="{{ alternate_grafana_dashboard | default('ucs_traffic_monitor/grafana/dashboards') }}"
+
+  - name: Copy grafana dashboard file on remote
+    copy:
+      src: "{{ item }}"
+      dest: /tmp/utm
+    with_fileglob:
+      - "{{ alternate_grafana_dashboard | default('ucs_traffic_monitor/grafana/dashboards') }}/*"
+
+  - name: Get files list on remote
+    find:
+      paths: /tmp/utm
+    register: find_tmp_utm
+
+  - name: Import UTM Grafana dashboards
+    grafana_dashboard:
+      url_username: admin
+      url_password: admin
+      grafana_url: "http://localhost:3000"
+      path: "{{ item.path }}"
+      message: Imported by ansible
+      overwrite: yes
+    with_items: "{{ find_tmp_utm.files }}"
+
+  - name: Remove directory /tmp/utm (remote)
+    file:
+      path: /tmp/utm
+      state: absent
+
+
