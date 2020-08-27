@@ -4,6 +4,8 @@
 - hosts: utm
   become: yes
   become_user: root
+  collections:
+  - community.grafana
   tasks:
 
 
@@ -94,27 +96,6 @@
       state: started
 
 
-#  - name: Add InfluxDB datasource in grafana
-#    uri:
-#      url: http://localhost:3000/api/datasources/
-#      url_username: admin
-#      url_password: admin
-#      force_basic_auth: yes
-#      method: POST
-#      body_format: json
-#      body:
-#        name: InfluxDB
-#        type: influxdb
-#        access: proxy
-#        url: http://localhost:8086
-#        database: telegraf
-#      status_code: 200, 409
-#    register: result
-#
-#  - name: Response from /api/datasources/
-#    debug: msg="{{ result.json }}" 
-#
-
   - name: Check if InfluxDB datasource exists in grafana
     uri:
       url_username: admin
@@ -152,7 +133,7 @@
       owner: telegraf
       group: wheel
     with_fileglob:
-      - ucs_traffic_monitor/telegraf/*
+      - ../telegraf/*
 
   - name: Adjust execution permission on /usr/local/telegraf/ucs_domains_group_1.txt and ucs_domains_group_2.txt
     file:
@@ -227,39 +208,18 @@
     when: telegraf_cfg.changed
 
 
-  - name: Stop httpd service (if required)
-    service:
-      name: httpd
-      state: stopped
-    when: not enable_httpd|bool
-    failed_when: false
+  - name: Create directory /usr/share/grafana/public/img/utm
+    file:
+      path: /usr/share/grafana/public/img/utm
+      state: directory
+      mode: '0775'
 
-  - name: Uninstall httpd (if required)
-    yum:
-      name: httpd
-      state: absent
-    when: not enable_httpd|bool
-
-  - name: Install httpd
-    yum:
-      name: httpd
-      state: latest
-    when: enable_httpd|bool
-
-  - name: Enable service httpd
-    service:
-      name: httpd
-      enabled: yes
-      state: started
-    when: enable_httpd|bool
-
-  - name: Add images files to /var/www/html
+  - name: Add images files to /usr/share/grafana/public/img/utm
     copy:
       src: "{{ item }}"
-      dest: /var/www/html
+      dest: /usr/share/grafana/public/img/utm
     with_fileglob:
-      - ucs_traffic_monitor/images/*
-    when: enable_httpd|bool
+      - ../images/*
 
 
   - name: Install/update Grafana piechart panel plugin
@@ -272,18 +232,11 @@
       - michaeldmoore-multistat-panel
     register: grafana_plugin
 
-  - name: Update grafana base configuration /etc/grafana/grafana.ini - disable_sanitize_html
-    lineinfile:
-      path: /etc/grafana/grafana.ini
-      regexp: '^;disable_sanitize_html = false'
-      line: 'disable_sanitize_html = true'
-    register: grafana_cfg
-
   - name: Restart grafana service (if plugins has been installed or configuration has changed)
     service:
       name: grafana-server
       state: restarted
-    when: grafana_plugin.changed or grafana_cfg.changed
+    when: grafana_plugin.changed
 
 
   - name: Create directory /tmp/utm (remote)
@@ -291,15 +244,12 @@
       path: /tmp/utm
       state: directory
 
-  - name: Location of grafana dashboards that will be use (local)...
-    debug: msg="{{ alternate_grafana_dashboard | default('ucs_traffic_monitor/grafana/dashboards') }}"
-
   - name: Copy grafana dashboard file on remote
     copy:
       src: "{{ item }}"
       dest: /tmp/utm
     with_fileglob:
-      - "{{ alternate_grafana_dashboard | default('ucs_traffic_monitor/grafana/dashboards') }}/*"
+      - ../grafana/dashboards/*
 
   - name: Get files list on remote
     find:
@@ -312,7 +262,7 @@
       url_password: admin
       grafana_url: "http://localhost:3000"
       path: "{{ item.path }}"
-      message: Imported by ansible
+      commit_message: Imported by ansible
       overwrite: yes
     with_items: "{{ find_tmp_utm.files }}"
 

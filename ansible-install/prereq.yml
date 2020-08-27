@@ -55,20 +55,12 @@
     changed_when: false
     when: enable_linux_fw|bool
 
-  - name: Add http service (port 80) to firewalld - current zone {{ firewalld_zone.stdout }}
-    firewalld:
-      service: http
-      permanent: yes
-      immediate: yes
-      state: enabled
-    when: enable_linux_fw|bool and enable_httpd|bool
-
   - name: Add grafana (port 3000) to firewalld - current zone {{ firewalld_zone.stdout }}
     firewalld:
       port: 3000/tcp
       permanent: yes
       immediate: yes
       state: enabled
-    when: enable_linux_fw|bool and enable_httpd|bool
+    when: enable_linux_fw|bool
 
 
