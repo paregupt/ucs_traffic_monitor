@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.45"
+__version__ = "0.45.1"
 
 import sys
 import os
@@ -1513,7 +1513,7 @@ def parse_compute_inventory(domain_ip, blade, ru):
         chassis = (str)(dn_list[1])
         blade = (str)(dn_list[2])
 
-        service_profile = (((item.assigned_to_dn).split('/'))[-1]).strip('ls-')
+        service_profile = re.sub(r"^ls-(.*)", r"\1",(((item.assigned_to_dn).split('/'))[-1])) 
         if 'none' in item.association or len(service_profile) == 0:
             service_profile = 'Unknown'
         # Numbers might be handy in front-end representations/color coding
@@ -1557,7 +1557,7 @@ def parse_compute_inventory(domain_ip, blade, ru):
         logger.debug('In fill_per_ru for {}:{}'.format(domain_ip, item.dn))
         dn_list = (item.dn).split('/')
         ru = (str)(dn_list[-1])
-        service_profile = (((item.assigned_to_dn).split('/'))[-1]).strip('ls-')
+        service_profile = re.sub(r"^ls-(.*)", r"\1",(((item.assigned_to_dn).split('/'))[-1]))
         if 'none' in item.association or len(service_profile) == 0:
             service_profile = 'Unknown'
         # Numbers might be handy in front-end representations/color coding
