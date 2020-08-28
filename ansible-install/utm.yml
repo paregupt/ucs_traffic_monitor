@@ -64,7 +64,7 @@
       state: started
 
 
-  - name: Add YUM repository influxdb.repo (use for influxdb and telegraf)
+  - name: Add YUM repository influxdb.repo (will be use for influxdb and telegraf)
     yum_repository:
       name: influxdb
       description: https://docs.influxdata.com/influxdb/v1.8/introduction/install/ 
@@ -126,14 +126,22 @@
       group: wheel
       mode: '0775'
 
-  - name: Add default file to /usr/local/telegraf
+  - name: Add or update ucs_traffic_monitor.py in /usr/local/telegraf
+    copy:
+      src: ../telegraf/ucs_traffic_monitor.py
+      dest: /usr/local/telegraf
+      owner: telegraf
+      group: wheel
+
+  - name: Add default .txt files to /usr/local/telegraf (if not exists)
     copy:
       src: "{{ item }}"
       dest: /usr/local/telegraf
       owner: telegraf
       group: wheel
+      force: no
     with_fileglob:
-      - ../telegraf/*
+      - ../telegraf/*.txt
 
   - name: Adjust execution permission on /usr/local/telegraf/ucs_domains_group_1.txt and ucs_domains_group_2.txt
     file:
@@ -218,6 +226,7 @@
     copy:
       src: "{{ item }}"
       dest: /usr/share/grafana/public/img/utm
+      force: "{{ update_image }}"
     with_fileglob:
       - ../images/*
 
@@ -239,24 +248,28 @@
     when: grafana_plugin.changed
 
 
-  - name: Create directory /tmp/utm (remote)
+  - name: Create directory /tmp/utm
     file:
       path: /tmp/utm
       state: directory
+    when: import_grafana_dashboard|bool
 
-  - name: Copy grafana dashboard file on remote
+  - name: Copy grafana dashboard file to /tmp/utm
     copy:
       src: "{{ item }}"
       dest: /tmp/utm
+      mode: '0600'
     with_fileglob:
       - ../grafana/dashboards/*
+    when: import_grafana_dashboard|bool
 
-  - name: Get files list on remote
+  - name: Get files list on remote from /tmp/utm
     find:
       paths: /tmp/utm
     register: find_tmp_utm
+    when: import_grafana_dashboard|bool
 
-  - name: Import UTM Grafana dashboards
+  - name: Import UTM Grafana dashboards from /tmp/utm
     grafana_dashboard:
       url_username: admin
       url_password: admin
@@ -265,10 +278,12 @@
       commit_message: Imported by ansible
       overwrite: yes
     with_items: "{{ find_tmp_utm.files }}"
+    when: import_grafana_dashboard|bool
 
-  - name: Remove directory /tmp/utm (remote)
+  - name: Remove directory /tmp/utm
     file:
       path: /tmp/utm
       state: absent
+    when: import_grafana_dashboard|bool
 
 
