@@ -287,3 +287,47 @@
     when: import_grafana_dashboard|bool
 
 
+# Configure LDAP/AD if required
+
+  - name: Add ldap configuration to grafana
+    template:
+      src: ldap.toml.ldap_ad
+      dest: /etc/grafana/ldap.toml
+      mode: '0640'
+    register: ldap_ad_grafana
+    when: ldap_ad_enable is defined and ldap_ad_enable|bool
+
+  - name: Update grafana base configuration /etc/grafana/grafana.ini - auth.ldap - enabled
+    ini_file:
+      path: /etc/grafana/grafana.ini
+      section: auth.ldap
+      option: enabled
+      value: "true"
+    register: ldap_ad_grafana_enabled
+    when: ldap_ad_enable is defined and ldap_ad_enable|bool
+
+  - name: Update grafana base configuration /etc/grafana/grafana.ini - auth.ldap - config_file
+    ini_file:
+      path: /etc/grafana/grafana.ini
+      section: auth.ldap
+      option: config_file
+      value: /etc/grafana/ldap.toml
+    register: ldap_ad_grafana_config_file
+    when: ldap_ad_enable is defined and ldap_ad_enable|bool
+    
+  - name: Update grafana base configuration /etc/grafana/grafana.ini - auth.ldap - allow_sign_up
+    ini_file:
+      path: /etc/grafana/grafana.ini
+      section: auth.ldap
+      option: allow_sign_up
+      value: "true"
+    register: ldap_ad_grafana_allow_sign_up
+    when: ldap_ad_enable is defined and ldap_ad_enable|bool
+    
+  - name: Restart grafana service (if ldap configuration has changed)
+    service:
+      name: grafana-server
+      state: restarted
+    when: ldap_ad_grafana.changed or ldap_ad_grafana_enabled.changed or ldap_ad_grafana_config_file.changed or ldap_ad_grafana_allow_sign_up.changed
+
+

@@ -1,6 +1,7 @@
 [utm]
 vagrant ansible_ssh_host=127.0.0.1 ansible_ssh_port=2201 ansible_ssh_user='vagrant' ansible_ssh_private_key_file='.vagrant/machines/default/virtualbox/private_key'
 
+
 [all:vars]
 
 # System timezone
@@ -8,6 +9,17 @@ timezone="America/Toronto"
 
 # Enable Linux firewall
 enable_linux_fw=true
+
+# LDAP/AD configuration (see templates/ldap.toml.ldap_ad for more details)
+ldap_ad_enable=false
+ldap_ad_host=contoso.com
+ldap_ad_port=389
+ldap_ad_bind_dn=CN=MyUser,OU=Users,OU=Corp,DC=contoso,DC=com
+ldap_ad_bind_password=MyUserPassword
+ldap_ad_search_base_dns='"DC=contoso,DC=com"'
+ldap_ad_group_dn_Admin=CN=MyAdminGroup,OU=Groups,OU=Corp,DC=contoso,DC=com
+ldap_ad_group_dn_Editor=CN=MyAdminEditor,OU=Groups,OU=Corp,DC=contoso,DC=com
+ldap_ad_group_dn_Viewer=CN=MyAdminViewer,OU=Groups,OU=Corp,DC=contoso,DC=com
 
 # Update existing images
 update_image=false
