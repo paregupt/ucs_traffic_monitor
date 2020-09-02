@@ -1,0 +1,66 @@
+---
+# file: prereq.yml (ref: https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation)
+
+- hosts: utm
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Add user utm
+    user:
+      name: utm
+      comment: UTM
+      uid: 2000
+      groups: wheel
+
+  - name: Create a 2048-bit SSH key for user utm ~utm/.ssh/id_rsa
+    user:
+      name: utm
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+
+
+  - name: Set timezone to {{ timezone }}
+    timezone:
+      name: "{{ timezone }}"
+
+
+  - name: Install required package - BASE
+    yum:
+      name: "{{ packages }}"
+      state: latest
+    vars:
+      packages:
+      - epel-release
+      - chrony
+
+
+  - name: Install optionnal package - BASE
+    yum:
+      name: firewalld
+      state: latest
+    when: enable_linux_fw|bool
+
+  - name: Enable service chronyd
+    service:
+      name: firewalld
+      enabled: yes
+      state: started
+    when: enable_linux_fw|bool
+
+  - name: Get current firewalld zone
+    shell: firewall-cmd --get-active-zones | head -n 1
+    register: firewalld_zone
+    changed_when: false
+    when: enable_linux_fw|bool
+
+  - name: Add grafana (port 3000) to firewalld - current zone {{ firewalld_zone.stdout }}
+    firewalld:
+      port: 3000/tcp
+      permanent: yes
+      immediate: yes
+      state: enabled
+    when: enable_linux_fw|bool
+
+
