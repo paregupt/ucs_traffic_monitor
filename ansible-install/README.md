@@ -234,12 +234,12 @@ Using a Windows "Command Prompt"
 ```
 mkdir C:\TEMP\UTM
 cd /D C:\TEMP\UTM
-curl https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/Vagrantfile --output Vagrantfile
+curl https://raw.githubusercontent.com/paregupt/ucs_traffic_monitor/master/ansible-install/Vagrantfile --output Vagrantfile
 vagrant up
 vagrant port
 ```
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images/vagrant_up_on_windows.jpg)
+![](docs/vagrant_up_on_windows.jpg)
 
 <br>
 
@@ -254,7 +254,7 @@ It is possible to execute Windows program from WSL distribution.
 ```
 mkdir /mnt/c/temp/UTM
 cd /mnt/c/temp/UTM
-curl https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/Vagrantfile --output Vagrantfile
+curl https://raw.githubusercontent.com/paregupt/ucs_traffic_monitor/master/ansible-install/Vagrantfile --output Vagrantfile
 
 # Add vagrant to the Linux (WSL) path
 export PATH=/mnt/c/HashiCorp/Vagrant/bin:$PATH
@@ -266,7 +266,7 @@ vagrant up
 vagrant port
 ```
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//vagrant_up_on_wsl.jpg)
+![](docs/vagrant_up_on_wsl.jpg)
 
 <br>
 
@@ -278,7 +278,7 @@ It does not seam possible to use vagrant from the Linux fs under WSL. My underst
 
 So if you hit that issue...  That why we are using /mnt/c to run Vagrant.
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//vagrant_error_on_wsl_fs.jpg)
+![](docs/vagrant_error_on_wsl_fs.jpg)
 
 <br>
 
@@ -298,7 +298,7 @@ chmod 600 /tmp/private_key
 ssh vagrant@127.0.0.1 -p 2222 -i /tmp/private_key
 ```
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//workarround_private_key_error_windows_fs.jpg)
+![](docs/workarround_private_key_error_windows_fs.jpg)
 
 <br>
 
@@ -313,7 +313,7 @@ sudo apt-get install git
 mkdir /mnt/c/temp/UTM
 cd /mnt/c/temp/UTM
 
-git clone --single-branch --branch feature/ansible-install https://github.com/VilledeMontreal/ucs_traffic_monitor
+git clone https://github.com/paregupt/ucs_traffic_monitor
 cd /mnt/c/temp/UTM/ucs_traffic_monitor/ansible-install
 
 # Add vagrant to the Linux (WSL) path
@@ -349,17 +349,17 @@ ansible-playbook -i inventory utm.yml
 
 <br>
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//ansible-1.jpg)
+![](docs/ansible-1.jpg)
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//ansible-2.jpg)
+![](docs/ansible-2.jpg)
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//ansible-3.jpg)
+![](docs/ansible-3.jpg)
 
 <br>
 
 You should be able to connect to grafana at http://localhost:3000 (User :admin, Password : admin) :
 
-![](https://raw.githubusercontent.com/VilledeMontreal/ucs_traffic_monitor/feature/ansible-install/ansible-install/images//final.jpg)
+![](docs/final.jpg)
 
 <br>
 
