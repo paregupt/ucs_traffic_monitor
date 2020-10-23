@@ -254,6 +254,10 @@ def get_ucs_domains():
                     continue
 
                 domain = line.split(',')
+                if len(domain) < 3:
+                    logger.warning('Line not in correct input format:'
+                                    'IP_Address,username,password')
+                    continue
                 domain_dict[domain[0]] = [domain[1], domain[2]]
                 logger.info('Added {} to domain dict'.format(domain[0]))
                 stats_dict[domain[0]] = {}
