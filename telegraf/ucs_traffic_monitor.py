@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.46"
+__version__ = "0.47"
 
 import sys
 import os
