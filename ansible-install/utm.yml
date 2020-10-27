@@ -124,7 +124,7 @@
       state: directory
       owner: telegraf
       group: wheel
-      mode: '0775'
+      mode: '0770'
 
   - name: Add or update ucs_traffic_monitor.py in /usr/local/telegraf
     copy:
@@ -132,6 +132,7 @@
       dest: /usr/local/telegraf
       owner: telegraf
       group: wheel
+      mode: '0770'
 
   - name: Add default .txt files to /usr/local/telegraf (if not exists)
     copy:
@@ -140,6 +141,7 @@
       owner: telegraf
       group: wheel
       force: no
+      mode: '0660'
     with_fileglob:
       - ../telegraf/*.txt
 
@@ -207,6 +209,7 @@
            ]
            timeout = "50s"
            data_format = "influx"
+      mode: '0644'
     register: telegraf_cfg
 
   - name: Restart telegraf service (if /etc/telegraf/telegraf.d/utm.conf has changed)
@@ -227,6 +230,7 @@
       src: "{{ item }}"
       dest: /usr/share/grafana/public/img/utm
       force: "{{ update_image }}"
+      mode: '0644'
     with_fileglob:
       - ../images/*
 
