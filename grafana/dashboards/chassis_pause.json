@@ -703,7 +703,7 @@
       },
       "id": 130,
       "options": {
-        "content": "\n<h2 style=\"text-align: center;\"><span style=\"color: #0085FC;\"><strong>Deatiled Congestion Monitoring - <span style=\"color: #ff00ff;\">$domain</span></strong></h2>",
+        "content": "\n<h2 style=\"text-align: center;\"><span style=\"color: #0085FC;\"><strong>Detail Congestion Monitoring - <span style=\"color: #ff00ff;\">$domain</span></strong></h2>",
         "mode": "html"
       },
       "pluginVersion": "7.1.0",
