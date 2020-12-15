@@ -21,7 +21,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "![Cisco UCS Architecture](/public/img/utm/ucs_architecture.png)",
       "fieldConfig": {
         "defaults": {
@@ -85,7 +85,7 @@
       "type": "text"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -531,7 +531,7 @@
       "version": "0.9.0"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "",
       "fieldConfig": {
         "defaults": {
