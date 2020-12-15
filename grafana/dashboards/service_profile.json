@@ -21,7 +21,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -84,7 +84,7 @@
       "type": "text"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -530,7 +530,7 @@
       "version": "0.9.0"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Traffic monitoring of a server and related entities like vNIC/vHBA, backplane ports, etc.\n -  Search a *Service Profile* from the drop-down menu at the top of the page.\n -  Use the *UCS Domain* drop down menu to limit the scope to a specific UCS domain or select *All* to search from all the available service profiles.",
       "fieldConfig": {
         "defaults": {
@@ -608,7 +608,7 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Displayed color (Green or Orange) based on the operational state of the service profile",
       "fieldConfig": {
         "defaults": {
