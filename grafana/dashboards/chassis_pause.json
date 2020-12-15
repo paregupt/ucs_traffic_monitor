@@ -21,7 +21,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -84,7 +84,7 @@
       "type": "text"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -530,7 +530,7 @@
       "version": "0.9.0"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -687,7 +687,7 @@
       "version": "0.9.0"
     },
     {
-      "datasource": null,
+      "datasource": "$data_source",
       "description": "Find Congestion on any link within a UCS Domain",
       "fieldConfig": {
         "defaults": {
@@ -2536,7 +2536,7 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "$data_source",
       "gridPos": {
         "h": 1,
         "w": 24,
