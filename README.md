@@ -1,6 +1,8 @@
 # UCS Traffic Monitoring (UTM)
 Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and Telegraf.
 
+[Click here to check out Cisco MDS Traffic Monitoring (MTM)](https://github.com/paregupt/mds_traffic_monitor)
+
 Locations Dashboard
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-1.png)
 
