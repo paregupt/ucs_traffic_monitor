@@ -1,8 +1,6 @@
 # UCS Traffic Monitoring (UTM)
 Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and Telegraf.
 
-[Click here to check out Cisco MDS Traffic Monitoring (MTM)](https://github.com/paregupt/mds_traffic_monitor)
-
 Locations Dashboard
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-1.png)
 
@@ -96,6 +94,9 @@ This should be able to
 Import the [dashboards](https://github.com/paregupt/ucs_traffic_monitor/tree/master/grafana/dashboards) into Grafana. You should have it running.
 
 For detailed steps-by-step instructions, especially if you do not have prior experience with Grafana, InfluxDB and Telegraf, check out: [Cisco UCS monitoring using Grafana, InfluxDB, Telegraf – UTM Installation](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/)
+
+## Looking for something similar to monitor Cisco MDS Switches?
+[Click here to check out Cisco MDS Traffic Monitoring (MTM)](https://github.com/paregupt/mds_traffic_monitor)
 
 ## Credits
 - My wife (Dimple) and kids (Manan and Kiara) while I took away precious weekend hours from you and invested in the development of UTM.
