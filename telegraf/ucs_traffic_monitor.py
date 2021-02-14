@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.47"
+__version__ = "0.50"
 
 import sys
 import os
@@ -2770,10 +2770,16 @@ def print_output_in_influxdb_lp():
                                             per_blade_dict['service_profile']
                             else:
                                 ru_dict = d_dict['ru']
-                                per_ru_dict = \
-                                    ru_dict[per_bp_port_dict['peer']]
-                                bp_tags = bp_tags + ',peer_service_profile=' + \
+                                ru_server = per_bp_port_dict['peer']
+                                if ru_server in per_ru_dict:
+                                    per_ru_dict = ru_dict[ru_server]
+                                    bp_tags = bp_tags + \
+                                            ',peer_service_profile=' + \
                                             per_ru_dict['service_profile']
+                                else:
+                                    logger.info('Know peer_type for {} but' \
+                                    ' cannot find it in per_ru_dict' \
+                                    .format(per_bp_port_dict['peer']))
                     bp_tags, bp_fields = \
                                 influxdb_lp_bp_ports(per_bp_port_dict, \
                                                      bp_tags, bp_fields)
