@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.50"
+__version__ = "0.51"
 
 import sys
 import os
@@ -73,6 +73,7 @@ raw_sdk_stats = {}
 class_ids = ['TopSystem',
              'NetworkElement',
              'SwSystemStats',
+             'MgmtEntity',
              'FirmwareRunning',
              'FcPIo',
              'FabricFcSanPc',
@@ -1172,7 +1173,7 @@ def get_fi_port_dict(d_dict, dn, transport):
 
     return port_dict
 
-def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw):
+def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw, mgmt_t):
     """
     Use the output of query_classid from UCS to update global stats_dict
 
@@ -1182,6 +1183,7 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw):
     net_elem (managedobjectlist of classid = NetworkElement)
     system_stats (managedobjectlist of classid = SwSystemStats)
     fw (managedobjectlist of classid = FirmwareRunning)
+    mgmt_t (managedobjectlist of classid = MgmtEntity)
 
     Returns:
     None
@@ -1234,6 +1236,16 @@ def parse_fi_env_stats(domain_ip, top_sys, net_elem, system_stats, fw):
         if 'sys/switch-B/mgmt/fw-system' in item.dn:
             logger.debug('In fw for {}:{}'.format(domain_ip, item.dn))
             d_dict['B']['fi_fw_sys_ver'] = item.version
+
+    for item in mgmt_t:
+        logger.debug('In mgmt_t for {}:{}'.format(domain_ip, item.dn))
+        fi_id = get_fi_id_from_dn(item.dn)
+        if fi_id is None:
+            logger.error('Unknow FI ID from {}\n{}'.format(domain_ip, item))
+            continue
+        fi_dict = d_dict[fi_id]
+        fi_dict['leadership'] = item.leadership
+        fi_dict['ha_ready'] = item.ha_ready
 
     logger.info('Done: Parse env_stats for {}'.format(domain_ip))
 
@@ -1966,7 +1978,8 @@ def parse_raw_sdk_stats():
                                obj['TopSystem'],
                                obj['NetworkElement'],
                                obj['SwSystemStats'],
-                               obj['FirmwareRunning'])
+                               obj['FirmwareRunning'],
+                               obj['MgmtEntity'])
         except Exception as e:
             s = ''
             for item in obj['TopSystem']:
@@ -1976,6 +1989,8 @@ def parse_raw_sdk_stats():
             for item in obj['SwSystemStats']:
                 s = s + (str)(item)
             for item in obj['FirmwareRunning']:
+                s = s + (str)(item)
+            for item in obj['MgmtEntity']:
                 s = s + (str)(item)
             logger.exception('parse_fi_env_stats:{}\n{}'.format(e, s))
 
@@ -2501,6 +2516,8 @@ def print_output_in_influxdb_lp():
                     ',mode="' + mode + '"' + ',name="' + name + '"' + \
                     ',ucsm_fw_ver="' + d_dict['ucsm_fw_ver'] + '"' + \
                     ',fi_fw_sys_ver="' + fi_dict['fi_fw_sys_ver'] + '"' + \
+                    ',ha_ready="' + fi_dict['ha_ready'] + '"' + \
+                    ',leadership="' + fi_dict['leadership'] + '"' + \
                     ',sys_uptime=' + (str)(uptime)
             fi_env_fields = fi_env_fields + '\n'
             final_print_string = final_print_string + fi_env_prefix + \
