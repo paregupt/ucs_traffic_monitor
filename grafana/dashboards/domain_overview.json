@@ -1,4 +1,84 @@
 {
+  "__inputs": [
+    {
+      "name": "VAR_DB",
+      "type": "constant",
+      "label": "Database",
+      "value": "telegraf",
+      "description": ""
+    },
+    {
+      "name": "VAR_RP",
+      "type": "constant",
+      "label": "Retention Policy",
+      "value": "autogen",
+      "description": ""
+    },
+    {
+      "name": "VAR_POLLING_INTERVAL",
+      "type": "constant",
+      "label": "polling_interval",
+      "value": "60",
+      "description": ""
+    },
+    {
+      "name": "VAR_5M_IN_MS",
+      "type": "constant",
+      "label": "5m_in_ms",
+      "value": "300000",
+      "description": ""
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "agenty-flowcharting-panel",
+      "name": "FlowCharting",
+      "version": "0.9.0"
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.5.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -16,21 +96,19 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1596086178756,
+  "id": null,
+  "iteration": 1622414012611,
   "links": [],
   "panels": [
     {
       "datasource": "$data_source",
       "description": "![Cisco UCS Architecture](/public/img/utm/ucs_architecture.png)",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 24,
         "x": 0,
         "y": 0
@@ -40,7 +118,7 @@
         "content": "<table style=\"margin: 0px; padding: 0px; border: 1px; border-collapse: collapse;\" width=\"100%\">\n<tbody>\n<tr style=\"margin: 0px; padding: 0px;\">\n<td style=\"width: 15%; margin: 0px; padding: 0px; border: none;\" valign=\"middle\"><img id='cisco_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='/public/img/utm/cisco_logo.png' width=\"120\" />\n</td>\n<td style=\"width: 70%; margin: 0px; padding: 0px; border: none;\">\n<h2 style=\"text-align: center; margin: 2px;\"><span style=\"color: #0085FC;\"><strong>UTM - UCS Traffic Monitoring</strong></span></h2>\n</td>\n<td style=\"width: 15%; margin: 0px; border: none;\" valign=\"middle\"><img id='your_logo' style=\"display: block; margin-left: auto; margin-right: auto;\" src='/public/img/utm/your_logo.png' alt=\"\" width=\"120\"/>\n</td>\n</tr>\n</tbody>\n</table>",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -80,16 +158,13 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "text"
     },
     {
       "datasource": "$data_source",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "flowchartsData": {
@@ -116,14 +191,14 @@
         ]
       },
       "format": "short",
-      "graphId": "flowchart_296",
+      "graphId": "flowchart_96",
       "gridPos": {
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 2
+        "y": 3
       },
-      "id": 296,
+      "id": 96,
       "newFlag": false,
       "pluginVersion": "7.1.0",
       "rulesData": {
@@ -148,7 +223,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/ri2OFp4Wz/locations",
+                "linkUrl": "/d/ri2OFp4Wz/locations?from=${__from}&to=${__to}",
                 "pattern": "locations"
               }
             ],
@@ -206,7 +281,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/Inte2EIWk/ucs-domain-overview",
+                "linkUrl": "/d/Inte2EIWk/ucs-domain-overview?from=${__from}&to=${__to}&var-domain=${domain}",
                 "pattern": "domain_overview"
               }
             ],
@@ -264,7 +339,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/W7LSukHWz/ucs-domain-traffic",
+                "linkUrl": "/d/W7LSukHWz/ucs-domain-traffic?from=${__from}&to=${__to}&var-domain=${domain}",
                 "pattern": "domain_traffic"
               }
             ],
@@ -322,7 +397,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/KOM8ZHNWz/ucs-chassis-traffic",
+                "linkUrl": "/d/KOM8ZHNWz/ucs-chassis-traffic?from=${__from}&to=${__to}&var-domain=${domain}",
                 "pattern": "chassis"
               }
             ],
@@ -380,7 +455,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/Z0M_N1vWz/service-profile-stats",
+                "linkUrl": "/d/Z0M_N1vWz/service-profile-stats?from=${__from}&to=${__to}&var-domain=${domain}",
                 "pattern": "servers"
               }
             ],
@@ -438,7 +513,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/Sve32sDZk/fi-uplink-port-ingress-congestion-monitoring",
+                "linkUrl": "/d/Sve32sDZk/fi-uplink-port-ingress-congestion-monitoring?from=${__from}&to=${__to}&var-domain=${domain}",
                 "pattern": "ingress_congestion"
               }
             ],
@@ -524,7 +599,6 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "agenty-flowcharting-panel",
       "valueName": "current",
@@ -534,23 +608,21 @@
       "datasource": "$data_source",
       "description": "",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "gridPos": {
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 5,
       "options": {
         "content": "\n<h2 style=\"text-align: center;\"><span style=\"color: #0085FC;\"><strong>UCS Domain Overview - </span><span style=\"color: #ff00ff;\"> $domain</span></strong></h2>\n",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -590,7 +662,6 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "text"
     },
@@ -599,7 +670,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -609,7 +679,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -634,7 +703,7 @@
         "h": 2,
         "w": 6,
         "x": 0,
-        "y": 6
+        "y": 7
       },
       "id": 73,
       "interval": "[[polling_interval]]s",
@@ -652,9 +721,10 @@
           "fields": "/^last$/",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [],
@@ -698,10 +768,8 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 4,
           "mappings": [],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -722,7 +790,7 @@
         "h": 2,
         "w": 6,
         "x": 6,
-        "y": 6
+        "y": 7
       },
       "id": 80,
       "interval": "[[polling_interval]]s",
@@ -745,9 +813,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -794,7 +863,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -805,7 +873,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -847,7 +914,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 6
+        "y": 7
       },
       "id": 7,
       "interval": "[[polling_interval]]s",
@@ -870,9 +937,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -1013,9 +1081,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1024,7 +1090,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 6
+        "y": 7
       },
       "hiddenSeries": false,
       "id": 106,
@@ -1045,8 +1111,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1178,7 +1247,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:684",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -1188,7 +1256,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:685",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1211,9 +1278,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -1222,7 +1287,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 6
+        "y": 7
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1243,8 +1308,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1390,7 +1458,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:592",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -1400,7 +1467,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:593",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1419,7 +1485,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -1429,7 +1494,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1451,7 +1515,7 @@
         "h": 2,
         "w": 3,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "id": 105,
       "interval": "[[polling_interval]]s",
@@ -1474,9 +1538,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -1527,7 +1592,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -1537,7 +1601,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1562,7 +1625,7 @@
         "h": 2,
         "w": 3,
         "x": 3,
-        "y": 8
+        "y": 9
       },
       "id": 3,
       "interval": "[[polling_interval]]s",
@@ -1585,9 +1648,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -1644,9 +1708,7 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1671,7 +1733,7 @@
         "h": 2,
         "w": 4,
         "x": 6,
-        "y": 8
+        "y": 9
       },
       "id": 107,
       "interval": "[[polling_interval]]s",
@@ -1694,9 +1756,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -1793,7 +1856,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -1803,7 +1865,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1828,7 +1889,7 @@
         "h": 2,
         "w": 2,
         "x": 10,
-        "y": 8
+        "y": 9
       },
       "id": 40,
       "interval": "[[polling_interval]]s",
@@ -1851,9 +1912,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -1916,9 +1978,7 @@
       "datasource": "$data_source",
       "description": "",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "flowchartsData": {
@@ -1950,7 +2010,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 11
       },
       "id": 292,
       "links": [],
@@ -2057,7 +2117,6 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "agenty-flowcharting-panel",
       "valueName": "current",
@@ -2067,9 +2126,7 @@
       "datasource": "$data_source",
       "description": "",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "flowchartsData": {
@@ -2101,7 +2158,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 11
       },
       "id": 293,
       "links": [],
@@ -2208,7 +2265,6 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "agenty-flowcharting-panel",
       "valueName": "current",
@@ -2219,7 +2275,8 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null
+            "align": null,
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -2267,7 +2324,7 @@
         "h": 6,
         "w": 4,
         "x": 0,
-        "y": 12
+        "y": 13
       },
       "id": 103,
       "interval": "[[polling_interval]]s",
@@ -2275,7 +2332,7 @@
       "options": {
         "showHeader": true
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -2398,7 +2455,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": [],
           "mappings": [],
           "thresholds": {
@@ -2421,7 +2477,7 @@
         "h": 6,
         "w": 3,
         "x": 4,
-        "y": 12
+        "y": 13
       },
       "id": 83,
       "interval": "[[polling_interval]]s",
@@ -2438,9 +2494,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -2510,7 +2567,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -2520,7 +2576,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2549,7 +2604,7 @@
         "h": 6,
         "w": 2,
         "x": 7,
-        "y": 12
+        "y": 13
       },
       "id": 108,
       "interval": "[[polling_interval]]s",
@@ -2572,9 +2627,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -2676,11 +2732,9 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [],
           "max": 100,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2706,7 +2760,7 @@
         "h": 6,
         "w": 3,
         "x": 9,
-        "y": 12
+        "y": 13
       },
       "id": 85,
       "interval": "[[polling_interval]]s",
@@ -2727,9 +2781,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -2798,7 +2853,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -2810,7 +2864,6 @@
           ],
           "max": 100,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2836,7 +2889,7 @@
         "h": 6,
         "w": 3,
         "x": 12,
-        "y": 12
+        "y": 13
       },
       "id": 86,
       "interval": "[[polling_interval]]s",
@@ -2857,9 +2910,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -2928,7 +2982,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -2938,7 +2991,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2963,7 +3015,7 @@
         "h": 6,
         "w": 2,
         "x": 15,
-        "y": 12
+        "y": 13
       },
       "id": 88,
       "interval": "[[polling_interval]]s",
@@ -2986,9 +3038,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -3090,7 +3143,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": [],
           "mappings": [],
           "thresholds": {
@@ -3113,7 +3165,7 @@
         "h": 6,
         "w": 3,
         "x": 17,
-        "y": 12
+        "y": 13
       },
       "id": 102,
       "interval": "[[polling_interval]]s",
@@ -3130,9 +3182,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "FI-$tag_fi_id $col",
@@ -3202,7 +3255,8 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null
+            "align": null,
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -3262,7 +3316,7 @@
         "h": 6,
         "w": 4,
         "x": 20,
-        "y": 12
+        "y": 13
       },
       "id": 109,
       "interval": "[[polling_interval]]s",
@@ -3271,7 +3325,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "$col",
@@ -3394,7 +3448,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -3404,7 +3457,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -3425,7 +3477,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 19
       },
       "id": 307,
       "interval": "[[polling_interval]]s",
@@ -3448,9 +3500,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -3513,7 +3566,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -3523,7 +3575,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -3544,7 +3595,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 19
       },
       "id": 310,
       "interval": "[[polling_interval]]s",
@@ -3567,9 +3618,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -3639,9 +3691,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -3650,7 +3700,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 20
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 297,
@@ -3671,8 +3721,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3961,7 +4014,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:217",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -3971,7 +4023,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:218",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -3997,9 +4048,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -4008,7 +4057,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 20
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 32,
@@ -4029,8 +4078,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4162,7 +4214,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:301",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -4172,7 +4223,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:302",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -4199,9 +4249,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -4210,7 +4258,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 20
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 298,
@@ -4231,8 +4279,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4521,7 +4572,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:217",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -4531,7 +4581,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:218",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -4557,9 +4606,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -4568,7 +4615,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 20
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 299,
@@ -4589,8 +4636,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4722,7 +4772,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:301",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -4732,7 +4781,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:302",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -4759,9 +4807,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -4770,7 +4816,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 25
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 34,
@@ -4791,8 +4837,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -5026,7 +5075,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:888",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -5036,7 +5084,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:889",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -5061,9 +5108,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -5072,7 +5117,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 25
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 35,
@@ -5093,8 +5138,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -5328,7 +5376,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1028",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -5338,7 +5385,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1029",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -5365,9 +5411,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -5376,7 +5420,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 25
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 300,
@@ -5397,8 +5441,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -5632,7 +5679,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:888",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -5642,7 +5688,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:889",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -5667,9 +5712,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -5678,7 +5721,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 25
+        "y": 26
       },
       "hiddenSeries": false,
       "id": 301,
@@ -5699,8 +5742,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -5934,7 +5980,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1028",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -5944,7 +5989,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1029",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -5963,7 +6007,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -5973,7 +6016,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -5994,7 +6036,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 31
       },
       "id": 309,
       "interval": "[[polling_interval]]s",
@@ -6017,9 +6059,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -6082,7 +6125,6 @@
       "datasource": "$data_source",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
               "id": 0,
@@ -6092,7 +6134,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -6113,7 +6154,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 31
       },
       "id": 311,
       "interval": "[[polling_interval]]s",
@@ -6136,9 +6177,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -6208,9 +6250,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -6219,7 +6259,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 32
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 302,
@@ -6240,8 +6280,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -6530,7 +6573,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:217",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -6540,7 +6582,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:218",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -6567,9 +6608,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -6578,7 +6617,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 32
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 304,
@@ -6599,8 +6638,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -6834,7 +6876,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:888",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -6844,7 +6885,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:889",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -6870,9 +6910,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -6881,7 +6919,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 32
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 303,
@@ -6902,8 +6940,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -7192,7 +7233,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:217",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -7202,7 +7242,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:218",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -7229,9 +7268,7 @@
       "datasource": "$data_source",
       "decimals": 0,
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "fill": 1,
@@ -7240,7 +7277,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 32
+        "y": 33
       },
       "hiddenSeries": false,
       "id": 305,
@@ -7261,8 +7298,11 @@
       "links": [],
       "maxDataPoints": 3,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -7496,7 +7536,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:888",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -7506,7 +7545,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:889",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -7525,7 +7563,8 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": "center"
+            "align": "center",
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -7647,7 +7686,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 38
       },
       "id": 38,
       "interval": "[[polling_interval]]s",
@@ -7661,7 +7700,7 @@
           }
         ]
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -7726,27 +7765,23 @@
       "type": "table"
     },
     {
-      "content": "",
       "datasource": "$data_source",
       "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
+        "defaults": {},
         "overrides": []
       },
       "gridPos": {
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 49
       },
       "id": 101,
-      "mode": "markdown",
       "options": {
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [
@@ -7786,13 +7821,12 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "transparent": true,
       "type": "text"
     }
   ],
   "refresh": false,
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "cisco",
@@ -7801,44 +7835,48 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "telegraf",
-          "value": "telegraf"
-        },
+        "description": null,
+        "error": null,
         "hide": 2,
         "label": "Database",
         "name": "db",
+        "query": "${VAR_DB}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_DB}",
+          "text": "${VAR_DB}",
+          "selected": false
+        },
         "options": [
           {
-            "selected": true,
-            "text": "telegraf",
-            "value": "telegraf"
+            "value": "${VAR_DB}",
+            "text": "${VAR_DB}",
+            "selected": false
           }
-        ],
-        "query": "telegraf",
-        "skipUrlSync": false,
-        "type": "constant"
+        ]
       },
       {
-        "current": {
-          "selected": false,
-          "text": "autogen",
-          "value": "autogen"
-        },
+        "description": null,
+        "error": null,
         "hide": 2,
         "label": "Retention Policy",
         "name": "rp",
+        "query": "${VAR_RP}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_RP}",
+          "text": "${VAR_RP}",
+          "selected": false
+        },
         "options": [
           {
-            "selected": true,
-            "text": "autogen",
-            "value": "autogen"
+            "value": "${VAR_RP}",
+            "text": "${VAR_RP}",
+            "selected": false
           }
-        ],
-        "query": "autogen",
-        "skipUrlSync": false,
-        "type": "constant"
+        ]
       },
       {
         "current": {
@@ -7846,6 +7884,8 @@
           "text": "InfluxDB",
           "value": "InfluxDB"
         },
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Data Source",
@@ -7859,33 +7899,34 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "text": "60",
-          "value": "60"
-        },
+        "description": null,
+        "error": null,
         "hide": 2,
         "label": null,
         "name": "polling_interval",
+        "query": "${VAR_POLLING_INTERVAL}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_POLLING_INTERVAL}",
+          "text": "${VAR_POLLING_INTERVAL}",
+          "selected": false
+        },
         "options": [
           {
-            "selected": true,
-            "text": "60",
-            "value": "60"
+            "value": "${VAR_POLLING_INTERVAL}",
+            "text": "${VAR_POLLING_INTERVAL}",
+            "selected": false
           }
-        ],
-        "query": "60",
-        "skipUrlSync": false,
-        "type": "constant"
+        ]
       },
       {
         "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "172.22.163.59",
-          "value": "172.22.163.59"
-        },
+        "current": {},
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"FIEnvStats\" with key=domain where $timeFilter",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "UCS Domain",
@@ -7904,30 +7945,32 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "300000",
-          "value": "300000"
-        },
+        "description": null,
+        "error": null,
         "hide": 2,
         "label": null,
         "name": "5m_in_ms",
+        "query": "${VAR_5M_IN_MS}",
+        "skipUrlSync": false,
+        "type": "constant",
+        "current": {
+          "value": "${VAR_5M_IN_MS}",
+          "text": "${VAR_5M_IN_MS}",
+          "selected": false
+        },
         "options": [
           {
-            "selected": true,
-            "text": "300000",
-            "value": "300000"
+            "value": "${VAR_5M_IN_MS}",
+            "text": "${VAR_5M_IN_MS}",
+            "selected": false
           }
-        ],
-        "query": "300000",
-        "skipUrlSync": false,
-        "type": "constant"
+        ]
       }
     ]
   },
   "time": {
-    "from": "now-6h",
-    "to": "now"
+    "from": "2021-05-10T13:57:22.500Z",
+    "to": "2021-05-10T15:16:07.500Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -7956,5 +7999,5 @@
   "timezone": "browser",
   "title": "UCS Domain - Overview",
   "uid": "Inte2EIWk",
-  "version": 3
+  "version": 8
 }
