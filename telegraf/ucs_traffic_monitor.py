@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 __author__ = "Paresh Gupta"
-__version__ = "0.51"
+__version__ = "0.52"
 
 import sys
 import os
@@ -2518,7 +2518,8 @@ def print_output_in_influxdb_lp():
                     ',fi_fw_sys_ver="' + fi_dict['fi_fw_sys_ver'] + '"' + \
                     ',ha_ready="' + fi_dict['ha_ready'] + '"' + \
                     ',leadership="' + fi_dict['leadership'] + '"' + \
-                    ',sys_uptime=' + (str)(uptime)
+                    ',sys_uptime=' + (str)(uptime) + \
+                    ',utm_collector_ver="' + __version__ + '"'
             fi_env_fields = fi_env_fields + '\n'
             final_print_string = final_print_string + fi_env_prefix + \
                                         fi_env_tags + fi_env_fields
@@ -2685,7 +2686,8 @@ def print_output_in_influxdb_lp():
                     bp_fields = ' '
                     bp_tags = bp_tags + 'bp_port=' + iom_slot_id + '/' + \
                         bp_port_id + ',chassis=' + chassis_id + \
-                        ',fi_id=' + per_bp_port_dict['fi_id']
+                        ',fi_id=' + per_bp_port_dict['fi_id'] + \
+                        ',location=' + location
                     if 'peer_type' in per_bp_port_dict:
                         if per_bp_port_dict['peer_type'] != 'unknown':
                             bp_tags = bp_tags + ',peer_type=' + \
