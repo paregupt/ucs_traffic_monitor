@@ -97,7 +97,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1622414012611,
+  "iteration": 1622415228343,
   "links": [],
   "panels": [
     {
@@ -1999,7 +1999,7 @@
             "tooltip": true,
             "type": "xml",
             "url": "http://<YourUrl>/<Your XML/drawio file/api>",
-            "xml": "<mxGraphModel dx=\"1422\" dy=\"914\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\">\n  <root>\n    <mxCell id=\"0\" />\n    <mxCell id=\"1\" parent=\"0\" />\n    <mxCell id=\"6opUUWU2XM1935bXFmZ7-1\" value=\"&lt;font face=&quot;Times New Roman&quot;&gt;FI-A&lt;/font&gt;\" style=\"rounded=1;whiteSpace=wrap;html=1;fillColor=#6666FF;strokeColor=none;arcSize=50;fontColor=#FFFFFF;fontStyle=1\" parent=\"1\" vertex=\"1\">\n      <mxGeometry x=\"160\" y=\"390\" width=\"520\" height=\"18\" as=\"geometry\" />\n    </mxCell>\n  </root>\n</mxGraphModel>\n",
+            "xml": "<mxGraphModel dx=\"1635\" dy=\"902\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\">\n    <root>\n        <mxCell id=\"0\" />\n        <mxCell id=\"1\" parent=\"0\" />\n        <mxCell id=\"6opUUWU2XM1935bXFmZ7-1\" value=\"&lt;font face=&quot;Times New Roman&quot;&gt;FI-A ( \n)&lt;/font&gt;\" style=\"rounded=1;whiteSpace=wrap;html=1;fillColor=#6666FF;strokeColor=none;arcSize=50;fontColor=#FFFFFF;fontStyle=1\" parent=\"1\" vertex=\"1\">\n            <mxGeometry x=\"160\" y=\"390\" width=\"520\" height=\"18\" as=\"geometry\" />\n        </mxCell>\n    </root>\n</mxGraphModel>\n",
             "zoom": "100%"
           }
         ]
@@ -2015,12 +2015,12 @@
       "id": 292,
       "links": [],
       "newFlag": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "rulesData": {
         "rulesData": [
           {
             "aggregation": "current",
-            "alias": "myRule",
+            "alias": "leadership",
             "colors": [
               "rgba(245, 54, 54, 0.9)",
               "rgba(237, 129, 40, 0.89)",
@@ -2042,7 +2042,7 @@
             "metricType": "serie",
             "order": 1,
             "overlayIcon": false,
-            "pattern": ".*",
+            "pattern": "FIEnvStats.leadership",
             "rangeData": [],
             "reduce": true,
             "refId": "A",
@@ -2054,7 +2054,15 @@
               "/.*/",
               "/.*/"
             ],
-            "textData": [],
+            "textData": [
+              {
+                "hidden": false,
+                "pattern": "6opUUWU2XM1935bXFmZ7-1",
+                "textOn": "wmd",
+                "textPattern": "/  /",
+                "textReplace": "pattern"
+              }
+            ],
             "textProp": "id",
             "textRegEx": true,
             "thresholds": [
@@ -2072,7 +2080,7 @@
             "tpGraphScale": "linear",
             "tpGraphSize": "100%",
             "tpGraphType": "line",
-            "type": "number",
+            "type": "string",
             "unit": "short",
             "valueData": []
           }
@@ -2096,6 +2104,8 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT last(\"leadership\") as \"leadership\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A') AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2147,28 +2157,28 @@
             "tooltip": true,
             "type": "xml",
             "url": "http://<YourUrl>/<Your XML/drawio file/api>",
-            "xml": "<mxGraphModel dx=\"1422\" dy=\"914\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\">\n  <root>\n    <mxCell id=\"0\" />\n    <mxCell id=\"1\" parent=\"0\" />\n    <mxCell id=\"6opUUWU2XM1935bXFmZ7-1\" value=\"&lt;font face=&quot;Times New Roman&quot;&gt;FI-B&lt;/font&gt;\" style=\"rounded=1;whiteSpace=wrap;html=1;fillColor=#B266FF;strokeColor=none;arcSize=50;fontColor=#FFFFFF;fontStyle=1\" parent=\"1\" vertex=\"1\">\n      <mxGeometry x=\"160\" y=\"390\" width=\"520\" height=\"18\" as=\"geometry\" />\n    </mxCell>\n  </root>\n</mxGraphModel>\n",
+            "xml": "<mxGraphModel dx=\"1635\" dy=\"902\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\">\n    <root>\n        <mxCell id=\"0\" />\n        <mxCell id=\"1\" parent=\"0\" />\n        <mxCell id=\"6opUUWU2XM1935bXFmZ7-1\" value=\"&lt;font face=&quot;Times New Roman&quot;&gt;FI-B ( \n)&lt;/font&gt;\" style=\"rounded=1;whiteSpace=wrap;html=1;fillColor=#B266FF;strokeColor=none;arcSize=50;fontColor=#FFFFFF;fontStyle=1\" parent=\"1\" vertex=\"1\">\n            <mxGeometry x=\"160\" y=\"390\" width=\"520\" height=\"18\" as=\"geometry\" />\n        </mxCell>\n    </root>\n</mxGraphModel>\n",
             "zoom": "100%"
           }
         ]
       },
       "format": "short",
-      "graphId": "flowchart_293",
+      "graphId": "flowchart_312",
       "gridPos": {
         "h": 2,
         "w": 12,
         "x": 12,
         "y": 11
       },
-      "id": 293,
+      "id": 312,
       "links": [],
       "newFlag": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "rulesData": {
         "rulesData": [
           {
             "aggregation": "current",
-            "alias": "myRule",
+            "alias": "leadership",
             "colors": [
               "rgba(245, 54, 54, 0.9)",
               "rgba(237, 129, 40, 0.89)",
@@ -2190,7 +2200,7 @@
             "metricType": "serie",
             "order": 1,
             "overlayIcon": false,
-            "pattern": ".*",
+            "pattern": "FIEnvStats.leadership",
             "rangeData": [],
             "reduce": true,
             "refId": "A",
@@ -2202,7 +2212,15 @@
               "/.*/",
               "/.*/"
             ],
-            "textData": [],
+            "textData": [
+              {
+                "hidden": false,
+                "pattern": "6opUUWU2XM1935bXFmZ7-1",
+                "textOn": "wmd",
+                "textPattern": "/  /",
+                "textReplace": "pattern"
+              }
+            ],
             "textProp": "id",
             "textRegEx": true,
             "thresholds": [
@@ -2220,7 +2238,7 @@
             "tpGraphScale": "linear",
             "tpGraphSize": "100%",
             "tpGraphType": "line",
-            "type": "number",
+            "type": "string",
             "unit": "short",
             "valueData": []
           }
@@ -2244,6 +2262,8 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT last(\"leadership\") as \"leadership\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B') AND $timeFilter",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -7636,9 +7656,9 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": true,
+                    "targetBlank": false,
                     "title": "Overview of UCS domains in ${__value.raw}",
-                    "url": "d/ri2OFp4Wz/locations?orgId=1&var-location=${__value.raw}"
+                    "url": "d/ri2OFp4Wz/locations?orgId=1&var-location=${__value.raw}&from=${__from}&to=${__to}"
                   }
                 ]
               }
@@ -7654,9 +7674,9 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": true,
+                    "targetBlank": false,
                     "title": "Traffic details in UCS domains ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}"
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&from=${__from}&to=${__to}"
                   }
                 ]
               }
@@ -7672,9 +7692,9 @@
                 "id": "links",
                 "value": [
                   {
-                    "targetBlank": true,
+                    "targetBlank": false,
                     "title": "Details of Service Profile ${__value.raw}",
-                    "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[Domain]}&var-service_profile=${__value.raw}"
+                    "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[Domain]}&var-service_profile=${__value.raw}&from=${__from}&to=${__to}"
                   }
                 ]
               }
@@ -7969,8 +7989,8 @@
     ]
   },
   "time": {
-    "from": "2021-05-10T13:57:22.500Z",
-    "to": "2021-05-10T15:16:07.500Z"
+    "from": "2021-05-10T14:36:45.000Z",
+    "to": "2021-05-10T15:55:30.000Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -7999,5 +8019,5 @@
   "timezone": "browser",
   "title": "UCS Domain - Overview",
   "uid": "Inte2EIWk",
-  "version": 8
+  "version": 10
 }
