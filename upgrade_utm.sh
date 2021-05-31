@@ -2,7 +2,7 @@
 # Initial Version coded on 26-Jul-2020 by Paresh (with Kiara)
 # Run this file from the 
 
-UTM_VERSION=4
+UTM_VERSION=5
 UTM_DIR=/usr/local/telegraf
 GRAFANA_IMG_DIR=/usr/share/grafana/public/img
 GRAFANA_PLUGIN_DIR=/var/lib/grafana/plugins
@@ -63,14 +63,15 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
     echo "First, I need some new packages. I can download them if this machine can access the Internet"
     echo ""
     echo "If this machine can't reach the Internet, please:"
-    echo "  1. Download and install https://dl.grafana.com/oss/release/grafana-7.1.1-1.x86_64.rpm"
-    echo "      1.1. Minimum required version 7.1.1"
-    echo "  2. Download and install https://grafana.com/grafana/plugins/agenty-flowcharting-panel/installation"
+    echo "  1. Download and install https://dl.grafana.com/oss/release/grafana-7.5.7-1.x86_64.rpm"
+    echo "      1.1. Earlier versions of Grafana will work with reduced functionality"
+    echo "  2. Download and install https://grafana.com/api/plugins/agenty-flowcharting-panel/versions/0.9.0/download"
     echo "      2.1. Minimum required version 0.9"
-    echo "  3. Download and install https://grafana.com/grafana/plugins/michaeldmoore-multistat-panel/installation"
-    echo "      3.1. Minimum required version 1.4.1"
+    echo "  3. Download and install https://grafana.com/api/plugins/michaeldmoore-multistat-panel/versions/1.7.1/download"
+    echo "      3.1. Minimum required version 1.4.1. UTM v0.5 doesn't need Multistat plugin"
     echo "  4. Restart Grafana: systemctl restart grafana-server"
-    echo "  5. Download and install wget https://dl.influxdata.com/telegraf/releases/telegraf-1.15.1-1.x86_64.rpm"
+    echo "  5. Download and install wget https://dl.influxdata.com/telegraf/releases/telegraf-1.18.3-1.x86_64.rpm"
+    echo "  6. Restart Telegraf: systemctl restart telegraf"
     echo "---------------------------"
     
     echo ""
@@ -80,8 +81,8 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
     then
         echo "---------------------------"
         echo "Downloading and upgrading Grafana v7.1.1 ..."
-        if wget https://dl.grafana.com/oss/release/grafana-7.1.1-1.x86_64.rpm ; then
-            if yum -y install grafana-7.1.1-1.x86_64.rpm ; then
+        if wget https://dl.grafana.com/oss/release/grafana-7.5.7-1.x86_64.rpm ; then
+            if yum -y install grafana-7.5.7-1.x86_64.rpm ; then
                 echo "Grafana upgrade done"
             else
                 echo "I could not upgrade Grafana"
@@ -92,8 +93,8 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
             echo "I could not make that work"
         fi
         echo "---------------------------"
-        if wget https://dl.influxdata.com/telegraf/releases/telegraf-1.15.1-1.x86_64.rpm ; then
-            if yum -y localinstall telegraf-1.15.1-1.x86_64.rpm ; then
+        if wget https://dl.influxdata.com/telegraf/releases/telegraf-1.18.3-1.x86_64.rpm ; then
+            if yum -y localinstall telegraf-1.18.3-1.x86_64.rpm ; then
                 echo "Telegraf upgrade done"
                 systemctl restart telegraf
             else
