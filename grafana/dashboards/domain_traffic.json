@@ -1,92 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_INFLUXDB",
-      "label": "InfluxDB",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
-    },
-    {
-      "name": "VAR_DB",
-      "type": "constant",
-      "label": "Database",
-      "value": "telegraf",
-      "description": ""
-    },
-    {
-      "name": "VAR_RP",
-      "type": "constant",
-      "label": "Retention Policy",
-      "value": "autogen",
-      "description": ""
-    },
-    {
-      "name": "VAR_POLLING_INTERVAL",
-      "type": "constant",
-      "label": "polling_interval",
-      "value": "60",
-      "description": ""
-    },
-    {
-      "name": "VAR_FC_DATA_RATE",
-      "type": "constant",
-      "label": "fc_data_rate",
-      "value": "0.85",
-      "description": ""
-    }
-  ],
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "agenty-flowcharting-panel",
-      "name": "FlowCharting",
-      "version": "0.9.0"
-    },
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.5.7"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "influxdb",
-      "name": "InfluxDB",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "michaeldmoore-multistat-panel",
-      "name": "Multistat",
-      "version": "1.7.1"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "text",
-      "name": "Text",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -105,8 +17,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1622566052804,
+  "id": 4,
+  "iteration": 1622571076664,
   "links": [],
   "panels": [
     {
@@ -24475,21 +24387,9 @@
         "hide": 2,
         "label": "Database",
         "name": "db",
-        "query": "${VAR_DB}",
+        "query": "telegraf",
         "skipUrlSync": false,
-        "type": "constant",
-        "current": {
-          "value": "${VAR_DB}",
-          "text": "${VAR_DB}",
-          "selected": false
-        },
-        "options": [
-          {
-            "value": "${VAR_DB}",
-            "text": "${VAR_DB}",
-            "selected": false
-          }
-        ]
+        "type": "constant"
       },
       {
         "description": null,
@@ -24497,21 +24397,9 @@
         "hide": 2,
         "label": "Retention Policy",
         "name": "rp",
-        "query": "${VAR_RP}",
+        "query": "autogen",
         "skipUrlSync": false,
-        "type": "constant",
-        "current": {
-          "value": "${VAR_RP}",
-          "text": "${VAR_RP}",
-          "selected": false
-        },
-        "options": [
-          {
-            "value": "${VAR_RP}",
-            "text": "${VAR_RP}",
-            "selected": false
-          }
-        ]
+        "type": "constant"
       },
       {
         "current": {
@@ -24539,25 +24427,18 @@
         "hide": 2,
         "label": null,
         "name": "polling_interval",
-        "query": "${VAR_POLLING_INTERVAL}",
+        "query": "60",
         "skipUrlSync": false,
-        "type": "constant",
-        "current": {
-          "value": "${VAR_POLLING_INTERVAL}",
-          "text": "${VAR_POLLING_INTERVAL}",
-          "selected": false
-        },
-        "options": [
-          {
-            "value": "${VAR_POLLING_INTERVAL}",
-            "text": "${VAR_POLLING_INTERVAL}",
-            "selected": false
-          }
-        ]
+        "type": "constant"
       },
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"FIEnvStats\" with key=domain where $timeFilter",
         "description": null,
@@ -24611,7 +24492,11 @@
       },
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"VnicStats\" with key=pinned_uplink where domain =~ /$domain/ and fi_id =~ /$fi_id/ and $timeFilter",
         "description": null,
@@ -24635,7 +24520,11 @@
       },
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": "$data_source",
         "definition": "show tag values from \"$db\".\"$rp\".\"FIUplinkPortStats\" with key=port where channel = '' and domain =~ /$domain/ and fi_id =~ /$fi_id/ and $timeFilter",
         "description": null,
@@ -24659,7 +24548,12 @@
       },
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
         "datasource": "$data_source",
         "definition": "SELECT \"name\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE \"domain\" =~ /^$domain$/ and $timeFilter",
         "description": null,
@@ -24683,7 +24577,12 @@
       },
       {
         "allValue": null,
-        "current": {},
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
         "datasource": "$data_source",
         "definition": "select location from (select location,last(load) from \"$db\".\"$rp\".\"FIEnvStats\" where (\"domain\" =~ /^$domain$/) and $timeFilter)",
         "description": null,
@@ -24711,26 +24610,19 @@
         "hide": 2,
         "label": null,
         "name": "fc_data_rate",
-        "query": "${VAR_FC_DATA_RATE}",
+        "query": "0.85",
         "skipUrlSync": false,
-        "type": "constant",
-        "current": {
-          "value": "${VAR_FC_DATA_RATE}",
-          "text": "${VAR_FC_DATA_RATE}",
-          "selected": false
-        },
-        "options": [
-          {
-            "value": "${VAR_FC_DATA_RATE}",
-            "text": "${VAR_FC_DATA_RATE}",
-            "selected": false
-          }
-        ]
+        "type": "constant"
       },
       {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_INFLUXDB}",
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "${data_source}",
         "definition": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
         "description": null,
         "error": null,
@@ -24739,9 +24631,16 @@
         "label": null,
         "multi": false,
         "name": "utm_collector_ver",
-        "options": [],
+        "options": [
+          {
+            "isNone": true,
+            "selected": true,
+            "text": "None",
+            "value": ""
+          }
+        ],
         "query": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
-        "refresh": 1,
+        "refresh": 0,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -24754,8 +24653,8 @@
     ]
   },
   "time": {
-    "from": "2021-05-10T12:05:37.000Z",
-    "to": "2021-05-10T12:49:37.000Z"
+    "from": "now-6h",
+    "to": "now"
   },
   "timepicker": {
     "nowDelay": "",
