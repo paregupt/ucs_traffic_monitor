@@ -1,6 +1,14 @@
 {
   "__inputs": [
     {
+      "name": "DS_INFLUXDB",
+      "label": "InfluxDB",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    },
+    {
       "name": "VAR_DB",
       "type": "constant",
       "label": "Database",
@@ -97,12 +105,12 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1622415228343,
+  "iteration": 1622566019204,
   "links": [],
   "panels": [
     {
       "datasource": "$data_source",
-      "description": "![Cisco UCS Architecture](/public/img/utm/ucs_architecture.png)",
+      "description": "![Cisco UCS Architecture](/public/img/utm/ucs_architecture.png)\nUTM collector - v$utm_collector_ver  \nUTM GUI - v0.52  \nby Paresh Gupta",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -185,7 +193,7 @@
             "tooltip": true,
             "type": "xml",
             "url": "http://<YourUrl>/<Your XML/drawio file/api>",
-            "xml": "<mxGraphModel>\n    <root>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-1\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-6\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#CCFF99;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry y=\"558\" width=\"1220\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations_button\" value=\"Locations\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"40\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-2\" value=\"UCS Domain Overview\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#0085FC;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"240\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-3\" value=\"UCS Domain Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"440\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-4\" value=\"UCS Chassis Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"640\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-5\" value=\"Server Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"840\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"30\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <UserObject label=\"\" link=\"/d/Inte2EIWk/ucs-domain-overview\" id=\"domain_overview\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"230\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/W7LSukHWz/ucs-domain-traffic\" id=\"domain_traffic\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"430\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/KOM8ZHNWz/ucs-chassis-traffic\" id=\"chassis\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"630\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/Z0M_N1vWz/service-profile-stats\" id=\"servers\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"830\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <mxCell id=\"3TAq4FZGmTNtiptqA514-0\" value=\"Ingress Traffic Congestion\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1040\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"ingress_congestion\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1030\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n    </root>\n</mxGraphModel>",
+            "xml": "<mxGraphModel>\n    <root>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-1\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-6\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#CCFF99;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry y=\"558\" width=\"1220\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations_button\" value=\"Locations\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"40\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-2\" value=\"UCS Domain Overview\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#0085FC;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"240\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-3\" value=\"UCS Domain Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"440\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-4\" value=\"UCS Chassis Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"640\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-5\" value=\"Server Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"840\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"30\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <UserObject label=\"\" link=\"/d/Inte2EIWk/ucs-domain-overview\" id=\"domain_overview\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"230\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/W7LSukHWz/ucs-domain-traffic\" id=\"domain_traffic\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"430\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/KOM8ZHNWz/ucs-chassis-traffic\" id=\"chassis\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"630\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/Z0M_N1vWz/service-profile-stats\" id=\"servers\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"830\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <mxCell id=\"3TAq4FZGmTNtiptqA514-0\" value=\"Congestion Monitoring\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1040\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"ingress_congestion\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1030\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n    </root>\n</mxGraphModel>",
             "zoom": "100%"
           }
         ]
@@ -7611,6 +7619,10 @@
               {
                 "id": "unit",
                 "value": "mbytes"
+              },
+              {
+                "id": "custom.width",
+                "value": 120
               }
             ]
           },
@@ -7642,7 +7654,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 31
+                "value": 30
               }
             ]
           },
@@ -7697,6 +7709,111 @@
                     "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[Domain]}&var-service_profile=${__value.raw}&from=${__from}&to=${__to}"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# vFC"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# vEth"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# CPU"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# Cores"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Server"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Chassis ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "d/KOM8ZHNWz/ucs-chassis-traffic?from=${__from}&to=${__to}&var-domain=${__data.fields.Domain}&var-chassis=${__data.fields[\"Chassis ID\"]}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Operability"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Operational State"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
               }
             ]
           }
@@ -7985,12 +8102,36 @@
             "selected": false
           }
         ]
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_INFLUXDB}",
+        "definition": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "utm_collector_ver",
+        "options": [],
+        "query": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
   "time": {
-    "from": "2021-05-10T14:36:45.000Z",
-    "to": "2021-05-10T15:55:30.000Z"
+    "from": "2021-05-10T12:05:37.000Z",
+    "to": "2021-05-10T12:49:37.000Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -8019,5 +8160,5 @@
   "timezone": "browser",
   "title": "UCS Domain - Overview",
   "uid": "Inte2EIWk",
-  "version": 10
+  "version": 14
 }
