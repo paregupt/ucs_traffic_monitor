@@ -68,7 +68,7 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
     echo "  2. Download and install https://grafana.com/api/plugins/agenty-flowcharting-panel/versions/0.9.0/download"
     echo "      2.1. Minimum required version 0.9"
     echo "  3. Download and install https://grafana.com/api/plugins/michaeldmoore-multistat-panel/versions/1.7.1/download"
-    echo "      3.1. Minimum required version 1.4.1. UTM v0.5 doesn't need Multistat plugin"
+    echo "      3.1. Minimum required version 1.4.1"
     echo "  4. Restart Grafana: systemctl restart grafana-server"
     echo "  5. Download and install wget https://dl.influxdata.com/telegraf/releases/telegraf-1.18.3-1.x86_64.rpm"
     echo "  6. Restart Telegraf: systemctl restart telegraf"
@@ -80,7 +80,7 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         echo "---------------------------"
-        echo "Downloading and upgrading Grafana v7.1.1 ..."
+        echo "Downloading and upgrading Grafana ..."
         if wget https://dl.grafana.com/oss/release/grafana-7.5.7-1.x86_64.rpm ; then
             if yum -y install grafana-7.5.7-1.x86_64.rpm ; then
                 echo "Grafana upgrade done"
@@ -93,6 +93,7 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
             echo "I could not make that work"
         fi
         echo "---------------------------"
+        echo "Downloading and upgrading Telegraf ..."
         if wget https://dl.influxdata.com/telegraf/releases/telegraf-1.18.3-1.x86_64.rpm ; then
             if yum -y localinstall telegraf-1.18.3-1.x86_64.rpm ; then
                 echo "Telegraf upgrade done"
@@ -187,7 +188,7 @@ echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]] ; then
     echo "---------------------------"
     echo "I need Grafana Credentials."
-    echo "Hint:Utm_12345"
+    echo "Hint:admin/Utm_12345"
     echo "---------------------------"
     testLoginValue="false"
     while [[ "${testLoginValue}" == "false" ]]; do
