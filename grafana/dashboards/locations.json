@@ -106,12 +106,12 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1622413939566,
+  "iteration": 1622565970004,
   "links": [],
   "panels": [
     {
       "datasource": "$data_source",
-      "description": "![Cisco UCS Architecture](/public/img/utm/ucs_architecture.png)\nUTM collector - v$utm_collector_ver  \nUTM GUI - v0.6  \nby Paresh Gupta",
+      "description": "![Cisco UCS Architecture](/public/img/utm/ucs_architecture.png)\nUTM collector - v$utm_collector_ver  \nUTM GUI - v0.52  \nby Paresh Gupta",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -194,7 +194,7 @@
             "tooltip": true,
             "type": "xml",
             "url": "http://<YourUrl>/<Your XML/drawio file/api>",
-            "xml": "<mxGraphModel>\n    <root>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-1\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-6\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#CCFF99;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry y=\"558\" width=\"1220\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations_button\" value=\"Locations\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#0085FC;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"40\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-2\" value=\"UCS Domain Overview\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"240\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-3\" value=\"UCS Domain Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"440\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-4\" value=\"UCS Chassis Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"640\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-5\" value=\"Server Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"840\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"30\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <UserObject label=\"\" link=\"/d/Inte2EIWk/ucs-domain-overview\" id=\"domain_overview\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"230\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/W7LSukHWz/ucs-domain-traffic\" id=\"domain_traffic\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"430\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/KOM8ZHNWz/ucs-chassis-traffic\" id=\"chassis\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"630\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/Z0M_N1vWz/service-profile-stats\" id=\"servers\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"830\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <mxCell id=\"3TAq4FZGmTNtiptqA514-0\" value=\"Ingress Traffic Congestion\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1040\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"ingress_congestion\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1030\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n    </root>\n</mxGraphModel>",
+            "xml": "<mxGraphModel>\n    <root>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"U3Yb-M3iW0U3TkC6f_VT-1\" parent=\"U3Yb-M3iW0U3TkC6f_VT-0\"/>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-6\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=13;arcSize=50;fillColor=#CCFF99;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry y=\"558\" width=\"1220\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations_button\" value=\"Locations\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#0085FC;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"40\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-2\" value=\"UCS Domain Overview\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"240\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-3\" value=\"UCS Domain Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"440\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-4\" value=\"UCS Chassis Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"640\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"qjMXR-8qFvfJkbGcyA1T-5\" value=\"Server Traffic\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"840\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"locations\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"30\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n        <UserObject label=\"\" link=\"/d/Inte2EIWk/ucs-domain-overview\" id=\"domain_overview\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"230\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/W7LSukHWz/ucs-domain-traffic\" id=\"domain_traffic\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"430\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/KOM8ZHNWz/ucs-chassis-traffic\" id=\"chassis\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"630\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <UserObject label=\"\" link=\"/d/Z0M_N1vWz/service-profile-stats\" id=\"servers\">\n            <mxCell style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n                <mxGeometry x=\"830\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n            </mxCell>\n        </UserObject>\n        <mxCell id=\"3TAq4FZGmTNtiptqA514-0\" value=\"Congestion Monitoring\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=#676767;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1040\" y=\"560\" width=\"140\" height=\"16\" as=\"geometry\"/>\n        </mxCell>\n        <mxCell id=\"ingress_congestion\" value=\"\" style=\"rounded=1;whiteSpace=wrap;html=1;spacing=0;strokeColor=none;fontColor=#FFFFFF;fontSize=10;arcSize=50;fillColor=none;\" parent=\"U3Yb-M3iW0U3TkC6f_VT-1\" vertex=\"1\">\n            <mxGeometry x=\"1030\" y=\"558\" width=\"160\" height=\"20\" as=\"geometry\"/>\n        </mxCell>\n    </root>\n</mxGraphModel>",
             "zoom": "100%"
           }
         ]
@@ -522,7 +522,7 @@
                 "hidden": false,
                 "linkOn": "a",
                 "linkParams": false,
-                "linkUrl": "/d/Sve32sDZk/fi-uplink-port-ingress-congestion-monitoring?from=${__from}&to=${__to}",
+                "linkUrl": "/d/Sve32sDZk/fi-uplink-port-ingress-congestion-monitoring?var-location=${location}&from=${__from}&to=${__to}",
                 "pattern": "ingress_congestion"
               }
             ],
@@ -581,6 +581,8 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT last(\"load\") FROM \"FIEnvStats\" WHERE (\"location\" =~ /^$location$/)",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2471,9 +2473,9 @@
                     "id": "links",
                     "value": [
                       {
-                        "targetBlank": true,
+                        "targetBlank": false,
                         "title": "Overview of UCS domain ${__value.raw}",
-                        "url": "d/Inte2EIWk/ucs-domain-overview?orgId=1&var-domain=${__value.raw}"
+                        "url": "d/Inte2EIWk/ucs-domain-overview?orgId=1&var-domain=${__value.raw}&from=${__from}&to=${__to}"
                       }
                     ]
                   }
@@ -4849,9 +4851,9 @@
                     "id": "links",
                     "value": [
                       {
-                        "targetBlank": true,
+                        "targetBlank": false,
                         "title": "Details of service profile ${__data.fields[service_profile]}",
-                        "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-polling_interval=${polling_interval}&var-domain=All&var-service_profile=${__data.fields[service_profile]}&var-vif=All&var-bp_port=All"
+                        "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-polling_interval=${polling_interval}&var-domain=All&var-service_profile=${__data.fields[service_profile]}&var-vif=All&var-bp_port=All&from=${__from}&to=${__to}"
                       }
                     ]
                   }
@@ -4867,9 +4869,9 @@
                     "id": "links",
                     "value": [
                       {
-                        "targetBlank": true,
+                        "targetBlank": false,
                         "title": "UCS domain ${__data.fields[Domain]} overview",
-                        "url": "d/Inte2EIWk/ucs-domains?orgId=1&var-domain=${__data.fields[Domain]}"
+                        "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__data.fields[Domain]}&from=${__from}&to=${__to}"
                       }
                     ]
                   }
@@ -4885,9 +4887,9 @@
                     "id": "links",
                     "value": [
                       {
-                        "targetBlank": true,
+                        "targetBlank": false,
                         "title": "Details of ${__data.fields[Chassis ID]} in UCS domain ${__data.fields[Domain]}",
-                        "url": "d/KOM8ZHNWz/ucs-chassis-traffic?orgId=1&var-polling_interval=${polling_interval}&var-domain=${__data.fields[Domain]}&var-chassis=${__data.fields[Chassis ID]}"
+                        "url": "d/KOM8ZHNWz/ucs-chassis-traffic?orgId=1&var-polling_interval=${polling_interval}&var-domain=${__data.fields[Domain]}&var-chassis=${__data.fields[Chassis ID]}&from=${__from}&to=${__to}"
                       }
                     ]
                   }
@@ -7709,7 +7711,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 12
+            "y": 11
           },
           "hiddenSeries": false,
           "id": 19,
@@ -7929,7 +7931,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 12
+            "y": 11
           },
           "hiddenSeries": false,
           "id": 20,
@@ -8150,7 +8152,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 20
+            "y": 19
           },
           "hiddenSeries": false,
           "id": 48,
@@ -8282,7 +8284,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 20
+            "y": 19
           },
           "hiddenSeries": false,
           "id": 46,
@@ -8414,7 +8416,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 28
+            "y": 27
           },
           "hiddenSeries": false,
           "id": 49,
@@ -8546,7 +8548,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 28
+            "y": 27
           },
           "hiddenSeries": false,
           "id": 47,
@@ -8696,7 +8698,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 13
+            "y": 12
           },
           "hiddenSeries": false,
           "id": 53,
@@ -8828,7 +8830,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 13
+            "y": 12
           },
           "hiddenSeries": false,
           "id": 51,
@@ -8963,7 +8965,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 21
+            "y": 20
           },
           "hiddenSeries": false,
           "id": 52,
@@ -9095,7 +9097,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 21
+            "y": 20
           },
           "hiddenSeries": false,
           "id": 50,
@@ -9785,7 +9787,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 15
+            "y": 14
           },
           "hiddenSeries": false,
           "id": 60,
@@ -9918,7 +9920,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 15
+            "y": 14
           },
           "hiddenSeries": false,
           "id": 59,
@@ -10051,7 +10053,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 23
+            "y": 22
           },
           "hiddenSeries": false,
           "id": 61,
@@ -10184,7 +10186,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 23
+            "y": 22
           },
           "hiddenSeries": false,
           "id": 58,
@@ -10442,7 +10444,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"FCS\",domain,fi_id,port,10) as \"FCS\" from (SELECT mean(\"fcs_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) as \"FCS\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"FCS\",domain,fi_id,port,10) as \"FCS\" from (SELECT sum(\"fcs_delta\") as \"FCS\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -10628,7 +10630,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"Out Discards\",domain,fi_id,port,10) as \"Out Discards\" from (SELECT mean(\"out_discard_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) as \"Out Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"Out Discards\",domain,fi_id,port,10) as \"Out Discards\" from (SELECT sum(\"out_discard_delta\") as \"Out Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -10814,7 +10816,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"mean\",domain,fi_id,port,10) as \"FC CRC\" from (SELECT mean(\"crc_rx_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"sum\",domain,fi_id,port,10) as \"FC CRC\" from (SELECT sum(\"crc_rx_delta\")  FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -11000,7 +11002,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"mean\",domain,fi_id,port,10) as \"FC RX Discards\" from (SELECT mean(\"discard_rx_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"sum\",domain,fi_id,port,10) as \"FC RX Discards\" from (SELECT sum(\"discard_rx_delta\")  FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -11186,7 +11188,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"FCS\",domain,fi_id,port,10) as \"FCS\" from (SELECT mean(\"fcs_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) as \"FCS\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"FCS\",domain,fi_id,port,10) as \"FCS\" from (SELECT sum(\"fcs_delta\") as \"FCS\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -11372,7 +11374,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"Out Discards\",domain,fi_id,port,10) as \"Out Discards\" from (SELECT mean(\"out_discard_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) as \"Out Discards\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"Out Discards\",domain,fi_id,port,10) as \"Out Discards\" from (SELECT sum(\"out_discard_delta\") as \"Out Discards\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -11558,7 +11560,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"mean\",domain,fi_id,port,10) as \"FC TX Discards\" from (SELECT mean(\"discard_tx_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"sum\",domain,fi_id,port,10) as \"FC TX Discards\" from (SELECT sum(\"discard_tx_delta\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -11744,7 +11746,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"mean\",domain,fi_id,port,10) as \"FC Link Failure\" from (SELECT mean(\"link_failures_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"sum\",domain,fi_id,port,10) as \"FC Link Failure\" from (SELECT sum(\"link_failures_delta\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -11875,7 +11877,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"fcs_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"FCS on Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"fcs_delta\") AS \"FCS on Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -11938,7 +11940,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"out_discard_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"Out Discards on Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"out_discard_delta\") AS \"Out Discards on Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -12002,7 +12004,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"fcs_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"FCS on Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"fcs_delta\") AS \"FCS on Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -12066,7 +12068,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"out_discard_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"Out Discards on Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"out_discard_delta\") AS \"Out Discards on Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -12224,7 +12226,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"crc_rx_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"RX CRC\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"crc_rx_delta\") AS \"RX CRC\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -12287,7 +12289,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"discard_rx_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"RX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"discard_rx_delta\") AS \"RX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -12350,7 +12352,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"discard_tx_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"TX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"discard_tx_delta\") AS \"TX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -12413,7 +12415,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"link_failures_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"Link Failures\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"link_failures_delta\") AS \"Link Failures\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -12476,7 +12478,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"signal_losses_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"Signal losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"signal_losses_delta\") AS \"Signal losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "E",
               "resultFormat": "time_series",
@@ -12539,7 +12541,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"sync_losses_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) AS \"Sync losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"sync_losses_delta\")  AS \"Sync losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
               "rawQuery": true,
               "refId": "F",
               "resultFormat": "time_series",
@@ -12752,7 +12754,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"mean\",domain,fi_id,port,10) as \"FC Signal Loss\" from (SELECT mean(\"signal_losses_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"sum\",domain,fi_id,port,10) as \"FC Signal Loss\" from (SELECT sum(\"signal_losses_delta\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -12938,7 +12940,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"mean\",domain,fi_id,port,10) as \"FC Sync Failure\" from (SELECT mean(\"sync_losses_delta\")  / [[polling_interval]]/([[__interval_ms]]/([[polling_interval]] * 1000)) FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+              "query": "select top(\"sum\",domain,fi_id,port,10) as \"FC Sync Failure\" from (SELECT sum(\"sync_losses_delta\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -13692,7 +13694,7 @@
                     "value": [
                       {
                         "title": "Detailed traffic monitoring of service profile ${__value.raw}",
-                        "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[domain]}&var-service_profile=${__value.raw}&${__url_time_range}"
+                        "url": "d/Z0M_N1vWz/service-profile-traffic?orgId=1&var-domain=${__data.fields[domain]}&var-service_profile=${__value.raw}&${__url_time_range}"
                       }
                     ]
                   }
@@ -13709,7 +13711,7 @@
                     "value": [
                       {
                         "title": "Detailed traffic monitoring of UCS domain ${__value.raw}",
-                        "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
+                        "url": "d/Sve32sDZk/congestion-monitoring?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
                       }
                     ]
                   }
@@ -13873,7 +13875,7 @@
                     "value": [
                       {
                         "title": "Detailed traffic monitoring of UCS domain ${__value.raw}",
-                        "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
+                        "url": "d/Sve32sDZk/congestion-monitoring?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
                       }
                     ]
                   }
@@ -14261,8 +14263,8 @@
     ]
   },
   "time": {
-    "from": "2021-05-10T13:57:22.500Z",
-    "to": "2021-05-10T15:16:07.500Z"
+    "from": "2021-05-10T12:05:37.000Z",
+    "to": "2021-05-10T12:49:37.000Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -14291,5 +14293,5 @@
   "timezone": "browser",
   "title": "Locations",
   "uid": "ri2OFp4Wz",
-  "version": 32
+  "version": 41
 }
