@@ -18,7 +18,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1622571101158,
+  "iteration": 1623182266208,
   "links": [],
   "panels": [
     {
@@ -652,7 +652,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_transport $col $tag_service_profile",
+          "alias": "$col $tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -670,9 +670,9 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"bytes_rx_delta\") *8/[[polling_interval]] AS \"RX Traffic\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'Eth') AND $timeFilter GROUP BY time($__interval),transport,service_profile fill(linear)",
+          "query": "select sum(RX)*8 as \"RX\" from (SELECT max((\"bytes_rx_delta\")) /[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'Eth') AND $timeFilter GROUP BY time([[__interval_ms]]ms),vif_name,service_profile) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -785,7 +785,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_transport $col $tag_service_profile",
+          "alias": "$col $tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -803,7 +803,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"bytes_tx_delta\") *8/[[polling_interval]] AS \"TX Traffic\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'Eth') AND $timeFilter GROUP BY time($__interval),transport,service_profile fill(linear)",
+          "query": "select sum(TX)*8 as \"TX\" from (SELECT max((\"bytes_tx_delta\")) /[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'Eth') AND $timeFilter GROUP BY time([[__interval_ms]]ms),vif_name,service_profile) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -918,7 +918,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_transport $col $tag_service_profile",
+          "alias": "$col $tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -936,7 +936,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"bytes_rx_delta\") *8/[[polling_interval]] AS \"RX Traffic\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY time($__interval),transport,service_profile fill(linear)",
+          "query": "select sum(RX)*8 as \"RX\" from (SELECT max((\"bytes_rx_delta\")) /[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY time([[__interval_ms]]ms),vif_name,service_profile) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1051,7 +1051,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_transport $col $tag_service_profile",
+          "alias": "$col $tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -1069,7 +1069,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"bytes_tx_delta\") *8/[[polling_interval]] AS \"TX Traffic\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY time($__interval),transport,service_profile fill(linear)",
+          "query": "select sum(TX)*8 as \"TX\" from (SELECT max((\"bytes_tx_delta\")) /[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY time([[__interval_ms]]ms),vif_name,service_profile) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2405,7 +2405,7 @@
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": false,
+              "selected": true,
               "text": "1/06",
               "value": "1/06"
             }
@@ -2445,7 +2445,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_tx_delta\") *8/[[polling_interval]] AS \"TX Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile fill(linear)",
+              "query": "SELECT max(\"bytes_tx_delta\") *8/[[polling_interval]] AS \"TX Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2523,7 +2523,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_tx_delta\") *8/[[polling_interval]]/mean(\"speed\")/1000000000 AS \"TX % Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port fill(linear)",
+              "query": "SELECT max(\"bytes_tx_delta\") *8/[[polling_interval]]/max(\"speed\")/1000000000 AS \"TX % Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -2643,7 +2643,7 @@
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": false,
+              "selected": true,
               "text": "1/06",
               "value": "1/06"
             }
@@ -2683,7 +2683,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\") *8/[[polling_interval]] AS \"RX Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile fill(linear)",
+              "query": "SELECT max(\"bytes_rx_delta\") *8/[[polling_interval]] AS \"RX Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2761,7 +2761,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\") *8/[[polling_interval]]/mean(\"speed\")/1000000000 AS \"RX % Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port fill(linear)",
+              "query": "SELECT max(\"bytes_rx_delta\") *8/[[polling_interval]]/max(\"speed\")/1000000000 AS \"RX % Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -3103,5 +3103,5 @@
   "timezone": "browser",
   "title": "UCS Chassis - traffic",
   "uid": "KOM8ZHNWz",
-  "version": 7
+  "version": 11
 }

@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1622571175757,
+  "iteration": 1623182314434,
   "links": [],
   "panels": [
     {
@@ -903,7 +903,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"PAUSE against Ingress Traffic\",location,domain,fi_id,port,peer,10) as \"PAUSE sent to FI Server Ports\" from (select sum(\"PAUSE against Ingress Traffic\") as \"PAUSE against Ingress Traffic\" from (SELECT non_negative_difference(mean(\"pause_rx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"PAUSE against Ingress Traffic\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ AND $timeFilter GROUP BY time($__interval),location,domain,fi_id,port,peer) where $timeFilter GROUP BY location,domain,fi_id,port,peer) where $timeFilter",
+          "query": "select top(\"PAUSE against Ingress Traffic\",location,domain,fi_id,port,peer,10) as \"PAUSE sent to FI Server Ports\" from (select sum(\"PAUSE against Ingress Traffic\") as \"PAUSE against Ingress Traffic\" from (SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"PAUSE against Ingress Traffic\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ AND $timeFilter GROUP BY time($__interval),location,domain,fi_id,port,peer) where $timeFilter GROUP BY location,domain,fi_id,port,peer) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1182,7 +1182,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"PAUSE against Egress Traffic\",location,domain,fi_id,port,peer,10) as \"PAUSE sent by FI Server Ports\" from (select sum(\"PAUSE against Egress Traffic\") as \"PAUSE against Egress Traffic\" from (SELECT non_negative_difference(mean(\"pause_tx\"))/elapsed(mean(\"pause_tx\"),1s) AS \"PAUSE against Egress Traffic\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ AND $timeFilter GROUP BY time($__interval),location,domain,fi_id,port,peer) where $timeFilter GROUP BY location,domain,fi_id,port,peer) where $timeFilter",
+          "query": "select top(\"PAUSE against Egress Traffic\",location,domain,fi_id,port,peer,10) as \"PAUSE sent by FI Server Ports\" from (select sum(\"PAUSE against Egress Traffic\") as \"PAUSE against Egress Traffic\" from (SELECT non_negative_difference(max(\"pause_tx\"))/elapsed(max(\"pause_tx\"),1s) AS \"PAUSE against Egress Traffic\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ AND $timeFilter GROUP BY time($__interval),location,domain,fi_id,port,peer) where $timeFilter GROUP BY location,domain,fi_id,port,peer) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1402,7 +1402,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"PAUSE against Ingress Traffic\",location,domain,chassis,peer_service_profile,10) as \"PAUSE sent by servers\" from (select sum(\"PAUSE against Ingress Traffic\") as \"PAUSE against Ingress Traffic\" from (SELECT non_negative_difference(mean(\"pause_rx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"PAUSE against Ingress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE \"domain\" =~ /^$domain$/ and $timeFilter GROUP BY time($__interval),location,domain,chassis,fi_id,bp_port,peer_service_profile) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY chassis,peer_service_profile,location,domain)  where $timeFilter",
+          "query": "select top(\"PAUSE against Ingress Traffic\",location,domain,chassis,peer_service_profile,10) as \"PAUSE sent by servers\" from (select sum(\"PAUSE against Ingress Traffic\") as \"PAUSE against Ingress Traffic\" from (SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"PAUSE against Ingress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE \"domain\" =~ /^$domain$/ and $timeFilter GROUP BY time($__interval),location,domain,chassis,fi_id,bp_port,peer_service_profile) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY chassis,peer_service_profile,location,domain)  where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1608,7 +1608,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"PAUSE against Egress Traffic\",chassis,peer_service_profile,location,domain,10) as \"PAUSE sent by servers\" from (select sum(\"PAUSE against Egress Traffic\") as \"PAUSE against Egress Traffic\" from (SELECT non_negative_difference(mean(\"pause_tx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"PAUSE against Egress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE \"domain\" =~ /^$domain$/ and $timeFilter GROUP BY time($__interval),chassis,fi_id,bp_port,peer_service_profile,location,domain) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY chassis,peer_service_profile,location,domain)  where $timeFilter",
+          "query": "select top(\"PAUSE against Egress Traffic\",chassis,peer_service_profile,location,domain,10) as \"PAUSE sent by servers\" from (select sum(\"PAUSE against Egress Traffic\") as \"PAUSE against Egress Traffic\" from (SELECT non_negative_difference(max(\"pause_tx\"))/elapsed(max(\"pause_rx\"),1s) AS \"PAUSE against Egress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE \"domain\" =~ /^$domain$/ and $timeFilter GROUP BY time($__interval),chassis,fi_id,bp_port,peer_service_profile,location,domain) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY chassis,peer_service_profile,location,domain)  where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1883,7 +1883,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))  / elapsed(max(pause_rx),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2062,7 +2062,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / [[polling_interval]] AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
+              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / elapsed(max(pause_tx),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2241,7 +2241,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))  / elapsed(max(pause_rx),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2420,7 +2420,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / [[polling_interval]] AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
+              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / elapsed(max(pause_tx),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"port\" =~ /^$server_port$/) AND $timeFilter GROUP BY time($__interval), \"port\", \"peer\" fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2742,7 +2742,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))  / elapsed(max(pause_rx),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2927,7 +2927,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / [[polling_interval]] AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
+              "query": "SELECT non_negative_difference(max(\"pause_tx\"))  / elapsed(max(pause_tx),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3112,7 +3112,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))  /elapsed(max(pause_rx),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3297,7 +3297,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / [[polling_interval]] AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
+              "query": "SELECT non_negative_difference(max(\"pause_tx\"))  / elapsed(max(pause_tx),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B' AND \"chassis\" =~ /^$chassis$/) AND $timeFilter GROUP BY time($__interval), \"chassis\", \"bp_port\", \"peer_service_profile\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3459,14 +3459,14 @@
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": false,
-              "text": "1/01",
-              "value": "1/01"
+              "selected": true,
+              "text": "2/01",
+              "value": "2/01"
             },
             "chassis": {
               "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
+              "text": "chassis-11",
+              "value": "chassis-11"
             }
           },
           "seriesOverrides": [],
@@ -3511,7 +3511,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))  / elapsed(max(pause_rx),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3664,14 +3664,14 @@
           "repeatDirection": "v",
           "scopedVars": {
             "bp_port": {
-              "selected": false,
-              "text": "1/01",
-              "value": "1/01"
+              "selected": true,
+              "text": "2/01",
+              "value": "2/01"
             },
             "chassis": {
               "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
+              "text": "chassis-11",
+              "value": "chassis-11"
             }
           },
           "seriesOverrides": [],
@@ -3710,2419 +3710,7 @@
               "measurement": "VnicStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic to vIFs from Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "**Use Case**: Find the root cause of ingress traffic congestion. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  Select a UCS domain, chassis, and Backplane Port. One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n\nFI and FEX/IOM ports do not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. \n- PAUSE frames are used by FC traffic (no-drop class) only. Congestion in Eth traffic is generally indicated by frame drops.\n",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 0,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 19
-          },
-          "hiddenSeries": false,
-          "id": 221,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": true,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 158,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/05",
-              "value": "1/05"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "domain"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "bp_port"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "non_negative_difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 19
-          },
-          "hiddenSeries": false,
-          "id": 227,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": null,
-            "sortDesc": null,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 160,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/05",
-              "value": "1/05"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic to vIFs from Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "**Use Case**: Find the root cause of ingress traffic congestion. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  Select a UCS domain, chassis, and Backplane Port. One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n\nFI and FEX/IOM ports do not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. \n- PAUSE frames are used by FC traffic (no-drop class) only. Congestion in Eth traffic is generally indicated by frame drops.\n",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 0,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 27
-          },
-          "hiddenSeries": false,
-          "id": 222,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": true,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 158,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/09",
-              "value": "1/09"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "domain"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "bp_port"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "non_negative_difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 27
-          },
-          "hiddenSeries": false,
-          "id": 228,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": null,
-            "sortDesc": null,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 160,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/09",
-              "value": "1/09"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic to vIFs from Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "**Use Case**: Find the root cause of ingress traffic congestion. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  Select a UCS domain, chassis, and Backplane Port. One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n\nFI and FEX/IOM ports do not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. \n- PAUSE frames are used by FC traffic (no-drop class) only. Congestion in Eth traffic is generally indicated by frame drops.\n",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 0,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 35
-          },
-          "hiddenSeries": false,
-          "id": 223,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": true,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 158,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/13",
-              "value": "1/13"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "domain"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "bp_port"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "non_negative_difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 35
-          },
-          "hiddenSeries": false,
-          "id": 229,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": null,
-            "sortDesc": null,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 160,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/13",
-              "value": "1/13"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic to vIFs from Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "**Use Case**: Find the root cause of ingress traffic congestion. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  Select a UCS domain, chassis, and Backplane Port. One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n\nFI and FEX/IOM ports do not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. \n- PAUSE frames are used by FC traffic (no-drop class) only. Congestion in Eth traffic is generally indicated by frame drops.\n",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 0,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 43
-          },
-          "hiddenSeries": false,
-          "id": 224,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": true,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 158,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/17",
-              "value": "1/17"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "domain"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "bp_port"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "non_negative_difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 43
-          },
-          "hiddenSeries": false,
-          "id": 230,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": null,
-            "sortDesc": null,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 160,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/17",
-              "value": "1/17"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic to vIFs from Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "**Use Case**: Find the root cause of ingress traffic congestion. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  Select a UCS domain, chassis, and Backplane Port. One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n\nFI and FEX/IOM ports do not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. \n- PAUSE frames are used by FC traffic (no-drop class) only. Congestion in Eth traffic is generally indicated by frame drops.\n",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 0,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 51
-          },
-          "hiddenSeries": false,
-          "id": 225,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": true,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 158,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/21",
-              "value": "1/21"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "domain"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "bp_port"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "non_negative_difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 51
-          },
-          "hiddenSeries": false,
-          "id": 231,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": null,
-            "sortDesc": null,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 160,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/21",
-              "value": "1/21"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "bytes_rx_delta"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [
-                      " *8/[[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "peer_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX Traffic to vIFs from Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "**Use Case**: Find the root cause of ingress traffic congestion. \n\n![](/public/img/utm/chassis_ingress_congestion.png)\n\n**How to use**:  Select a UCS domain, chassis, and Backplane Port. One row is created per chassis. Graphs are generated for backplanes ports in that chassis within the row. Choose one Chassis at a time if you have many chassis. \n\nFI and FEX/IOM ports do not originate or terminate the traffic. Mostly, the real cause of congestion is one of the servers which is unable to receive traffic at the incoming rate. Try to find one of those servers by comparing unusual PAUSE frame activity and traffic spikes. Refer to the graphs on the left with RX PAUSE frames on IOM/FEX backplane ports which indicate a backpressure applied by Server against ingress traffic.  PAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one port among many other similar ports has higher PAUSE frame activity?\n\nOnce you have a suspect backplane port with unusual PAUSE frame activity, look at the graph on the right which shows the service profile and vNIC/vHBA traffic using that backplane port. High traffic rate or traffic spikes, especially with matching timestamp with unusual PAUSE frame activity, indicate that high utilization is the cause of congestion.\n\n**Details**: \n- A server sends PAUSE frames to IOM/FEX backplane port if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on IOM/FEX backplane ports. \n- PAUSE frames are not reported at per vNIC/vHBA granularity. \n- PAUSE frames are used by FC traffic (no-drop class) only. Congestion in Eth traffic is generally indicated by frame drops.\n",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 0,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 59
-          },
-          "hiddenSeries": false,
-          "id": 226,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": true,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 158,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/29",
-              "value": "1/29"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col <-- $tag_peer_service_profile",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "domain"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "chassis"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "bp_port"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "BackplanePortStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))  / [[polling_interval]] AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "pause_rx"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  },
-                  {
-                    "params": [],
-                    "type": "non_negative_difference"
-                  },
-                  {
-                    "params": [
-                      " / [[polling_interval]]"
-                    ],
-                    "type": "math"
-                  },
-                  {
-                    "params": [
-                      "RX PAUSE"
-                    ],
-                    "type": "alias"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "domain",
-                  "operator": "=~",
-                  "value": "/^$domain$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "fi_id",
-                  "operator": "=~",
-                  "value": "/^$fi_id$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "chassis",
-                  "operator": "=~",
-                  "value": "/^$chassis$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "bp_port",
-                  "operator": "=~",
-                  "value": "/^$bp_port$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "RX PAUSE on Backplane port $bp_port in $chassis",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$data_source",
-          "description": "Refer to the description of the panel on the left. Compare high PAUSE frame activity from the left graph to the high traffic activity in this graph.",
-          "fieldConfig": {
-            "defaults": {},
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 59
-          },
-          "hiddenSeries": false,
-          "id": 232,
-          "interval": "[[polling_interval]]s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": false,
-            "max": true,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sort": null,
-            "sortDesc": null,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.5.7",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "v",
-          "repeatIteration": 1622485811736,
-          "repeatPanelId": 160,
-          "scopedVars": {
-            "bp_port": {
-              "selected": false,
-              "text": "1/29",
-              "value": "1/29"
-            },
-            "chassis": {
-              "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_service_profile $tag_vif_name $col",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "vif_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "service_profile"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "linear"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "VnicStats",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
+              "query": "SELECT max(\"bytes_rx_delta\")  *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6286,8 +3874,8 @@
           "scopedVars": {
             "chassis": {
               "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
+              "text": "chassis-11",
+              "value": "chassis-11"
             }
           },
           "seriesOverrides": [],
@@ -6332,7 +3920,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_tx\"))  / [[polling_interval]] AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\" fill(null)",
+              "query": "SELECT non_negative_difference(max(\"pause_tx\"))  / elapsed(max(pause_tx),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"domain\", \"chassis\", \"bp_port\",\"peer_service_profile\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6484,8 +4072,8 @@
           "scopedVars": {
             "chassis": {
               "selected": false,
-              "text": "chassis-1",
-              "value": "chassis-1"
+              "text": "chassis-11",
+              "value": "chassis-11"
             }
           },
           "seriesOverrides": [],
@@ -6524,7 +4112,7 @@
               "measurement": "VnicStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_tx_delta\")  *8/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
+              "query": "SELECT max(\"bytes_tx_delta\")  *8/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"chassis\" =~ /^$chassis$/ AND \"peer_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval), \"vif_name\", \"service_profile\" fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6674,7 +4262,7 @@
             "h": 2,
             "w": 12,
             "x": 0,
-            "y": 44
+            "y": 13
           },
           "id": 242,
           "links": [],
@@ -6832,7 +4420,7 @@
             "h": 2,
             "w": 12,
             "x": 12,
-            "y": 44
+            "y": 13
           },
           "id": 243,
           "links": [],
@@ -6989,7 +4577,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "% TX"
+                  "options": "Peak % TX"
                 },
                 "properties": [
                   {
@@ -7009,7 +4597,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "TX"
+                  "options": "Peak TX"
                 },
                 "properties": [
                   {
@@ -7049,6 +4637,22 @@
                     "value": 120
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Speed"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  },
+                  {
+                    "id": "unit",
+                    "value": "Gbits"
+                  }
+                ]
               }
             ]
           },
@@ -7056,7 +4660,7 @@
             "h": 20,
             "w": 12,
             "x": 0,
-            "y": 46
+            "y": 15
           },
           "id": 249,
           "interval": "[[polling_interval]]s",
@@ -7066,7 +4670,7 @@
             "sortBy": [
               {
                 "desc": true,
-                "displayName": "% TX"
+                "displayName": "Peak % TX"
               }
             ]
           },
@@ -7097,7 +4701,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (mean(\"bytes_tx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*0.85)*100 as \"% TX\", mean(\"bytes_tx_delta\") *8/ [[polling_interval]] as \"TX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='A') AND $timeFilter GROUP BY port,peer",
+              "query": "SELECT (max(\"bytes_tx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000)*100 as \"Peak % TX\", max(\"bytes_tx_delta\") *8/ [[polling_interval]] as \"Peak TX\",max(oper_speed) as \"Speed\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='A') AND $timeFilter GROUP BY port,peer",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -7137,7 +4741,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(\"RX PAUSE\") as \"RX PAUSE\" from (SELECT non_negative_difference(mean(\"pause_rx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='A' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
+              "query": "select sum(\"RX PAUSE\") as \"RX PAUSE\" from (SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='A' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -7175,9 +4779,10 @@
                   "names": [
                     "port",
                     "peer",
-                    "% TX",
-                    "TX",
-                    "RX PAUSE"
+                    "Peak % TX",
+                    "Peak TX",
+                    "RX PAUSE",
+                    "Speed"
                   ]
                 }
               }
@@ -7231,7 +4836,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "% TX"
+                  "options": "Peak % TX"
                 },
                 "properties": [
                   {
@@ -7251,7 +4856,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "TX"
+                  "options": "Peak TX"
                 },
                 "properties": [
                   {
@@ -7291,6 +4896,22 @@
                     "value": 120
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Speed"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  },
+                  {
+                    "id": "unit",
+                    "value": "Gbits"
+                  }
+                ]
               }
             ]
           },
@@ -7298,7 +4919,7 @@
             "h": 20,
             "w": 12,
             "x": 12,
-            "y": 46
+            "y": 15
           },
           "id": 250,
           "interval": "[[polling_interval]]s",
@@ -7308,7 +4929,7 @@
             "sortBy": [
               {
                 "desc": true,
-                "displayName": "% TX"
+                "displayName": "Peak % TX"
               }
             ]
           },
@@ -7339,7 +4960,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (mean(\"bytes_tx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*0.85)*100 as \"% TX\", mean(\"bytes_tx_delta\") *8/ [[polling_interval]] as \"TX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='B') AND $timeFilter GROUP BY port,peer",
+              "query": "SELECT (max(\"bytes_tx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000)*100 as \"Peak % TX\", max(\"bytes_tx_delta\") *8/ [[polling_interval]] as \"Peak TX\",max(oper_speed) as \"Speed\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='B') AND $timeFilter GROUP BY port,peer",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -7379,7 +5000,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(\"RX PAUSE\") as \"RX PAUSE\" from (SELECT non_negative_difference(mean(\"pause_rx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='B' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
+              "query": "select sum(\"RX PAUSE\") as \"RX PAUSE\" from (SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='B' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -7417,9 +5038,10 @@
                   "names": [
                     "port",
                     "peer",
-                    "% TX",
-                    "TX",
-                    "RX PAUSE"
+                    "Peak % TX",
+                    "Peak TX",
+                    "RX PAUSE",
+                    "Speed"
                   ]
                 }
               }
@@ -7461,7 +5083,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 66
+            "y": 35
           },
           "hiddenSeries": false,
           "id": 244,
@@ -7497,8 +5119,8 @@
           "scopedVars": {
             "server_port": {
               "selected": true,
-              "text": "1/10",
-              "value": "1/10"
+              "text": "1/22",
+              "value": "1/22"
             }
           },
           "seriesOverrides": [
@@ -7547,7 +5169,7 @@
               "measurement": "VnicStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_tx_delta\")  / [[polling_interval]]*8 AS \"TX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"port\" =~ /^$server_port$/ and fi_id='A') AND $timeFilter GROUP BY time($__interval), \"port\",peer fill(linear)",
+              "query": "SELECT max(\"bytes_tx_delta\")  / [[polling_interval]]*8 AS \"TX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"port\" =~ /^$server_port$/ and fi_id='A') AND $timeFilter GROUP BY time($__interval), \"port\",peer fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7693,7 +5315,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and \"port\" =~ /^$server_port$/ and fi_id='A' AND $timeFilter GROUP BY time($__interval),domain,fi_id,port fill(linear)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and \"port\" =~ /^$server_port$/ and fi_id='A' AND $timeFilter GROUP BY time($__interval),domain,fi_id,port fill(linear)",
               "rawQuery": true,
               "refId": "F",
               "resultFormat": "time_series",
@@ -7806,7 +5428,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 66
+            "y": 35
           },
           "hiddenSeries": false,
           "id": 245,
@@ -7842,8 +5464,8 @@
           "scopedVars": {
             "server_port": {
               "selected": true,
-              "text": "1/10",
-              "value": "1/10"
+              "text": "1/22",
+              "value": "1/22"
             }
           },
           "seriesOverrides": [
@@ -7892,7 +5514,7 @@
               "measurement": "VnicStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_tx_delta\")  / [[polling_interval]]*8 AS \"TX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"port\" =~ /^$server_port$/ and fi_id='B') AND $timeFilter GROUP BY time($__interval), \"port\",peer fill(linear)",
+              "query": "SELECT max(\"bytes_tx_delta\")  / [[polling_interval]]*8 AS \"TX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"port\" =~ /^$server_port$/ and fi_id='B') AND $timeFilter GROUP BY time($__interval), \"port\",peer fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8038,7 +5660,7 @@
               "measurement": "BackplanePortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT non_negative_difference(mean(\"pause_rx\"))/elapsed(mean(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and \"port\" =~ /^$server_port$/ and fi_id='B' AND $timeFilter GROUP BY time($__interval),domain,fi_id,port fill(linear)",
+              "query": "SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"RX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and \"port\" =~ /^$server_port$/ and fi_id='B' AND $timeFilter GROUP BY time($__interval),domain,fi_id,port fill(linear)",
               "rawQuery": true,
               "refId": "F",
               "resultFormat": "time_series",
@@ -8494,7 +6116,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "% RX"
+                  "options": "Peak % RX"
                 },
                 "properties": [
                   {
@@ -8514,7 +6136,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "RX"
+                  "options": "Peak RX"
                 },
                 "properties": [
                   {
@@ -8554,6 +6176,22 @@
                     "value": 120
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Speed"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  },
+                  {
+                    "id": "unit",
+                    "value": "Gbits"
+                  }
+                ]
               }
             ]
           },
@@ -8571,7 +6209,7 @@
             "sortBy": [
               {
                 "desc": true,
-                "displayName": "% RX"
+                "displayName": "Peak % RX"
               }
             ]
           },
@@ -8602,7 +6240,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (mean(\"bytes_rx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*0.85)*100 as \"% RX\", mean(\"bytes_rx_delta\") *8/ [[polling_interval]] as \"RX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='A') AND $timeFilter GROUP BY port,peer",
+              "query": "SELECT (max(\"bytes_rx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000)*100 as \"Peak % RX\", max(\"bytes_rx_delta\") *8/ [[polling_interval]] as \"Peak RX\", max(oper_speed) as \"Speed\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='A') AND $timeFilter GROUP BY port,peer",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -8642,7 +6280,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(\"TX PAUSE\") as \"TX PAUSE\" from (SELECT non_negative_difference(mean(\"pause_tx\"))/elapsed(mean(\"pause_tx\"),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='A' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
+              "query": "select sum(\"TX PAUSE\") as \"TX PAUSE\" from (SELECT non_negative_difference(max(\"pause_tx\"))/elapsed(max(\"pause_tx\"),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='A' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -8680,9 +6318,10 @@
                   "names": [
                     "port",
                     "peer",
-                    "% RX",
-                    "RX",
-                    "TX PAUSE"
+                    "Peak RX",
+                    "Speed",
+                    "TX PAUSE",
+                    "Peak % RX"
                   ]
                 }
               }
@@ -8741,7 +6380,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "% RX"
+                  "options": "Peak % RX"
                 },
                 "properties": [
                   {
@@ -8761,7 +6400,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "RX"
+                  "options": "Peak RX"
                 },
                 "properties": [
                   {
@@ -8801,6 +6440,22 @@
                     "value": 120
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Speed"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 100
+                  },
+                  {
+                    "id": "unit",
+                    "value": "Gbits"
+                  }
+                ]
               }
             ]
           },
@@ -8818,7 +6473,7 @@
             "sortBy": [
               {
                 "desc": true,
-                "displayName": "% RX"
+                "displayName": "Peak % RX"
               }
             ]
           },
@@ -8849,7 +6504,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (mean(\"bytes_rx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*0.85)*100 as \"% RX\", mean(\"bytes_rx_delta\") *8/ [[polling_interval]] as \"RX\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='B') AND $timeFilter GROUP BY port,peer",
+              "query": "SELECT (max(\"bytes_rx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000)*100 as \"Peak % RX\", max(\"bytes_rx_delta\") *8/ [[polling_interval]] as \"Peak RX\", max(oper_speed) as \"Speed\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ and \"channel\" != '' and fi_id='B') AND $timeFilter GROUP BY port,peer",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -8889,7 +6544,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(\"TX PAUSE\") as \"TX PAUSE\" from (SELECT non_negative_difference(mean(\"pause_tx\"))/elapsed(mean(\"pause_tx\"),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='B' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
+              "query": "select sum(\"TX PAUSE\") as \"TX PAUSE\" from (SELECT non_negative_difference(max(\"pause_tx\"))/elapsed(max(\"pause_tx\"),1s) AS \"TX PAUSE\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE \"domain\" =~ /^$domain$/ and fi_id='B' and \"channel\" != '' AND $timeFilter GROUP BY time($__interval),port) where $timeFilter GROUP BY port",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -8927,9 +6582,10 @@
                   "names": [
                     "port",
                     "peer",
-                    "% RX",
-                    "RX",
-                    "TX PAUSE"
+                    "Peak % RX",
+                    "Peak RX",
+                    "TX PAUSE",
+                    "Speed"
                   ]
                 }
               }
@@ -9012,8 +6668,8 @@
           "scopedVars": {
             "server_port": {
               "selected": true,
-              "text": "1/10",
-              "value": "1/10"
+              "text": "1/22",
+              "value": "1/22"
             }
           },
           "seriesOverrides": [
@@ -9357,8 +7013,8 @@
           "scopedVars": {
             "server_port": {
               "selected": true,
-              "text": "1/10",
-              "value": "1/10"
+              "text": "1/22",
+              "value": "1/22"
             }
           },
           "seriesOverrides": [
@@ -9737,7 +7393,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_rx_delta\") *8 /[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"channel\" != '' and oper_state = 'up') AND $timeFilter GROUP BY time($__interval), \"port\" fill(linear)",
+              "query": "SELECT max(\"bytes_rx_delta\") *8 /[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"channel\" != '' and oper_state = 'up') AND $timeFilter GROUP BY time($__interval), \"port\" fill(linear)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9908,7 +7564,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT mean(\"bytes_tx_delta\") *8 /[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"channel\" != '' and oper_state = 'up') AND $timeFilter GROUP BY time($__interval), \"port\" fill(linear)",
+              "query": "SELECT max(\"bytes_tx_delta\") *8 /[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /^$fi_id$/ AND \"channel\" != '' and oper_state = 'up') AND $timeFilter GROUP BY time($__interval), \"port\" fill(linear)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -10348,5 +8004,5 @@
   "timezone": "browser",
   "title": "Congestion monitoring",
   "uid": "Sve32sDZk",
-  "version": 51
+  "version": 55
 }
