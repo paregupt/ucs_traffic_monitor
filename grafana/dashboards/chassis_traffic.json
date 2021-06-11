@@ -18,7 +18,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1623182266208,
+  "iteration": 1623383672791,
   "links": [],
   "panels": [
     {
@@ -596,7 +596,7 @@
       },
       "id": 121,
       "panels": [],
-      "title": "Overview for $chassis in $domain_name",
+      "title": "Traffic",
       "type": "row"
     },
     {
@@ -648,11 +648,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$col $tag_service_profile",
+          "alias": "$tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -695,7 +695,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Top Eth traffic - Inbound - per service profile breakdown",
+      "title": "Traffic Per Server - Ingress Eth - $chassis in $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -781,11 +781,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$col $tag_service_profile",
+          "alias": "$tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -828,7 +828,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Top Eth traffic - Outbound - per service profile breakdown",
+      "title": "Traffic Per Server - Egress Eth - $chassis in $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -914,11 +914,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$col $tag_service_profile",
+          "alias": "$tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -961,7 +961,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Top FC traffic - Inbound - per service profile breakdown",
+      "title": "Traffic Per Server - Ingress FC - $chassis in $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1047,11 +1047,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$col $tag_service_profile",
+          "alias": "$tag_service_profile",
           "groupBy": [
             {
               "params": [
@@ -1094,7 +1094,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Top FC traffic - Outbound - per service profile breakdown",
+      "title": "Traffic Per Server - Egress FC - $chassis in $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1517,7 +1517,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(oper_state) as \"Operational State\", channel as \"Port-Chanel\",peer as \"Peer\", peer_port as \"Peer port\", peer_type as \"Peer Type\", oper_speed as \"Speed (Gbps)\"  FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY port ",
+              "query": "SELECT last(oper_state) as \"Operational State\", channel as \"Port-Chanel\",peer as \"Peer\", peer_port as \"Peer Port\", peer_type as \"Peer Type\", oper_speed as \"Speed (Gbps)\"  FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY port ",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -1540,7 +1540,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "FI-A Server ports",
+          "title": "FI-A Server Ports",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -1551,9 +1551,9 @@
                     "Operational State",
                     "Port-Chanel",
                     "Peer",
-                    "Peer port",
                     "Peer Type",
-                    "Speed (Gbps)"
+                    "Speed (Gbps)",
+                    "Peer Port"
                   ]
                 }
               }
@@ -1630,7 +1630,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(oper_state) as \"Operational State\", channel as \"Port-Chanel\",peer as \"Peer\", peer_port as \"Peer port\", peer_type as \"Peer Type\", oper_speed as \"Speed (Gbps)\"  FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY port ",
+              "query": "SELECT last(oper_state) as \"Operational State\", channel as \"Port-Chanel\",peer as \"Peer\", peer_port as \"Peer Port\", peer_type as \"Peer Type\", oper_speed as \"Speed (Gbps)\"  FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY port ",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -1653,7 +1653,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "FI-B Server ports",
+          "title": "FI-B Server Ports",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -1664,9 +1664,9 @@
                     "Operational State",
                     "Port-Chanel",
                     "Peer",
-                    "Peer port",
                     "Peer Type",
-                    "Speed (Gbps)"
+                    "Speed (Gbps)",
+                    "Peer Port"
                   ]
                 }
               }
@@ -1685,7 +1685,7 @@
           "type": "table"
         }
       ],
-      "title": "[  IOM Fabric port <--> FI Server port  ] Connections",
+      "title": "[  IOM Fabric Port <--> FI Server Port  ] Connections",
       "type": "row"
     },
     {
@@ -2129,7 +2129,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT bp_port as \"Backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", peer as \"Peer\", peer_port as \"Peer port\", peer_type as \"Peer type\", peer_service_profile as \"Peer Service Profile\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY bp_port",
+              "query": "SELECT bp_port as \"Backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", peer as \"Peer\", peer_port as \"Peer Port\", peer_type as \"Peer Type\", peer_service_profile as \"Peer Service Profile\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'A' AND channel != '' AND $timeFilter GROUP BY bp_port",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2152,7 +2152,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Backplane ports on [[chassis]] (connected to FI-A)",
+          "title": "Backplane Ports in [[chassis]] (connected via FI-A)",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -2163,10 +2163,10 @@
                     "Operational State",
                     "Port-Channel",
                     "Speed",
-                    "Peer port",
-                    "Peer Service Profile",
                     "Peer",
-                    "Peer type"
+                    "Peer Service Profile",
+                    "Peer Port",
+                    "Peer Type"
                   ]
                 }
               }
@@ -2288,7 +2288,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT bp_port as \"Backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", peer as \"Peer\", peer_port as \"Peer port\", peer_type as \"Peer type\", peer_service_profile as \"Peer Service Profile\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY bp_port",
+              "query": "SELECT bp_port as \"Backplane port\",last(oper_state) as \"Operational State\", channel as \"Port-Channel\", speed as \"Speed\", peer as \"Peer\", peer_port as \"Peer Port\", peer_type as \"Peer Type\", peer_service_profile as \"Peer Service Profile\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/) AND (\"chassis\" =~ /^$chassis$/) AND fi_id = 'B' AND channel != '' AND $timeFilter GROUP BY bp_port",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2311,7 +2311,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Backplane ports on [[chassis]] (connected to FI-B)",
+          "title": "Backplane Ports in [[chassis]] (connected via FI-B)",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -2322,10 +2322,10 @@
                     "Operational State",
                     "Port-Channel",
                     "Speed",
-                    "Peer port",
-                    "Peer Service Profile",
                     "Peer",
-                    "Peer type"
+                    "Peer Service Profile",
+                    "Peer Port",
+                    "Peer Type"
                   ]
                 }
               }
@@ -2334,7 +2334,7 @@
           "type": "table"
         }
       ],
-      "title": "[  IOM/FEX backplane port <--> Server Adaptor Port ] connections",
+      "title": "[  IOM/FEX Backplane Port <--> Server Adaptor Port ] Connections",
       "type": "row"
     },
     {
@@ -2360,7 +2360,7 @@
           "dashes": false,
           "datasource": "$data_source",
           "decimals": 2,
-          "description": "**Use Case**: Monitor the utilization of IOM backplane ports\n\n![Backplane port utilization](/public/img/utm/chassis_backplane_port_utilization.png)\n\n**How to use**: Start by selecting a UCS domain and chassis. Finally, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n**Details**: An IOM backplane port has one-to-one connectivity to a single adaptor port on a server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
+          "description": "**Use Case**: Monitor the utilization of IOM backplane ports\n\n![Backplane port utilization](/public/img/utm/chassis_backplane_port_utilization.png)\n\n**How to use**: Start by selecting a UCS domain and chassis. Then, select *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n**Details**: An IOM backplane port has one-to-one connectivity to a single adaptor port on a server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
           "fieldConfig": {
             "defaults": {},
             "overrides": []
@@ -2406,8 +2406,8 @@
           "scopedVars": {
             "bp_port": {
               "selected": true,
-              "text": "1/06",
-              "value": "1/06"
+              "text": "1/05",
+              "value": "1/05"
             }
           },
           "seriesOverrides": [
@@ -2427,7 +2427,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_bp_port --> $tag_peer_service_profile",
+              "alias": "$col --> $tag_peer_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -2445,7 +2445,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT max(\"bytes_tx_delta\") *8/[[polling_interval]] AS \"TX Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile",
+              "query": "SELECT max(\"bytes_tx_delta\") *8/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2466,7 +2466,7 @@
               "tags": []
             },
             {
-              "alias": "$col $tag_bp_port",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -2505,7 +2505,7 @@
               "tags": []
             },
             {
-              "alias": "$col $tag_bp_port",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -2523,7 +2523,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT max(\"bytes_tx_delta\") *8/[[polling_interval]]/max(\"speed\")/1000000000 AS \"TX % Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port",
+              "query": "SELECT max(\"bytes_tx_delta\") *8/[[polling_interval]]/max(\"speed\")/1000000000 AS \"TX %\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -2548,7 +2548,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Backplane port $bp_port utilization - TX",
+          "title": "Backplane Port Utilization - TX - $bp_port ",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -2599,7 +2599,7 @@
           "dashes": false,
           "datasource": "$data_source",
           "decimals": 2,
-          "description": "**Use Case**: Monitor the utilization of IOM backplane ports\n\n![Backplane port utilization](/public/img/utm/chassis_backplane_port_utilization.png)\n\n**How to use**: Start by selecting a UCS domain and chassis. Finally, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n**Details**: An IOM backplane port has one-to-one connectivity to a single adaptor port on a server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
+          "description": "**Use Case**: Monitor the utilization of IOM backplane ports\n\n![Backplane port utilization](/public/img/utm/chassis_backplane_port_utilization.png)\n\n**How to use**: Start by selecting a UCS domain and chassis. Then, select a *Backplane port(s)*. The graphs for RX and TX traffic are auto-generated side-by-side. To use the output:\n  - Look at Left Y-axis for utilization in (Giga or Mega) bits per second and Right Y-axis for utilization in %.\n  - *Util Max* shows max speed of the link. *% Max* always shows 100%.\n  - TX traffic on backplane ports is inbound to the blade server. Similarly, RX traffic on backplane ports is outbound from the blade server.\n\nYou can select more than one values or All from *Backplane Ports*. The RX and TX graphs are auto-generated for the selected values. You may want to look at everything when you don't know where to start or if you are just doing routine monitoring. But it is better to focus on one link at a time and not get overwhelmed by too much information at the same time.\n\n**Details**: An IOM backplane port has one-to-one connectivity to a single adaptor port on a server. Multiple vNIC/vHBA may be using this link. To find the traffic distribution per vNIC/vHBA, go to the service profile monitoring.\n- The options under *Uplink Port Channel* drop-down are automatically updated based on the selected UCS domain and Chassis",
           "fieldConfig": {
             "defaults": {},
             "overrides": []
@@ -2644,8 +2644,8 @@
           "scopedVars": {
             "bp_port": {
               "selected": true,
-              "text": "1/06",
-              "value": "1/06"
+              "text": "1/05",
+              "value": "1/05"
             }
           },
           "seriesOverrides": [
@@ -2665,7 +2665,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_bp_port --> $tag_peer_service_profile",
+              "alias": "$col <-- $tag_peer_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -2683,7 +2683,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT max(\"bytes_rx_delta\") *8/[[polling_interval]] AS \"RX Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile",
+              "query": "SELECT max(\"bytes_rx_delta\") *8/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port,peer_service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2704,7 +2704,7 @@
               "tags": []
             },
             {
-              "alias": "$col $tag_bp_port",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -2743,7 +2743,7 @@
               "tags": []
             },
             {
-              "alias": "$col $tag_bp_port",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -2761,7 +2761,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT max(\"bytes_rx_delta\") *8/[[polling_interval]]/max(\"speed\")/1000000000 AS \"RX % Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port",
+              "query": "SELECT max(\"bytes_rx_delta\") *8/[[polling_interval]]/max(\"speed\")/1000000000 AS \"RX %\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"chassis\" =~ /^$chassis$/ AND \"bp_port\" =~ /^$bp_port$/) AND $timeFilter GROUP BY time($__interval),bp_port",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -2786,7 +2786,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Backplane port $bp_port utilization - RX",
+          "title": "Backplane Port Utilization - RX - $bp_port",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -2827,7 +2827,7 @@
         }
       ],
       "repeat": "bp_port",
-      "title": "Backplane port $bp_port utilization",
+      "title": "Backplane Port $bp_port Utilization",
       "type": "row"
     }
   ],
@@ -3103,5 +3103,5 @@
   "timezone": "browser",
   "title": "UCS Chassis - traffic",
   "uid": "KOM8ZHNWz",
-  "version": 11
+  "version": 14
 }

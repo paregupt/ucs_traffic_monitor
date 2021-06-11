@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1623182156695,
+  "iteration": 1623383539431,
   "links": [],
   "panels": [
     {
@@ -597,150 +597,8 @@
       },
       "id": 119,
       "panels": [],
-      "title": "Top 10 Ports and Servers in locations -  $location",
+      "title": "Top 10 Ports and Servers -  $location",
       "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$data_source",
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 2,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 107,
-      "interval": "[[polling_interval]]s",
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "background",
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ]
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.7",
-      "targets": [
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$col",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "type": "stat"
     },
     {
       "cacheTimeout": null,
@@ -773,7 +631,7 @@
       "gridPos": {
         "h": 2,
         "w": 12,
-        "x": 12,
+        "x": 0,
         "y": 8
       },
       "id": 109,
@@ -820,7 +678,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+          "query": "select sum(RX)*8 as \"Total - RX Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -858,7 +716,149 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+          "query": "select sum(TX)*8 as \"Total - TX Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$data_source",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 107,
+      "interval": "[[polling_interval]]s",
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.7",
+      "targets": [
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select sum(RX)*8 as \"Total - RX FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select sum(TX)*8 as \"Total - TX FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -903,11 +903,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 50
+                "value": 0.5
               },
               {
                 "color": "red",
-                "value": 75
+                "value": 0.75
               }
             ]
           },
@@ -925,7 +925,7 @@
                 "value": [
                   {
                     "title": "Details traffic monitoring of UCS domain ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}&var-fi_id=${__data.fields[\"fi_id\"]}&var-uplink=${__data.fields[\"port\"]}"
                   }
                 ]
               },
@@ -975,7 +975,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "percent"
+                "value": "percentunit"
               },
               {
                 "id": "custom.displayMode",
@@ -989,6 +989,472 @@
         "h": 13,
         "w": 6,
         "x": 0,
+        "y": 10
+      },
+      "id": 180,
+      "interval": "[[polling_interval]]s",
+      "links": [],
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.5.7",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Avg % RX\" from (SELECT (mean(\"bytes_rx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000) as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        },
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Peak % RX\" from (SELECT (max(\"bytes_rx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000) as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top 10 FI Uplink Ports - RX Eth - $location",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "domain",
+                "fi_id",
+                "port",
+                "Peak % RX",
+                "Avg % RX"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$data_source",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "filterable": false
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 0.75
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "domain"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Details traffic monitoring of UCS domain ${__value.raw}",
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}&var-fi_id=${__data.fields[\"fi_id\"]}&var-uplink=${__data.fields[\"port\"]}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Domain"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fi_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "FI"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "Port"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/%/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 6,
+        "x": 6,
+        "y": 10
+      },
+      "id": 179,
+      "interval": "[[polling_interval]]s",
+      "links": [],
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.5.7",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Avg % TX\" from (SELECT (mean(\"bytes_tx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000) as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        },
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Peak % TX\" from (SELECT (max(\"bytes_tx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000) as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top 10 FI Uplink Ports - TX Eth - $location",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "domain",
+                "fi_id",
+                "port",
+                "Avg % TX",
+                "Peak % TX"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$data_source",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "filterable": false
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 0.75
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "domain"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Details traffic monitoring of UCS domain ${__value.raw}",
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}&var-fi_id=${__data.fields[\"fi_id\"]}&var-uplink=${__data.fields[\"port\"]}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Domain"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fi_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "FI"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              },
+              {
+                "id": "displayName",
+                "value": "Port"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/%/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 6,
+        "x": 12,
         "y": 10
       },
       "id": 99,
@@ -1027,7 +1493,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Avg % RX\" from (SELECT (mean(\"bytes_rx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*[[fc_data_rate]])*100 as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Avg % RX\" from (SELECT (mean(\"bytes_rx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*[[fc_data_rate]]) as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1073,7 +1539,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Peak % RX\" from (SELECT (max(\"bytes_rx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000*[[fc_data_rate]])*100 as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Peak % RX\" from (SELECT (max(\"bytes_rx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000*[[fc_data_rate]]) as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -1098,7 +1564,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Top 10 FC Ports - RX",
+      "title": "Top 10 FI Uplink Ports - RX FC - $location",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1137,11 +1603,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 50
+                "value": 0.5
               },
               {
                 "color": "red",
-                "value": 75
+                "value": 0.75
               }
             ]
           },
@@ -1159,7 +1625,7 @@
                 "value": [
                   {
                     "title": "Details traffic monitoring of UCS domain ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}&var-fi_id=${__data.fields[\"fi_id\"]}&var-uplink=${__data.fields[\"port\"]}"
                   }
                 ]
               },
@@ -1209,7 +1675,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "percent"
+                "value": "percentunit"
               },
               {
                 "id": "custom.displayMode",
@@ -1222,7 +1688,7 @@
       "gridPos": {
         "h": 13,
         "w": 6,
-        "x": 6,
+        "x": 18,
         "y": 10
       },
       "id": 178,
@@ -1260,7 +1726,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Avg % TX\" from (SELECT (mean(\"bytes_tx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*[[fc_data_rate]])*100 as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Avg % TX\" from (SELECT (mean(\"bytes_tx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000*[[fc_data_rate]]) as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -1306,7 +1772,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Peak % TX\" from (SELECT (max(\"bytes_tx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000*[[fc_data_rate]])*100 as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
+          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Peak % TX\" from (SELECT (max(\"bytes_tx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000*[[fc_data_rate]]) as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -1331,473 +1797,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Top 10 FC Ports - TX",
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "domain",
-                "fi_id",
-                "port",
-                "Avg % TX",
-                "Peak % TX"
-              ]
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$data_source",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left",
-            "filterable": false
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 50
-              },
-              {
-                "color": "red",
-                "value": 75
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "domain"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "title": "Details traffic monitoring of UCS domain ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
-                  }
-                ]
-              },
-              {
-                "id": "displayName",
-                "value": "Domain"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "fi_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 80
-              },
-              {
-                "id": "displayName",
-                "value": "FI"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "port"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 80
-              },
-              {
-                "id": "displayName",
-                "value": "Port"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/%/"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "gradient-gauge"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 13,
-        "w": 6,
-        "x": 12,
-        "y": 10
-      },
-      "id": 180,
-      "interval": "[[polling_interval]]s",
-      "links": [],
-      "options": {
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "7.5.7",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Avg % RX\" from (SELECT (mean(\"bytes_rx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000)*100 as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        },
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"RX\",domain,fi_id,port,10) as \"Peak % RX\" from (SELECT (max(\"bytes_rx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000)*100 as \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Top 10 Eth Ports - RX",
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "domain",
-                "fi_id",
-                "port",
-                "Peak % RX",
-                "Avg % RX"
-              ]
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$data_source",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left",
-            "filterable": false
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 50
-              },
-              {
-                "color": "red",
-                "value": 75
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "domain"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "title": "Details traffic monitoring of UCS domain ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
-                  }
-                ]
-              },
-              {
-                "id": "displayName",
-                "value": "Domain"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "fi_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 80
-              },
-              {
-                "id": "displayName",
-                "value": "FI"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "port"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 80
-              },
-              {
-                "id": "displayName",
-                "value": "Port"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/%/"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              },
-              {
-                "id": "custom.displayMode",
-                "value": "gradient-gauge"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 13,
-        "w": 6,
-        "x": 18,
-        "y": 10
-      },
-      "id": 179,
-      "interval": "[[polling_interval]]s",
-      "links": [],
-      "options": {
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "7.5.7",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Avg % TX\" from (SELECT (mean(\"bytes_tx_delta\") *8/ [[polling_interval]])/(last(oper_speed)*1000000000)*100 as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        },
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"TX\",domain,fi_id,port,10) as \"Peak % TX\" from (SELECT (max(\"bytes_tx_delta\") *8/ [[polling_interval]])/(max(oper_speed)*1000000000)*100 as \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '' and \"oper_state\" = 'up') AND $timeFilter GROUP BY domain,fi_id,port) where $timeFilter",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Top 10 Eth Ports - TX",
+      "title": "Top 10 FI Uplink Ports - TX FC - $location",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -1909,454 +1909,6 @@
         "h": 13,
         "w": 6,
         "x": 0,
-        "y": 23
-      },
-      "id": 165,
-      "interval": "[[polling_interval]]s",
-      "links": [],
-      "options": {
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "RX"
-          }
-        ]
-      },
-      "pluginVersion": "7.5.7",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"RX\", domain,service_profile,10) as \"Avg RX\" from (select sum(RX)*8 as \"RX\" from (SELECT mean(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        },
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"RX\", domain,service_profile,10) as \"Peak RX\" from (select sum(RX)*8 as \"RX\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Top 10 Servers - RX FC",
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "Avg RX",
-                "domain",
-                "service_profile",
-                "Peak RX"
-              ]
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$data_source",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left",
-            "filterable": false
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 5000000000
-              },
-              {
-                "color": "red",
-                "value": 8000000000
-              }
-            ]
-          },
-          "unit": "bps"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "domain"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": false,
-                    "title": "Detailed traffic monitoring of UCS domain ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
-                  }
-                ]
-              },
-              {
-                "id": "displayName",
-                "value": "Domain"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "service_profile"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": false,
-                    "title": "Detailed traffic monitoring of service profile ${__value.raw}",
-                    "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[domain]}&var-service_profile=${__value.raw}&${__url_time_range}"
-                  }
-                ]
-              },
-              {
-                "id": "displayName",
-                "value": "Service Profile"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/X/"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "gradient-gauge"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 13,
-        "w": 6,
-        "x": 6,
-        "y": 23
-      },
-      "id": 181,
-      "interval": "[[polling_interval]]s",
-      "links": [],
-      "options": {
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "RX"
-          }
-        ]
-      },
-      "pluginVersion": "7.5.7",
-      "repeatDirection": "h",
-      "targets": [
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"TX\", domain,service_profile,10) as \"Avg TX\" from (select sum(TX)*8 as \"TX\" from (SELECT mean(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        },
-        {
-          "aggregation": "Last",
-          "alias": "",
-          "decimals": 2,
-          "displayAliasType": "Warning / Critical",
-          "displayType": "Regular",
-          "displayValueWithAlias": "Never",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "select top(\"TX\", domain,service_profile,10) as \"Peak TX\" from (select sum(TX)*8 as \"TX\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [],
-          "units": "none",
-          "valueHandler": "Number Threshold"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Top 10 Servers - TX FC",
-      "transformations": [
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "Avg TX",
-                "domain",
-                "service_profile",
-                "Peak TX"
-              ]
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$data_source",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left",
-            "filterable": false
-          },
-          "decimals": 1,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 5000000000
-              },
-              {
-                "color": "red",
-                "value": 8000000000
-              }
-            ]
-          },
-          "unit": "bps"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "domain"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": false,
-                    "title": "Detailed traffic monitoring of UCS domain ${__value.raw}",
-                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
-                  }
-                ]
-              },
-              {
-                "id": "displayName",
-                "value": "Domain"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "service_profile"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": false,
-                    "title": "Detailed traffic monitoring of service profile ${__value.raw}",
-                    "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[domain]}&var-service_profile=${__value.raw}&${__url_time_range}"
-                  }
-                ]
-              },
-              {
-                "id": "displayName",
-                "value": "Service Profile"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "/X/"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "gradient-gauge"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 13,
-        "w": 6,
-        "x": 12,
         "y": 23
       },
       "id": 183,
@@ -2470,7 +2022,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Top 10 Servers - RX Eth",
+      "title": "Top 10 Servers - RX Eth - $location",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -2580,7 +2132,7 @@
       "gridPos": {
         "h": 13,
         "w": 6,
-        "x": 18,
+        "x": 6,
         "y": 23
       },
       "id": 182,
@@ -2694,7 +2246,455 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Top 10 Servers - TX Eth",
+      "title": "Top 10 Servers - TX Eth - $location",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Avg TX",
+                "domain",
+                "service_profile",
+                "Peak TX"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$data_source",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "filterable": false
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5000000000
+              },
+              {
+                "color": "red",
+                "value": 8000000000
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "domain"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": false,
+                    "title": "Detailed traffic monitoring of UCS domain ${__value.raw}",
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Domain"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_profile"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": false,
+                    "title": "Detailed traffic monitoring of service profile ${__value.raw}",
+                    "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[domain]}&var-service_profile=${__value.raw}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Service Profile"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/X/"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 6,
+        "x": 12,
+        "y": 23
+      },
+      "id": 165,
+      "interval": "[[polling_interval]]s",
+      "links": [],
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "RX"
+          }
+        ]
+      },
+      "pluginVersion": "7.5.7",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"RX\", domain,service_profile,10) as \"Avg RX\" from (select sum(RX)*8 as \"RX\" from (SELECT mean(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        },
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"RX\", domain,service_profile,10) as \"Peak RX\" from (select sum(RX)*8 as \"RX\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top 10 Servers - RX FC - $location",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "Avg RX",
+                "domain",
+                "service_profile",
+                "Peak RX"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$data_source",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "filterable": false
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 5000000000
+              },
+              {
+                "color": "red",
+                "value": 8000000000
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "domain"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": false,
+                    "title": "Detailed traffic monitoring of UCS domain ${__value.raw}",
+                    "url": "d/W7LSukHWz/ucs-domain-traffic?orgId=1&var-domain=${__value.raw}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Domain"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "service_profile"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": false,
+                    "title": "Detailed traffic monitoring of service profile ${__value.raw}",
+                    "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-domain=${__data.fields[domain]}&var-service_profile=${__value.raw}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "displayName",
+                "value": "Service Profile"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/X/"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 6,
+        "x": 18,
+        "y": 23
+      },
+      "id": 181,
+      "interval": "[[polling_interval]]s",
+      "links": [],
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "RX"
+          }
+        ]
+      },
+      "pluginVersion": "7.5.7",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"TX\", domain,service_profile,10) as \"Avg TX\" from (select sum(TX)*8 as \"TX\" from (SELECT mean(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        },
+        {
+          "aggregation": "Last",
+          "alias": "",
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select top(\"TX\", domain,service_profile,10) as \"Peak TX\" from (select sum(TX)*8 as \"TX\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC') AND $timeFilter GROUP BY domain,chassis,service_profile,vif_name) where $timeFilter  group by service_profile,domain) where $timeFilter",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [],
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top 10 Servers - TX FC - $location",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -2728,7 +2728,7 @@
           "fieldConfig": {
             "defaults": {
               "custom": {
-                "align": "center",
+                "align": "left",
                 "filterable": false
               },
               "mappings": [],
@@ -2816,7 +2816,7 @@
               "measurement": "FIEnvStats",
               "orderByTime": "DESC",
               "policy": "autogen",
-              "query": "SELECT \"model\" AS \"Model\", \"mode\" AS \"Mode\", \"ucsm_fw_ver\" AS \"UCSM firmware\", \"fi_fw_sys_ver\" AS \"FI System Firmware\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"location\" =~ /^$location$/ AND \"fi_id\" = 'A') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by  \"domain\" fill(null) ORDER BY time DESC LIMIT 1",
+              "query": "SELECT last(\"model\") AS \"Model\", last(\"mode\") AS \"Mode\", last(\"ucsm_fw_ver\") AS \"UCSM firmware\", last(\"fi_fw_sys_ver\") AS \"FI System Firmware\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"location\" =~ /^$location$/ AND \"fi_id\" = 'A') AND $timeFilter group by  \"domain\"",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2911,7 +2911,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "UCS Domains",
+          "title": "UCS Domains - $location",
           "transformations": [
             {
               "id": "organize",
@@ -3005,10 +3005,11 @@
                   "type": "fill"
                 }
               ],
+              "hide": false,
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms)  group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and $timeFilter)  group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3043,7 +3044,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Uplink and other ports - $location",
+          "title": "FI Uplink and Other Ports - $location",
           "type": "stat"
         },
         {
@@ -3080,6 +3081,21 @@
                     "id": "color",
                     "value": {
                       "fixedColor": "light-red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "UP"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "light-green",
                       "mode": "fixed"
                     }
                   }
@@ -3139,7 +3155,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) as \"UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and oper_state = 'up' and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms)  group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) as \"UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and oper_state = 'up' and $timeFilter)  group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -3191,7 +3207,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) as \"Not UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and oper_state != 'up' and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms)  group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) as \"Not UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and oper_state != 'up' and $timeFilter)  group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -3226,7 +3242,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Distribution - Operational state - $location",
+          "title": "FI Uplink Ports - Operational State - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -3258,7 +3274,38 @@
                 ]
               }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "10 Gbps"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "light-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "40 Gbps"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "light-yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 5,
@@ -3266,7 +3313,7 @@
             "x": 18,
             "y": 11
           },
-          "id": 35,
+          "id": 144,
           "interval": "[[polling_interval]]s",
           "links": [],
           "maxDataPoints": 3,
@@ -3310,7 +3357,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 4) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='Eth' AND \"oper_speed\" = 1) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3361,7 +3408,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 8) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='Eth' AND  \"oper_speed\" = 10) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -3412,7 +3459,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 16) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='Eth' AND  \"oper_speed\" = 40) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -3463,7 +3510,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 32) and $timeFilter group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='Eth' AND  \"oper_speed\" = 25) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -3498,7 +3545,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Distribution - FC - Speed - $location",
+          "title": "FI Uplink Ports -  Ethernet Speed - $location",
           "type": "piechart"
         },
         {
@@ -3524,7 +3571,38 @@
                 ]
               }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "FC"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "semi-dark-green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Ethernet"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "semi-dark-blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 5,
@@ -3576,7 +3654,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"FC\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"transport\" = 'FC') and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"FC\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"transport\" = 'FC') and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3627,7 +3705,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"Ethernet\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"transport\" = 'Eth') and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"Ethernet\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"transport\" = 'Eth') and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -3662,7 +3740,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Distribution - Transport - $location",
+          "title": "FI Uplink Ports - Transport - $location",
           "type": "piechart"
         },
         {
@@ -3688,7 +3766,23 @@
                 ]
               }
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "8G"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "light-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 5,
@@ -3696,7 +3790,7 @@
             "x": 18,
             "y": 16
           },
-          "id": 144,
+          "id": 35,
           "interval": "[[polling_interval]]s",
           "links": [],
           "maxDataPoints": 3,
@@ -3740,7 +3834,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 1) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='FC' and \"oper_speed\" = 4) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -3791,7 +3885,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 10) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='FC' and \"oper_speed\" = 8) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -3842,7 +3936,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 40) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='FC' and \"oper_speed\" = 16) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -3893,7 +3987,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 25) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='FC' and \"oper_speed\" = 32) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -3928,7 +4022,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Distribution - Ethernet - Speed - $location",
+          "title": "FI Uplink Ports - FC Speed - $location",
           "type": "piechart"
         },
         {
@@ -4015,7 +4109,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select count(domain) as \"# Domains\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE \"location\" =~ /^$location$/ and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(domain) as \"# Domains\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE \"location\" =~ /^$location$/ and $timeFilter GROUP BY domain) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -4053,7 +4147,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(count) as \"# Chassis\" from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND chassis!='') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY service_profile,domain,chassis,id) group by domain) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select sum(count) as \"# Chassis\" from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND chassis!='') AND $timeFilter GROUP BY service_profile,domain,chassis,id) group by domain) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4076,7 +4170,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "In $location",
+          "title": "$location",
           "type": "stat"
         },
         {
@@ -4186,7 +4280,7 @@
               "measurement": "BladeServers",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(id) AS \"OK\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"oper_state\" = 'ok') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(id) AS \"OK\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"oper_state\" = 'ok') AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -4244,7 +4338,7 @@
               "measurement": "BladeServers",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(id) AS \"Other\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"oper_state\" != 'ok') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,blade,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(id) AS \"Other\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"oper_state\" != 'ok') AND $timeFilter GROUP BY domain,chassis,blade,id) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4285,7 +4379,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Server operational state",
+          "title": "Server Operational State - $location",
           "type": "piechart"
         },
         {
@@ -4394,7 +4488,7 @@
               "measurement": "BladeServers",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(id) AS \"Blade Servers\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"type\" = 'blade') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(id) AS \"Blade Servers\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"type\" = 'blade') AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4445,7 +4539,7 @@
               "measurement": "BladeServers",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(id) AS \"Rack Servers\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"type\" = 'rack') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(id) AS \"Rack Servers\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/ AND \"type\" = 'rack') AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -4480,7 +4574,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Server types - $location",
+          "title": "Server Types - $location",
           "type": "piechart"
         },
         {
@@ -4563,7 +4657,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '') and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '') and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4598,7 +4692,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Server ports - $location",
+          "title": "FI Server Ports - $location",
           "type": "stat"
         },
         {
@@ -4676,7 +4770,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_state\" = 'up') and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_state\" = 'up') and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4727,7 +4821,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"Not UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_state\" != 'up') and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"Not UP\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_state\" != 'up') and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -4762,7 +4856,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Distribution - Operational state - $location",
+          "title": "FI Server Ports - Operational State - $location",
           "type": "piechart"
         },
         {
@@ -4840,7 +4934,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 1) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 1) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -4891,7 +4985,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 10) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 10) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -4942,7 +5036,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 40) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 40) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -4993,7 +5087,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 25) and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 25) and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -5028,7 +5122,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Distribution - operational speed - $location",
+          "title": "FI Server Ports - Operational Speed - $location",
           "type": "piechart"
         },
         {
@@ -5125,7 +5219,7 @@
               "measurement": "BladeServers",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select sum(last) as \"Memory\" from (SELECT last(\"memory\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select sum(last) as \"Memory\" from (SELECT last(\"memory\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -5169,7 +5263,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(last) as \"# CPU\" from (SELECT last(\"num_cpus\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select sum(last) as \"# CPU\" from (SELECT last(\"num_cpus\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -5207,7 +5301,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(last) as \"# Cores\"  from (SELECT last(\"num_cores\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select sum(last) as \"# Cores\"  from (SELECT last(\"num_cores\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -5245,7 +5339,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(last) as \"# vEth\" from (SELECT last(\"num_vEths\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select sum(last) as \"# vEth\" from (SELECT last(\"num_vEths\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -5283,7 +5377,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(last) as \"# vFC\" from (SELECT last(\"num_vFCs\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select sum(last) as \"# vFC\" from (SELECT last(\"num_vFCs\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
               "rawQuery": true,
               "refId": "E",
               "resultFormat": "time_series",
@@ -5306,7 +5400,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Resources in $location",
+          "title": "Resources - $location",
           "type": "stat"
         },
         {
@@ -5345,7 +5439,7 @@
                       {
                         "targetBlank": false,
                         "title": "Details of service profile ${__data.fields[service_profile]}",
-                        "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-polling_interval=${polling_interval}&var-domain=All&var-service_profile=${__data.fields[service_profile]}&var-vif=All&var-bp_port=All&from=${__from}&to=${__to}"
+                        "url": "d/Z0M_N1vWz/service-profile-stats?orgId=1&var-polling_interval=${polling_interval}&var-domain=All&var-service_profile=${__data.fields[\"Service Profile\"]}&var-vif=All&var-bp_port=All&from=${__from}&to=${__to}"
                       }
                     ]
                   }
@@ -5372,7 +5466,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Chassis ID"
+                  "options": "Chassis"
                 },
                 "properties": [
                   {
@@ -5381,9 +5475,13 @@
                       {
                         "targetBlank": false,
                         "title": "Details of ${__data.fields[Chassis ID]} in UCS domain ${__data.fields[Domain]}",
-                        "url": "d/KOM8ZHNWz/ucs-chassis-traffic?orgId=1&var-polling_interval=${polling_interval}&var-domain=${__data.fields[Domain]}&var-chassis=${__data.fields[Chassis ID]}&from=${__from}&to=${__to}"
+                        "url": "d/KOM8ZHNWz/ucs-chassis-traffic?orgId=1&var-polling_interval=${polling_interval}&var-domain=${__data.fields[Domain]}&var-chassis=${__data.fields.Chassis}&from=${__from}&to=${__to}"
                       }
                     ]
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 120
                   }
                 ]
               },
@@ -5396,6 +5494,10 @@
                   {
                     "id": "unit",
                     "value": "mbytes"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 100
                   }
                 ]
               },
@@ -5427,7 +5529,7 @@
                   },
                   {
                     "id": "custom.width",
-                    "value": 24
+                    "value": 20
                   }
                 ]
               },
@@ -5439,7 +5541,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 75
+                    "value": 80
                   }
                 ]
               },
@@ -5451,7 +5553,7 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 79
+                    "value": 80
                   }
                 ]
               },
@@ -5463,7 +5565,43 @@
                 "properties": [
                   {
                     "id": "custom.width",
-                    "value": 91
+                    "value": 80
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "# vFC"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 80
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Server"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 120
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Operability"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 120
                   }
                 ]
               }
@@ -5480,7 +5618,12 @@
           "links": [],
           "options": {
             "showHeader": true,
-            "sortBy": []
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Operability"
+              }
+            ]
           },
           "pluginVersion": "7.5.7",
           "targets": [
@@ -5501,7 +5644,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT location as \"Location\", domain as \"Domain\",  chassis as \"Chassis ID\", id as \"Server\", model as \"Model\", serial as \"Serial\", num_cpus as \"# CPU\", num_cores as \"# Cores\", memory as \"Memory\", operability as \"Operability\", oper_state as \"Operational State\", oper_state_code, num_vEths as \"# vEth\", num_vFCs as \"# vFC\" FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND  time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY \"service_profile\",domain,chassis,id order by time desc limit 1",
+              "query": "SELECT last(model) as \"Model\", last(serial) as \"Serial\", last(num_cpus) as \"# CPU\", last(num_cores) as \"# Cores\", last(memory) as \"Memory\", last(operability) as \"Operability\", last(oper_state) as \"Operational State\", last(oper_state_code) as \"oper_state_code\", last(num_vEths) as \"# vEth\", last(num_vFCs) as \"# vFC\" FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"location\" =~ /^$location$/) AND $timeFilter GROUP BY \"service_profile\",domain,chassis,id,location",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -5524,7 +5667,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Servers",
+          "title": "Servers - $location",
           "transform": "table",
           "transformations": [
             {
@@ -5532,11 +5675,11 @@
               "options": {
                 "include": {
                   "names": [
+                    "chassis",
+                    "domain",
+                    "id",
+                    "location",
                     "service_profile",
-                    "Location",
-                    "Domain",
-                    "Chassis ID",
-                    "Server",
                     "Model",
                     "Serial",
                     "# CPU",
@@ -5544,9 +5687,9 @@
                     "Memory",
                     "Operability",
                     "Operational State",
-                    "oper_state_code",
                     "# vEth",
-                    "# vFC"
+                    "# vFC",
+                    "oper_state_code"
                   ]
                 }
               }
@@ -5555,9 +5698,29 @@
               "id": "organize",
               "options": {
                 "excludeByName": {},
-                "indexByName": {},
+                "indexByName": {
+                  "# CPU": 7,
+                  "# Cores": 8,
+                  "# vEth": 13,
+                  "# vFC": 14,
+                  "Memory": 9,
+                  "Model": 5,
+                  "Operability": 10,
+                  "Operational State": 11,
+                  "Serial": 6,
+                  "chassis": 2,
+                  "domain": 1,
+                  "id": 3,
+                  "location": 0,
+                  "oper_state_code": 12,
+                  "service_profile": 4
+                },
                 "renameByName": {
                   "Location": "",
+                  "chassis": "Chassis",
+                  "domain": "Domain",
+                  "id": "Server",
+                  "location": "Location",
                   "oper_state_code": "  ",
                   "service_profile": "Service Profile"
                 }
@@ -5619,7 +5782,7 @@
             "h": 6,
             "w": 4,
             "x": 0,
-            "y": 10
+            "y": 42
           },
           "id": 138,
           "interval": "[[polling_interval]]s",
@@ -5643,7 +5806,7 @@
               "values": false
             },
             "text": {},
-            "textMode": "auto"
+            "textMode": "value_and_name"
           },
           "pluginVersion": "7.5.7",
           "targets": [
@@ -5665,7 +5828,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select count(domain) as \"# Domains\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE \"location\" =~ /^$location$/ and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(domain) as \"# Domains\" from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE \"location\" =~ /^$location$/ and $timeFilter GROUP BY domain) where $timeFilter",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -5726,7 +5889,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "In $location",
+          "title": "$location",
           "type": "stat"
         },
         {
@@ -5750,7 +5913,7 @@
             "h": 6,
             "w": 5,
             "x": 4,
-            "y": 10
+            "y": 42
           },
           "hiddenSeries": false,
           "id": 140,
@@ -5891,7 +6054,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Server types - $location",
+          "title": "Server Types - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -5963,7 +6126,7 @@
             "h": 2,
             "w": 10,
             "x": 9,
-            "y": 10
+            "y": 42
           },
           "id": 142,
           "interval": "[[polling_interval]]s",
@@ -6009,7 +6172,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms)  group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' and $timeFilter)  group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6044,7 +6207,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Uplink and other ports - $location",
+          "title": "FI Uplink and Other Ports - $location",
           "type": "stat"
         },
         {
@@ -6081,7 +6244,7 @@
             "h": 2,
             "w": 5,
             "x": 19,
-            "y": 10
+            "y": 42
           },
           "id": 147,
           "interval": "[[polling_interval]]s",
@@ -6127,7 +6290,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '') and time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+              "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '') and $timeFilter group by domain,fi_id,port) where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6162,7 +6325,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Server ports - $location",
+          "title": "FI Server Ports - $location",
           "type": "stat"
         },
         {
@@ -6183,7 +6346,7 @@
             "h": 5,
             "w": 5,
             "x": 9,
-            "y": 12
+            "y": 44
           },
           "hiddenSeries": false,
           "id": 143,
@@ -6326,7 +6489,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "FI Uplink Ports - Operational status - $location",
+          "title": "FI Uplink Ports - Operational State - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -6392,7 +6555,7 @@
             "h": 5,
             "w": 5,
             "x": 14,
-            "y": 12
+            "y": 44
           },
           "hiddenSeries": false,
           "id": 154,
@@ -6445,7 +6608,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND \"oper_speed\" = 1) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND transport='Eth' AND \"oper_speed\" = 1) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -6496,7 +6659,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND \"oper_speed\" = 10) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND transport='Eth' AND  \"oper_speed\" = 10) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -6547,7 +6710,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND \"oper_speed\" = 40) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND transport='Eth' AND \"oper_speed\" = 40) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -6598,7 +6761,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND \"oper_speed\" = 25) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/  AND \"channel\" != '' AND transport='Eth' AND \"oper_speed\" = 25) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -6691,7 +6854,7 @@
             "h": 5,
             "w": 5,
             "x": 19,
-            "y": 12
+            "y": 44
           },
           "hiddenSeries": false,
           "id": 152,
@@ -6834,7 +6997,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "FI Server Ports - Operational status - $location",
+          "title": "FI Server Ports - Operational State - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -6925,7 +7088,7 @@
             "h": 6,
             "w": 4,
             "x": 0,
-            "y": 16
+            "y": 48
           },
           "id": 141,
           "interval": "[[polling_interval]]s",
@@ -7153,7 +7316,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Resources in $location",
+          "title": "Resources - $location",
           "type": "stat"
         },
         {
@@ -7174,7 +7337,7 @@
             "h": 6,
             "w": 5,
             "x": 4,
-            "y": 16
+            "y": 48
           },
           "hiddenSeries": false,
           "id": 139,
@@ -7329,7 +7492,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Server operational Status",
+          "title": "Server Operational State - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -7388,7 +7551,7 @@
             "h": 5,
             "w": 5,
             "x": 9,
-            "y": 17
+            "y": 49
           },
           "hiddenSeries": false,
           "id": 145,
@@ -7587,7 +7750,7 @@
             "h": 5,
             "w": 5,
             "x": 14,
-            "y": 17
+            "y": 49
           },
           "hiddenSeries": false,
           "id": 157,
@@ -7640,7 +7803,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 4) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND transport='FC' AND \"oper_speed\" = 4) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -7691,7 +7854,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 8 ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND  transport='FC' AND \"oper_speed\" = 8 ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -7742,7 +7905,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 16) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND  transport='FC' AND \"oper_speed\" = 16) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -7793,7 +7956,7 @@
               "measurement": "FIServerPortStats",
               "orderByTime": "ASC",
               "policy": "autogen",
-              "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND \"oper_speed\" = 32) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+              "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"channel\" != '' AND  transport='FC' AND \"oper_speed\" = 32) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -7830,7 +7993,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "FC Uplink Ports - Speed - $location",
+          "title": "FI Uplink Ports - FC Speed - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -7890,7 +8053,7 @@
             "h": 5,
             "w": 5,
             "x": 19,
-            "y": 17
+            "y": 49
           },
           "hiddenSeries": false,
           "id": 155,
@@ -8172,7 +8335,7 @@
           }
         }
       ],
-      "title": "Inventory over time",
+      "title": "Inventory Trending",
       "type": "row"
     },
     {
@@ -8257,7 +8420,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+              "query": "select sum(RX)*8 as \"Ingress Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8320,7 +8483,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+              "query": "select sum(TX)*8 as \"Egress Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -8369,7 +8532,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Ethernet Traffic - Total",
+          "title": "Total Traffic Across All Locations and Domains - Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -8477,7 +8640,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+              "query": "select sum(RX)*8 as \"Ingress FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8541,7 +8704,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
+              "query": "select sum(TX)*8 as \"Egress FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -8590,7 +8753,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "FC Traffic - Total",
+          "title": "Total Traffic Across All Locations and Domains - FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -8657,7 +8820,7 @@
             "min": false,
             "rightSide": true,
             "show": true,
-            "sort": "current",
+            "sort": "max",
             "sortDesc": true,
             "total": false,
             "values": true
@@ -8676,11 +8839,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_location",
+              "alias": "$tag_location",
               "groupBy": [
                 {
                   "params": [
@@ -8697,7 +8860,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
+              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port,location) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8722,7 +8885,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Ethernet traffic - Ingress - per location breakdown",
+          "title": "Traffic Per Location - Ingress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -8808,11 +8971,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_location",
+              "alias": "$tag_location",
               "groupBy": [
                 {
                   "params": [
@@ -8829,7 +8992,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
+              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port,location) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8854,7 +9017,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Ingress - per location breakdown",
+          "title": "Traffic Per Location - Ingress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -8921,7 +9084,7 @@
             "min": false,
             "rightSide": true,
             "show": true,
-            "sort": "current",
+            "sort": "max",
             "sortDesc": true,
             "total": false,
             "values": true
@@ -8940,11 +9103,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_location",
+              "alias": "$tag_location",
               "groupBy": [
                 {
                   "params": [
@@ -8961,7 +9124,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
+              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port,location) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -8986,7 +9149,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Ethernet traffic - Egress - per location breakdown",
+          "title": "Traffic Per Location - Egress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9072,11 +9235,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_location",
+              "alias": "$tag_location",
               "groupBy": [
                 {
                   "params": [
@@ -9093,7 +9256,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
+              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port,location) where $timeFilter GROUP BY time([[__interval_ms]]ms),location",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9118,7 +9281,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Egress - per location breakdown",
+          "title": "Traffic Per Location - Egress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9156,7 +9319,7 @@
           }
         }
       ],
-      "title": "Traffic - location",
+      "title": "Traffic - Location",
       "type": "row"
     },
     {
@@ -9222,11 +9385,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain",
+              "alias": "$tag_domain",
               "groupBy": [
                 {
                   "params": [
@@ -9269,7 +9432,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Ethernet traffic - Ingress - per domain breakdown",
+          "title": "Traffic Per Domain - Ingress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9312,7 +9475,7 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
-          "description": "**Use Case**: Most and least busy UCS domains, AKA top-talker and bottom-talker domains\n\n**How to use**: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or max.\n<span style=\"color:orange\">**How to use**</span>: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or current.",
+          "description": "**Use Case**: Most and least busy UCS domains, AKA top-talker and bottom-talker domains\n\n**How to use**: Monitor the traffic pattern over time in the graph. Sort by clicking on the avg or max.",
           "fieldConfig": {
             "defaults": {},
             "overrides": []
@@ -9355,11 +9518,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain",
+              "alias": "$tag_domain",
               "groupBy": [
                 {
                   "params": [
@@ -9401,7 +9564,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Ingress - per domain breakdown",
+          "title": "Traffic Per Domain - Ingress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9490,11 +9653,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain",
+              "alias": "$tag_domain",
               "groupBy": [
                 {
                   "params": [
@@ -9536,7 +9699,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Ethernet traffic - Egress - per domain breakdown",
+          "title": "Traffic Per Domain - Egress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9622,11 +9785,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain",
+              "alias": "$tag_domain",
               "groupBy": [
                 {
                   "params": [
@@ -9668,7 +9831,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Egress - per domain breakdown",
+          "title": "Traffic Per Domain - Egress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9706,7 +9869,7 @@
           }
         }
       ],
-      "title": "Traffic - domain",
+      "title": "Traffic - Domain",
       "type": "row"
     },
     {
@@ -9769,11 +9932,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain $tag_chassis",
+              "alias": "$tag_domain $tag_chassis",
               "groupBy": [
                 {
                   "params": [
@@ -9790,7 +9953,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
+              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile,vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),chassis,domain",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9815,7 +9978,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Ethernet traffic - Ingress - per chassis breakdown",
+          "title": "Traffic Per Chassis -  Ingress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -9901,11 +10064,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain $tag_chassis",
+              "alias": "$tag_domain $tag_chassis",
               "groupBy": [
                 {
                   "params": [
@@ -9922,7 +10085,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
+              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile,vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -9947,7 +10110,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Ingress - per chassis breakdown",
+          "title": "Traffic Per Chassis -  Ingress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10033,11 +10196,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_domain $tag_chassis",
+              "alias": "$tag_domain $tag_chassis",
               "groupBy": [
                 {
                   "params": [
@@ -10054,7 +10217,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
+              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile_vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -10079,7 +10242,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Ethernet traffic - Egress - per chassis breakdown",
+          "title": "Traffic Per Chassis -  Egress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10165,11 +10328,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$tag_transport $col $tag_domain $tag_chassis",
+              "alias": "$tag_domain $tag_chassis",
               "groupBy": [
                 {
                   "params": [
@@ -10186,7 +10349,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
+              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile,vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -10211,7 +10374,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Egress - per chassis breakdown",
+          "title": "Traffic Per Chassis -  Egress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10312,11 +10475,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_service_profile",
+              "alias": "$tag_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -10334,7 +10497,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,service_profile",
+              "query": "select sum(RX)*8 as \"Total RX - Eth\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile,vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -10359,7 +10522,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Eth traffic - Ingress - per service profile breakdown",
+          "title": "Traffic Per Server - Ingress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10445,11 +10608,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_service_profile",
+              "alias": "$tag_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -10467,7 +10630,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,service_profile",
+              "query": "select sum(RX)*8 as \"Total RX - FC\" from (SELECT max(\"bytes_rx_delta\")/[[polling_interval]] AS \"RX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile,vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -10492,7 +10655,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Ingress - per service profile breakdown",
+          "title": "Traffic Per Server - Ingress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10578,11 +10741,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_service_profile",
+              "alias": "$tag_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -10600,7 +10763,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,service_profile",
+              "query": "select sum(TX)*8 as \"Total TX - Eth\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'Eth') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile_vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -10625,7 +10788,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top Eth traffic - Egress - per service profile breakdown",
+          "title": "Traffic Per Server - Egress Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10711,11 +10874,11 @@
           "renderer": "flot",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "stack": true,
+          "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_service_profile",
+              "alias": "$tag_service_profile",
               "groupBy": [
                 {
                   "params": [
@@ -10733,7 +10896,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,fi_id,port) where $timeFilter GROUP BY time([[__interval_ms]]ms),domain,service_profile",
+              "query": "select sum(TX)*8 as \"Total TX - FC\" from (SELECT max(\"bytes_tx_delta\")/[[polling_interval]] AS \"TX\" FROM \"$db\".\"$rp\".\"VnicStats\" WHERE (\"location\" =~ /^$location$/ and \"transport\" = 'FC') AND $timeFilter GROUP BY time([[__interval_ms]]ms),domain,chassis,service_profile,vif_name) where $timeFilter GROUP BY time([[__interval_ms]]ms),service_profile",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -10758,7 +10921,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Top FC traffic - Egress - per service profile breakdown",
+          "title": "Traffic Per Server - Egress FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -10796,7 +10959,7 @@
           }
         }
       ],
-      "title": "Traffic - Service Profile",
+      "title": "Traffic - Server",
       "type": "row"
     },
     {
@@ -10962,7 +11125,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 Eth Uplink Ports - FCS",
+          "title": "Top 10 FI Uplink Ports - FCS - Eth - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -11148,7 +11311,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 Eth Uplink Ports - Out Discards",
+          "title": "Top 10 FI Uplink Ports - Out Discards - Eth - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -11334,7 +11497,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 FC Uplink Ports - CRC",
+          "title": "Top 10 FI Uplink Ports - CRC - FC - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -11520,7 +11683,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 FC Uplink Ports - RX Discards",
+          "title": "Top 10 FI Uplink Ports - RX Discards - FC - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -11706,7 +11869,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 Eth Server Ports - FCS",
+          "title": "Top 10 FI Server Ports - FCS - Eth - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -11892,7 +12055,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 Eth Server Ports - Out Discards",
+          "title": "Top 10 FI Server Ports - Out Discards - Eth - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -12078,7 +12241,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 FC Uplink Ports - TX Discards",
+          "title": "Top 10 FI Uplink Ports - TX Discards - FC  - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -12264,7 +12427,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 FC Uplink Ports - Link Failure",
+          "title": "Top 10 FI Uplink Ports - Link Failure - FC - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -12352,7 +12515,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12370,7 +12533,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"fcs_delta\") AS \"FCS on Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"fcs_delta\") AS \"FCS on FI Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -12415,7 +12578,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12433,7 +12596,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"out_discard_delta\") AS \"Out Discards on Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"out_discard_delta\") AS \"Out Discards on FI Uplink Ports\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -12478,7 +12641,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12497,7 +12660,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"fcs_delta\") AS \"FCS on Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"fcs_delta\") AS \"FCS on FI Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -12542,7 +12705,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12561,7 +12724,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"out_discard_delta\") AS \"Out Discards on Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"out_discard_delta\") AS \"Out Discards on FI Server Ports\" FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'Eth' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -12610,7 +12773,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Ethernet CRC, Discards, etc.",
+          "title": "CRC, Discards, etc. on FI Uplink and Server Ports - Eth - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -12701,7 +12864,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12719,7 +12882,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"crc_rx_delta\") AS \"RX CRC\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"crc_rx_delta\") AS \"RX CRC\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -12764,7 +12927,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12782,7 +12945,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"discard_rx_delta\") AS \"RX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"discard_rx_delta\") AS \"RX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -12827,7 +12990,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12845,7 +13008,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"discard_tx_delta\") AS \"TX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"discard_tx_delta\") AS \"TX Discards\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -12890,7 +13053,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12908,7 +13071,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"link_failures_delta\") AS \"Link Failures\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"link_failures_delta\") AS \"Link Failures\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -12953,7 +13116,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -12971,7 +13134,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"signal_losses_delta\") AS \"Signal losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"signal_losses_delta\") AS \"Signal losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "E",
               "resultFormat": "time_series",
@@ -13016,7 +13179,7 @@
               ]
             },
             {
-              "alias": "$col $tag_transport",
+              "alias": "$col",
               "groupBy": [
                 {
                   "params": [
@@ -13034,7 +13197,7 @@
               "measurement": "FIUplinkPortStats",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"sync_losses_delta\")  AS \"Sync losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms),transport fill(linear)",
+              "query": "SELECT sum(\"sync_losses_delta\")  AS \"Sync losses\" FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"location\" =~ /^$location$/ AND \"transport\" = 'FC' AND \"channel\" != '') AND $timeFilter GROUP BY time([[__interval_ms]]ms)",
               "rawQuery": true,
               "refId": "F",
               "resultFormat": "time_series",
@@ -13083,7 +13246,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "FC CRC, Discards, etc. on Uplink Ports",
+          "title": "CRC, Discards, etc. on FI Uplink Ports - FC - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -13272,7 +13435,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 FC Uplink Ports - Signal Loss",
+          "title": "Top 10 FI Uplink Ports - Signal Loss - FC - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -13458,7 +13621,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 FC Uplink Ports - Sync Loss",
+          "title": "Top 10 FI Uplink Ports - Sync Loss - FC - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -13664,7 +13827,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 vNIC/vHBA - RX Drops",
+          "title": "Top 10 vNIC/vHBA - RX Drops - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -13872,7 +14035,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 vNIC/vHBA - TX Drops",
+          "title": "Top 10 vNIC/vHBA - TX Drops - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -14080,7 +14243,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 vNIC/vHBA - RX Errors",
+          "title": "Top 10 vNIC/vHBA - RX Errors - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -14288,7 +14451,7 @@
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Top 10 vNIC/vHBA - TX Errors",
+          "title": "Top 10 vNIC/vHBA - TX Errors - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -14346,6 +14509,7 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
+          "decimals": 0,
           "description": "**Use Case**: Monitor congestion against ingress traffic. \n\n![Server Ports RX PAUSE](/public/img/utm/fi_server_port_rx_pause.png)\n\n**How to use**:  This is the sum of the RX PAUSE frames received on the FI Server Ports in a location. These PAUSE frames are sent by the connected devices (FEX, IOM, or Servers) when they must apply back pressure on the incoming traffic. *Note*: Server Ingress traffic is TX for FI Server Ports and RX for FI Uplink Ports.\n\nPAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one among many others has higher PAUSE frame activity?\n\nOnce you have a suspect location,  continue digging further into location > Domain > FI > FEX/IOM/Chassis > Service profile. You can also go to the Detailed Congestion Monitoring dashboard.\n\n**Details**: \n- A server sends PAUSE frames if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on the connected port (on FI or FEX or IOM). \n- PAUSE frames are used for FC traffic only (no-drop class). Congestion in Eth traffic is generally indicated by frame drops.\n",
           "fieldConfig": {
             "defaults": {},
@@ -14461,7 +14625,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "PAUSE against Ingress traffic (RX Pause) on server ports",
+          "title": "PAUSE Against Ingress Traffic (RX Pause) on FI Server Ports per Location - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -14477,6 +14641,7 @@
           },
           "yaxes": [
             {
+              "decimals": 0,
               "format": "short",
               "label": null,
               "logBase": 10,
@@ -14504,6 +14669,7 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
+          "decimals": 0,
           "description": "**Use Case**: Monitor congestion against egress traffic. \n\n![Server Ports TX PAUSE](/public/img/utm/fi_server_port_tx_pause.png)\n\n**How to use**:  This is the sum of the TX PAUSE frames sent on the FI Server Ports in a location. These PAUSE frames are sent to the connected devices (FEX, IOM or Servers) when the backpressure must be applied against the outgoing traffic. *Note*: Server egress traffic is RX for FI Server Ports and TX for FI Uplink Ports.\n\nPAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one among many others has higher PAUSE frame activity?\n\nOnce you have a suspect location,  continue digging further into location > Domain > FI > FEX/IOM/Chassis > Service profile. You can also go to the Detailed Congestion Monitoring dashboard.\n\n**Details**: \n- A server receives PAUSE frames if it is transmitting data faster than the receiver can accept it. These frames are reported as TX PAUSE on the connected port (on FI or FEX or IOM). \n- PAUSE frames are used for FC traffic only (no-drop class). Congestion in Eth traffic is generally indicated by frame drops.\n",
           "fieldConfig": {
             "defaults": {},
@@ -14618,7 +14784,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "PAUSE against Egress traffic (TX Pause) on server ports",
+          "title": "PAUSE Against Egress Traffic (TX Pause) on FI Server Ports per Location - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -14634,6 +14800,7 @@
           },
           "yaxes": [
             {
+              "decimals": 0,
               "format": "short",
               "label": null,
               "logBase": 10,
@@ -14661,6 +14828,7 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
+          "decimals": 0,
           "description": "**Use Case**: Monitor congestion against ingress traffic. \n\n![Server Ports RX PAUSE](/public/img/utm/fi_server_port_rx_pause.png)\n\n**How to use**:  This is the sum of the RX PAUSE frames received on the FI Server Ports in a UCS domain. These PAUSE frames are sent by the connected devices (FEX, IOM, or Servers) when they must apply back pressure on the incoming traffic. *Note*: Server Ingress traffic is TX for FI Server Ports and RX for FI Uplink Ports.\n\nPAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one among many others has higher PAUSE frame activity?\n\nOnce you have a suspect location,  continue digging further into location > Domain > FI > FEX/IOM/Chassis > Service profile. You can also go to the Detailed Congestion Monitoring dashboard.\n\n**Details**: \n- A server sends PAUSE frames if it is unable to receive the traffic at the ingress rate. These frames are reported as RX PAUSE on the connected port (on FI or FEX or IOM). \n- PAUSE frames are used for FC traffic only (no-drop class). Congestion in Eth traffic is generally indicated by frame drops.\n",
           "fieldConfig": {
             "defaults": {},
@@ -14775,7 +14943,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "PAUSE against Ingress traffic (RX Pause) on server ports",
+          "title": "PAUSE Against Ingress Traffic (RX Pause) on FI Server Ports per Location and Domain - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -14791,6 +14959,7 @@
           },
           "yaxes": [
             {
+              "decimals": 0,
               "format": "short",
               "label": null,
               "logBase": 10,
@@ -14818,6 +14987,7 @@
           "dashLength": 10,
           "dashes": false,
           "datasource": "$data_source",
+          "decimals": 0,
           "description": "**Use Case**: Monitor congestion against egress traffic. \n\n![Server Ports TX PAUSE](/public/img/utm/fi_server_port_tx_pause.png)\n\n**How to use**:  This is the sum of the TX PAUSE frames sent on the FI Server Ports in a UCS domain. These PAUSE frames are sent to the connected devices (FEX, IOM or Servers) when the backpressure must be applied against the outgoing traffic. *Note*: Server egress traffic is RX for FI Server Ports and TX for FI Uplink Ports.\n\nPAUSE frames may be exchanged under normal conditions also. So, find unusual PAUSE frame activity with below symptoms (not an exhaustive list):\n- PAUSE frame rate in tens or hundreds per second is bad. Thousands, tens-of-thousands, or Millions per second is terribly bad.\n- Look for spike in PAUSE frame rate. Low stable values are probably fine.\n- Does one among many others has higher PAUSE frame activity?\n\nOnce you have a suspect location,  continue digging further into location > Domain > FI > FEX/IOM/Chassis > Service profile. You can also go to the Detailed Congestion Monitoring dashboard.\n\n**Details**: \n- A server receives PAUSE frames if it is transmitting data faster than the receiver can accept it. These frames are reported as TX PAUSE on the connected port (on FI or FEX or IOM). \n- PAUSE frames are used for FC traffic only (no-drop class). Congestion in Eth traffic is generally indicated by frame drops.\n",
           "fieldConfig": {
             "defaults": {},
@@ -14932,7 +15102,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "PAUSE against Egress traffic (TX Pause) on server ports",
+          "title": "PAUSE Against Egress Traffic (TX Pause) on FI Server Ports per Location and Domain - $location",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -14948,6 +15118,7 @@
           },
           "yaxes": [
             {
+              "decimals": 0,
               "format": "short",
               "label": null,
               "logBase": 10,
@@ -15011,7 +15182,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Service Profile"
+                  "options": "Server"
                 },
                 "properties": [
                   {
@@ -15101,7 +15272,7 @@
               "tags": []
             }
           ],
-          "title": "Top 10 Servers - Congestion Against Ingress Traffic",
+          "title": "Top 10 Servers - Congestion Against Ingress Traffic - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -15126,7 +15297,7 @@
                 },
                 "renameByName": {
                   "domain": "Domain",
-                  "peer_service_profile": "Service Profile"
+                  "peer_service_profile": "Server"
                 }
               }
             }
@@ -15175,7 +15346,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Service Profile"
+                  "options": "Server"
                 },
                 "properties": [
                   {
@@ -15265,7 +15436,7 @@
               "tags": []
             }
           ],
-          "title": "Top 10 Servers - Congestion Against Egress Traffic",
+          "title": "Top 10 Servers - Congestion Against Egress Traffic - $location",
           "transformations": [
             {
               "id": "filterFieldsByName",
@@ -15290,7 +15461,7 @@
                 },
                 "renameByName": {
                   "domain": "Domain",
-                  "peer_service_profile": "Service Profile"
+                  "peer_service_profile": "Server"
                 }
               }
             }
@@ -15593,5 +15764,5 @@
   "timezone": "browser",
   "title": "Locations",
   "uid": "ri2OFp4Wz",
-  "version": 51
+  "version": 67
 }

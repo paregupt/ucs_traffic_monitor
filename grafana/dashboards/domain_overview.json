@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1623182208991,
+  "iteration": 1623383589172,
   "links": [],
   "panels": [
     {
@@ -651,7 +651,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "SELECT last(\"name\") FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "SELECT last(\"name\") FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -680,7 +680,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "UCS Domain name",
+      "title": "UCS Domain Name - $domain",
       "type": "stat"
     },
     {
@@ -744,7 +744,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"sys_uptime\") AS \"Uptime\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "SELECT last(\"sys_uptime\") AS \"Uptime\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -881,7 +881,7 @@
           "measurement": "BladeServers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(last) as \"Memory\" from (SELECT last(\"memory\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select sum(last) as \"Memory\" from (SELECT last(\"memory\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -925,7 +925,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(last) as \"#CPU\" from (SELECT last(\"num_cpus\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select sum(last) as \"#CPU\" from (SELECT last(\"num_cpus\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -963,7 +963,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(last) as \"#Cores\" from (SELECT last(\"num_cores\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select sum(last) as \"#Cores\" from (SELECT last(\"num_cores\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1151,7 +1151,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Server types",
+      "title": "Server Types - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1362,7 +1362,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Server operational state",
+      "title": "Server Operational State - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1469,7 +1469,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "SELECT last(\"ucsm_fw_ver\") AS \"UCSM version\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "SELECT last(\"ucsm_fw_ver\") AS \"UCSM version\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1504,7 +1504,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "UCSM version",
+      "title": "UCSM Version - $domain",
       "type": "stat"
     },
     {
@@ -1591,7 +1591,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select location from (select location,last(model) from \"$db\".\"$rp\".\"FIEnvStats\" where  (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select location from (select location,last(model) from \"$db\".\"$rp\".\"FIEnvStats\" where  (\"domain\" =~ /^$domain$/) AND $timeFilter) where $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1620,7 +1620,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Location",
+      "title": "Location - $domain",
       "type": "stat"
     },
     {
@@ -1700,7 +1700,7 @@
           "measurement": "BladeServers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(last) as \"#vFC\" from (SELECT last(\"num_vFCs\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server ,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select sum(last) as \"#vFC\" from (SELECT last(\"num_vFCs\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,server ,id) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1744,7 +1744,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(last) as \"#vEth\" from (SELECT last(\"num_vEths\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY domain,chassis,server,id) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select sum(last) as \"#vEth\" from (SELECT last(\"num_vEths\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY domain,chassis,server,id) where $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1856,7 +1856,7 @@
           "measurement": "BladeServers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND chassis!='') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY service_profile,domain,chassis,id) group by domain) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select sum(count) from (select count(distinct(chassis)) from (SELECT last(\"model\") FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/ AND chassis!='') AND $timeFilter GROUP BY service_profile,domain,chassis,id) group by domain) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -2281,7 +2281,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"oob_if_ip\") AS \"OOB IP Address\", last(\"serial\") AS \"Serial\", last(\"model\") AS \"Model\", last(\"fi_fw_sys_ver\") AS \"System version\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A') AND time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "SELECT last(\"oob_if_ip\") AS \"OOB IP Address\", last(\"serial\") AS \"Serial\", last(\"model\") AS \"Model\", last(\"fi_fw_sys_ver\") AS \"System Version\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'A') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2376,7 +2376,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-A",
+      "title": "FI-A - $domain",
       "transformations": [
         {
           "id": "reduce",
@@ -2499,7 +2499,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-A Load",
+      "title": "FI-A Load - $domain",
       "type": "stat"
     },
     {
@@ -2591,7 +2591,7 @@
           "measurement": "BladeServers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "SELECT last(\"total_memory\")  as \"Total\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT last(\"total_memory\")  as \"Total\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2641,7 +2641,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"mem_available\") as \"Available\"  FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT last(\"mem_available\") as \"Available\"  FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2664,7 +2664,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-A Memory",
+      "title": "FI-A Memory - $domain",
       "type": "stat"
     },
     {
@@ -2744,7 +2744,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT (last(\"total_memory\") - last(\"mem_available\"))/last(\"total_memory\")*100 FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT (last(\"total_memory\") - last(\"mem_available\"))/last(\"total_memory\")*100 FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /A/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2785,7 +2785,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-A memory utilization",
+      "title": "FI-A Memory - $domain",
       "type": "gauge"
     },
     {
@@ -2873,7 +2873,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT (last(\"total_memory\") - last(\"mem_available\"))/last(\"total_memory\")*100 FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT (last(\"total_memory\") - last(\"mem_available\"))/last(\"total_memory\")*100 FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2914,7 +2914,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-B memory utilization",
+      "title": "FI-B Memory - $domain",
       "type": "gauge"
     },
     {
@@ -3002,7 +3002,7 @@
           "measurement": "BladeServers",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "SELECT last(\"total_memory\")  as \"Total\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT last(\"total_memory\")  as \"Total\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3052,7 +3052,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"mem_available\") as \"Available\"  FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT last(\"mem_available\") as \"Available\"  FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" =~ /B/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3075,7 +3075,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-B Memory",
+      "title": "FI-B Memory - $domain",
       "type": "stat"
     },
     {
@@ -3146,7 +3146,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"load\") AS \"Load\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "query": "SELECT last(\"load\") AS \"Load\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B') AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3187,7 +3187,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-B Load",
+      "title": "FI-B Load - $domain",
       "type": "stat"
     },
     {
@@ -3274,7 +3274,7 @@
           "measurement": "FIEnvStats",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(\"oob_if_ip\") AS \"OOB IP Address\", last(\"serial\") AS \"Serial\", last(\"model\") AS \"Model\", last(\"fi_fw_sys_ver\") AS \"System version\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B') AND $timeFilter",
+          "query": "SELECT last(\"oob_if_ip\") AS \"OOB IP Address\", last(\"serial\") AS \"Serial\", last(\"model\") AS \"Model\", last(\"fi_fw_sys_ver\") AS \"System Version\" FROM \"$db\".\"$rp\".\"FIEnvStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"fi_id\" = 'B') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3369,7 +3369,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-B",
+      "title": "FI-B - $domain",
       "transformations": [
         {
           "id": "reduce",
@@ -3463,7 +3463,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' and \"fi_id\" =~ /A/) and $timeFilter group by domain,fi_id,port)",
+          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' and \"fi_id\" =~ /A/) and $timeFilter group by port)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3498,7 +3498,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-A Uplink and other ports - $domain",
+      "title": "FI-A Uplink and Other Ports - $domain",
       "type": "stat"
     },
     {
@@ -3581,7 +3581,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' and \"fi_id\" =~ /B/) and $timeFilter group by domain,fi_id,port)",
+          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' and \"fi_id\" =~ /B/) and $timeFilter group by port)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3616,7 +3616,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-B Uplink and other ports - $domain",
+      "title": "FI-B Uplink and Other Ports - $domain",
       "type": "stat"
     },
     {
@@ -3938,7 +3938,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Uplink Ports - Status - $domain",
+      "title": "FI-A Uplink Ports - Operational State - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -4138,7 +4138,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Uplink Ports - Transport - $domain",
+      "title": "FI-A Uplink Ports - Transport - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -4496,7 +4496,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-B - Uplink Ports - Status - $domain",
+      "title": "FI-B Uplink Ports - Operational State - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -4696,7 +4696,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-B - Uplink Ports - Transport - $domain",
+      "title": "FI-B Uplink Ports - Transport - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -4809,7 +4809,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND \"oper_speed\" = 1) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND  transport = 'Eth' AND \"oper_speed\" = 1) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -4860,7 +4860,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND \"oper_speed\" = 10) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND  transport = 'Eth' AND \"oper_speed\" = 10) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -4911,7 +4911,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND \"oper_speed\" = 40) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND  transport = 'Eth' AND \"oper_speed\" = 40) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -4962,7 +4962,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND \"oper_speed\" = 25) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'A' AND  transport = 'Eth' AND \"oper_speed\" = 25) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -4999,7 +4999,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Eth Uplink Ports  - Speed - $domain",
+      "title": "FI-A Uplink Ports - Eth Speed - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -5110,7 +5110,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 4 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND transport = 'FC' AND \"oper_speed\" = 4 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -5161,7 +5161,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 8 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 8 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -5212,7 +5212,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 16 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 16 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -5263,7 +5263,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 32 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 32 AND \"fi_id\" = 'A' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -5300,7 +5300,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - FC Uplink Ports - Speed - $domain",
+      "title": "FI-A Uplink Ports - FC Speed - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -5413,7 +5413,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND \"oper_speed\" = 1) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"1 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND  transport = 'Eth' AND \"oper_speed\" = 1) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -5464,7 +5464,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND \"oper_speed\" = 10) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"10 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND  transport = 'Eth' AND \"oper_speed\" = 10) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -5515,7 +5515,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND \"oper_speed\" = 40) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"40 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND  transport = 'Eth' AND \"oper_speed\" = 40) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -5566,7 +5566,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND \"oper_speed\" = 25) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"25 Gbps\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"fi_id\" = 'B' AND  transport = 'Eth' AND \"oper_speed\" = 25) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -5603,7 +5603,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-B - Eth Uplink Ports - Speed - $domain",
+      "title": "FI-B Uplink Ports - Eth Speed  - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -5714,7 +5714,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 4 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"4G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 4 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -5765,7 +5765,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 8 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"8G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 8 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -5816,7 +5816,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 16 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"16G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 16 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -5867,7 +5867,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND \"oper_speed\" = 32 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
+          "query": "select count(last) AS \"32G\" from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIUplinkPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND  transport = 'FC' AND \"oper_speed\" = 32 AND \"fi_id\" = 'B' ) and $timeFilter GROUP BY time($__interval),domain,fi_id,port) where  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -5904,7 +5904,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-B - FC Uplink Ports - Speed - $domain",
+      "title": "FI-B Uplink Ports - FC Speed - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -6022,7 +6022,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND fi_id = 'A') and  time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND fi_id = 'A') and  $timeFilter group by domain,fi_id,port) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -6057,7 +6057,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-A Server ports - $domain",
+      "title": "FI-A Server Ports - $domain",
       "type": "stat"
     },
     {
@@ -6140,7 +6140,7 @@
           "measurement": "FIServerPortStats",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND fi_id = 'B') and  time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms group by domain,fi_id,port) where time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms",
+          "query": "select count(last) from (SELECT last(\"oper_state\") FROM \"$db\".\"$rp\".\"FIServerPortStats\" WHERE (\"domain\" =~ /^$domain$/ AND \"channel\" != '' AND fi_id = 'B') and  $timeFilter group by domain,fi_id,port) where $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -6175,7 +6175,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "FI-B Server ports - $domain",
+      "title": "FI-B Server Ports - $domain",
       "type": "stat"
     },
     {
@@ -6497,7 +6497,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Server Ports - Status - $domain",
+      "title": "FI-A Server Ports - Operational State - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -6800,7 +6800,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Server Ports  - Speed - $domain",
+      "title": "FI-A Server Ports  - Speed - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -7157,7 +7157,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Server Ports - Status - $domain",
+      "title": "FI-A Server Ports - Operational State - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -7460,7 +7460,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "FI-A - Server Ports  - Speed - $domain",
+      "title": "FI-A Server Ports  - Speed - $domain",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -7687,7 +7687,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Chassis ID"
+              "options": "Chassis"
             },
             "properties": [
               {
@@ -7698,8 +7698,8 @@
                 "id": "links",
                 "value": [
                   {
-                    "title": "",
-                    "url": "d/KOM8ZHNWz/ucs-chassis-traffic?from=${__from}&to=${__to}&var-domain=${__data.fields.Domain}&var-chassis=${__data.fields[\"Chassis ID\"]}"
+                    "title": "Details of traffic in Chassis ${__data.fields.Chassis} in UCS Domain ${__data.fields.Domain}",
+                    "url": "d/KOM8ZHNWz/ucs-chassis-traffic?from=${__from}&to=${__to}&var-domain=${__data.fields.Domain}&var-chassis=${__data.fields.Chassis}"
                   }
                 ]
               }
@@ -7768,7 +7768,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT location as \"Location\", domain as \"Domain\",  chassis as \"Chassis ID\", id as \"Server\", model as \"Model\", serial as \"Serial\", num_cpus as \"# CPU\", num_cores as \"# Cores\", memory as \"Memory\", operability as \"Operability\", oper_state as \"Operational State\", oper_state_code, num_vEths as \"# vEth\", num_vFCs as \"# vFC\" FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND  time > [[__to]]ms - [[5m_in_ms]]ms and time < [[__to]]ms GROUP BY \"service_profile\",domain,chassis,id order by time desc limit 1",
+          "query": "SELECT last(model) as \"Model\", last(serial) as \"Serial\", last(num_cpus) as \"# CPU\", last(num_cores) as \"# Cores\", last(memory )as \"Memory\", last(operability) as \"Operability\", last(oper_state) as \"Operational State\", last(oper_state_code) as oper_state_code, last(num_vEths) as \"# vEth\", last(num_vFCs) as \"# vFC\" FROM \"$db\".\"$rp\".\"Servers\" WHERE (\"domain\" =~ /^$domain$/) AND $timeFilter GROUP BY service_profile,location,domain,chassis,id",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -7791,20 +7791,42 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Servers",
+      "title": "Servers - $domain",
       "transformations": [
         {
           "id": "organize",
           "options": {
             "excludeByName": {
+              "Location": false,
               "Time": true,
-              "chassis": true,
-              "domain": true,
-              "id": true,
+              "chassis": false,
+              "domain": false,
+              "id": false,
               "service_profile": false
             },
-            "indexByName": {},
+            "indexByName": {
+              "# CPU": 8,
+              "# Cores": 9,
+              "# vEth": 14,
+              "# vFC": 15,
+              "Memory": 10,
+              "Model": 6,
+              "Operability": 12,
+              "Operational State": 13,
+              "Serial": 7,
+              "Time": 0,
+              "chassis": 4,
+              "domain": 2,
+              "id": 5,
+              "location": 3,
+              "oper_state_code": 11,
+              "service_profile": 1
+            },
             "renameByName": {
+              "chassis": "Chassis",
+              "domain": "Domain",
+              "id": "Server",
+              "location": "Location",
               "oper_state_code": " _",
               "service_profile": "Service Profile"
             }
@@ -8041,5 +8063,5 @@
   "timezone": "browser",
   "title": "UCS Domain - Overview",
   "uid": "Inte2EIWk",
-  "version": 14
+  "version": 21
 }
