@@ -68,7 +68,7 @@ if [[ $REPLY =~ ^[Aa]$ ]] ; then
     echo "  2. Download and install https://grafana.com/api/plugins/agenty-flowcharting-panel/versions/0.9.0/download"
     echo "      2.1. Minimum required version 0.9"
     echo "  3. Download and install https://grafana.com/api/plugins/michaeldmoore-multistat-panel/versions/1.7.1/download"
-    echo "      3.1. Minimum required version 1.4.1"
+    echo "      3.1. Minimum required version 1.4.1. UTM v0.6 onwards doesn't need Multistat panel"
     echo "  4. Restart Grafana: systemctl restart grafana-server"
     echo "  5. Download and install wget https://dl.influxdata.com/telegraf/releases/telegraf-1.18.3-1.x86_64.rpm"
     echo "  6. Restart Telegraf: systemctl restart telegraf"
