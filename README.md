@@ -42,9 +42,9 @@ Two options:
 1. Install InfluxDB
 1. Install Grafana. Install following plugins:
     1. Flowchart
-    1. Pie Chart
-    1. ePict panel
-    1. multistat
+    1. Pie Chart (using Pie chart v2 starting UTM v0.6)
+    1. ePict panel (Not needed starting UTM v0.6)
+    1. multistat (Not needed starting UTM v0.6)
 1. Install following Python modules
     1. Cisco UCSM Python SDK
     1. netmiko library
@@ -54,7 +54,7 @@ Two options:
 This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before. [Click here for detailed installation instructions of the UTM OVA](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/#Installing_UTM_using_OVA). 
 
 ## Upgrades
-You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Generally, the upgrade is simple with one or two commands. Please refer to respective packages for upgrade process. Please keep an the on security vulnerabilities and fixes.
+You are responsible to upgrade Grafana, InfluxDB, Telegraf, Python and other packages. Upgrading UTM is simple with one or two commands and doesn't take more than a few minutes. Please refer to respective packages for upgrade process. Please keep a watch on the security vulnerabilities and fixes.
 
 ## Configuration
 
@@ -91,7 +91,7 @@ This should be able to
  2. Stitch them end-to-end between FI uplink ports and vNIC/vHBA on blade servers
  3. Write the data to InfluxDB
 
-Import the [dashboards](https://github.com/paregupt/ucs_traffic_monitor/tree/master/grafana/dashboards) into Grafana. You should have it running.
+Import the [dashboards](https://github.com/paregupt/ucs_traffic_monitor/tree/master/grafana/dashboards) into Grafana. That's all. UTM should be fully functional.
 
 For detailed steps-by-step instructions, especially if you do not have prior experience with Grafana, InfluxDB and Telegraf, check out: [Cisco UCS monitoring using Grafana, InfluxDB, Telegraf – UTM Installation](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/)
 
@@ -102,4 +102,4 @@ For detailed steps-by-step instructions, especially if you do not have prior exp
 - My wife (Dimple) and kids (Manan and Kiara) while I took away precious weekend hours from you and invested in the development of UTM.
 - Folks in the Cisco UCS business unit and TAC, who knowingly or unknowingly helped me to build UTM and also for awesome content on ciscolive.com.
 - Colleagues and friends in Cisco (Art, Craig, Eugene, Mark and a long list of people) for the inspiration. 
-- End-users/customers: Philipe, Jason, Shawn, Ryan and others for your great feedback.
+- End-users/customers: Philipe, Jason, Shawn, Ryan, Ian, and others for your great feedback.
