@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1623383539431,
+  "iteration": 1623387455581,
   "links": [],
   "panels": [
     {
@@ -15176,6 +15176,10 @@
                   {
                     "id": "custom.displayMode",
                     "value": "gradient-gauge"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 0
                   }
                 ]
               },
@@ -15251,7 +15255,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"PAUSE against Ingress Traffic\",domain,peer_service_profile,10) as \"PAUSE sent by servers\" from (select sum(\"PAUSE against Ingress Traffic\") as \"PAUSE against Ingress Traffic\" from (SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"PAUSE against Ingress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE $timeFilter GROUP BY time($__interval),domain,fi_id,bp_port,peer_service_profile) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY domain,peer_service_profile)  where $timeFilter",
+              "query": "select top(\"PAUSE against Ingress Traffic\",domain,peer_service_profile,10) as \"PAUSE Sent by Servers\" from (select sum(\"PAUSE against Ingress Traffic\") as \"PAUSE against Ingress Traffic\" from (SELECT non_negative_difference(max(\"pause_rx\"))/elapsed(max(\"pause_rx\"),1s) AS \"PAUSE against Ingress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE $timeFilter GROUP BY time($__interval),domain,fi_id,bp_port,peer_service_profile) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY domain,peer_service_profile)  where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -15281,7 +15285,7 @@
                   "names": [
                     "domain",
                     "peer_service_profile",
-                    "PAUSE sent by servers"
+                    "PAUSE Sent by Servers"
                   ]
                 }
               }
@@ -15340,6 +15344,10 @@
                   {
                     "id": "custom.displayMode",
                     "value": "gradient-gauge"
+                  },
+                  {
+                    "id": "decimals",
+                    "value": 0
                   }
                 ]
               },
@@ -15415,7 +15423,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "select top(\"PAUSE against Egress Traffic\",domain,peer_service_profile,10) as \"PAUSE sent to servers\" from (select sum(\"PAUSE against Egress Traffic\") as \"PAUSE against Egress Traffic\" from (SELECT non_negative_difference(max(\"pause_tx\"))/elapsed(max(\"pause_tx\"),1s) AS \"PAUSE against Egress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE $timeFilter GROUP BY time($__interval),domain,fi_id,bp_port,peer_service_profile) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY domain,peer_service_profile)  where $timeFilter",
+              "query": "select top(\"PAUSE against Egress Traffic\",domain,peer_service_profile,10) as \"PAUSE Sent to Servers\" from (select sum(\"PAUSE against Egress Traffic\") as \"PAUSE against Egress Traffic\" from (SELECT non_negative_difference(max(\"pause_tx\"))/elapsed(max(\"pause_tx\"),1s) AS \"PAUSE against Egress Traffic\" FROM \"$db\".\"$rp\".\"BackplanePortStats\" WHERE $timeFilter GROUP BY time($__interval),domain,fi_id,bp_port,peer_service_profile) where $timeFilter and peer_service_profile != 'Unknown' GROUP BY domain,peer_service_profile)  where $timeFilter",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -15445,7 +15453,7 @@
                   "names": [
                     "domain",
                     "peer_service_profile",
-                    "PAUSE sent to servers"
+                    "PAUSE Sent to Servers"
                   ]
                 }
               }
@@ -15764,5 +15772,5 @@
   "timezone": "browser",
   "title": "Locations",
   "uid": "ri2OFp4Wz",
-  "version": 67
+  "version": 68
 }
