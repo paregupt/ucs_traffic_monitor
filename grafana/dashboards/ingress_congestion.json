@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 6,
-  "iteration": 1623383768502,
+  "iteration": 1623390969801,
   "links": [],
   "panels": [
     {
@@ -11196,16 +11196,9 @@
         "label": null,
         "multi": false,
         "name": "utm_collector_ver",
-        "options": [
-          {
-            "isNone": true,
-            "selected": true,
-            "text": "None",
-            "value": ""
-          }
-        ],
+        "options": [],
         "query": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -11246,7 +11239,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Congestion monitoring",
+  "title": "Congestion Monitoring",
   "uid": "Sve32sDZk",
-  "version": 60
+  "version": 61
 }

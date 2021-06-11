@@ -18,7 +18,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1623383672791,
+  "iteration": 1623390832171,
   "links": [],
   "panels": [
     {
@@ -3051,16 +3051,9 @@
         "label": null,
         "multi": false,
         "name": "utm_collector_ver",
-        "options": [
-          {
-            "isNone": true,
-            "selected": true,
-            "text": "None",
-            "value": ""
-          }
-        ],
+        "options": [],
         "query": "select last(utm_collector_ver) from \"$db\".\"$rp\".\"FIEnvStats\"",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -3101,7 +3094,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "UCS Chassis - traffic",
+  "title": "UCS Chassis - Traffic",
   "uid": "KOM8ZHNWz",
-  "version": 14
+  "version": 15
 }
