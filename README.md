@@ -8,19 +8,22 @@ UCS Domains Overview
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-3.png)
 
 Top 10 ports, service profiles, etc.
-![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-2.png)
+![UTM_v0 6-overview](https://user-images.githubusercontent.com/8773072/122630893-12828d80-d07c-11eb-838c-c298e322e38d.gif)
 
 Load Balance verification and root cause
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-4.png)
 
 Congestion Monitoring and detection 
-![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-9.png)
+![UTM_v0 6-congestion](https://user-images.githubusercontent.com/8773072/122630885-0696cb80-d07c-11eb-852b-dbc5f1722606.jpg)
 
 End-to-end mapping from vHBA/vNIC to FI uplink Port
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-8.png)
 
 Integrated documentation with conceptual drawing and detailed explanations
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-10.png)
+
+Link utilization and errors
+![UTM_v0 6-link-tabular-view](https://user-images.githubusercontent.com/8773072/122631083-b28ce680-d07d-11eb-8cc0-05d260fe6147.jpg)
 
 and much more...
 
