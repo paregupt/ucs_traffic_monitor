@@ -20,10 +20,17 @@
       - python36-pip
       - python-setuptools 
 
+  - name: Update pip itself (required by netmiko)
+    pip: 
+      name: pip
+      executable: pip3.6
+      state: latest
+    
   - name: Install ucsmsdk and netmiko package via pip
     pip:
       name: "{{ packages }}"
       executable: pip3.6
+      state: latest
     vars:
       packages:
       - ucsmsdk
