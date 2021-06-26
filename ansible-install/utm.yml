@@ -248,8 +248,6 @@
     with_items:
       - agenty-flowcharting-panel
       - grafana-piechart-panel
-      - larona-epict-panel
-      - michaeldmoore-multistat-panel
     register: grafana_plugin
 
   - name: Restart grafana service (if plugins has been installed or configuration has changed)
