@@ -37,7 +37,7 @@ and much more...
 - Python version: Version 3 only. Should be able to work on Python 2 also with minor modification.
 
 Two options:
-- DIY Installation: Self install the required pacakges
+- DIY Installation: Self install the required packages (or take a look to [ansible-install](ansible-install) folder where you could let the machine work for you)
 - OVA - Required packages are pre-installed on CentOS 7.6 OVA
 
 ### DIY Installation
