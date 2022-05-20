@@ -1,2 +1,3 @@
 .vagrant/
+inventory.test
 vdm/
