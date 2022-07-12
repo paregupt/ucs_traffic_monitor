@@ -115,7 +115,7 @@
       status_code: 200, 404
     register: grafana_ds
 
-  - name: Create influxdb datasource (for influxdb)
+  - name: Create influxdb datasource
     grafana_datasource:
       url_username: admin
       url_password: admin
