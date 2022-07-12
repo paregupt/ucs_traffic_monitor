@@ -28,6 +28,3 @@ update_image=false
 
 # Update existing dashboard
 import_grafana_dashboard=true
-
-# InfluxDB version (via package name : influxdb is v1, influxdb2 is v2)
-influxdb_package=influxdb

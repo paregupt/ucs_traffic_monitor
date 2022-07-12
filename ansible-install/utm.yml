@@ -9,60 +9,6 @@
   tasks:
 
 
-  - name: Check for downgrade of influxdb - not supported
-    shell:
-      cmd: rpm -qa | grep -c influxdb2
-      warn: false
-    register: shell_check_downgrade
-    failed_when: false
-    changed_when: false
-
-  - fail:
-      msg: Downgrade influxdb is not supported - check influxdb_package variable for details
-    when: influxdb_package == "influxdb" and shell_check_downgrade.stdout != "0"
-
-
-  - name: Check for upgrade of influxdb
-    shell:
-      cmd: rpm -qa | grep influxdb | grep -v '\-cli\-' | cut -d '-' -f1
-      warn: false
-    register: shell_check_upgrade
-    failed_when: false
-    changed_when: false
-
-  - name: Stop telegraf service (upgrade of influxdb)
-    service:
-      name: telegraf
-      state: stopped
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
-
-  - name: Stop influxdb service (upgrade of influxdb)
-    service:
-      name: influxdb
-      state: stopped
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
-
-  - name: Backup of influxdb v1
-    shell:
-      cmd: influx_inspect export -database telegraf -datadir /var/lib/influxdb/data -waldir /var/lib/influxdb/wal -retention autogen -out /tmp/telegraf.data -lponly
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
-
-  - name: Remove of influxdb (upgrade)
-    yum:
-      name: influxdb 
-      state: absent
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
-
-  - name: Clean up before influxdb v2
-    file:
-      path: "{{ item }}"
-      state: absent
-    with_items:
-      - /etc/influxdb
-      - /var/lib/influxdb/
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
-
-
   - name: Install required package - UTM
     yum:
       name: "{{ packages }}"
@@ -138,61 +84,14 @@
 
   - name: Install influxdb
     yum:
-      name: "{{ influxdb_package }}"
+      name: influxdb
       state: latest
-
-  - name: Install influxdb - client (if influxdb2 is installed)
-    yum:
-      name: influxdb2-cli
-      state: latest
-    when: influxdb_package == "influxdb2"
 
   - name: Enable service influxdb
     service:
       name: influxdb
       enabled: yes
       state: started
-
-
-  - name: Setup influxdb 2.x (if required)
-    shell:
-      cmd: |
-        influx setup --org utm --bucket telegraf --retention 0 --force --username utm --password utmPassword
-    register: shell_influx_setup
-    changed_when: '"instance has already been set up" not in shell_influx_setup.stderr'
-    failed_when: shell_influx_setup.rc != 0 and "instance has already been set up" not in shell_influx_setup.stderr
-    when: influxdb_package == "influxdb2"
-
-  - name: Get Token for influxdb 2.x operation (if required)
-    shell:
-      cmd: |
-        influx auth list | grep "utm's Token" | awk '{ print $4 }'
-    changed_when: false
-    register: shell_influx_token
-    when: influxdb_package == "influxdb2"
-
-  - name: Get bucket-id for influxdb 2.x operation (if required)
-    shell:
-      cmd: |
-        influx bucket list | grep "telegraf" | awk '{ print $1 }'
-    changed_when: false
-    register: shell_influx_bucketid
-    when: influxdb_package == "influxdb2"
-
-  - name: Setup dbrp for influxdb 2.x (if required)
-    shell:
-      cmd: |
-        influx v1 dbrp create --db telegraf --rp autogen --bucket-id {{ shell_influx_bucketid.stdout }} --default
-    register: shell_influx_dbrp
-    changed_when: '"another DBRP mapping with same" not in shell_influx_dbrp.stderr'
-    failed_when: shell_influx_dbrp.rc != 0 and "another DBRP mapping with same" not in shell_influx_dbrp.stderr
-    when: influxdb_package == "influxdb2"
-
-  - name: Restore of influxdb v1 if upgrading influxdb
-    shell:
-      cmd: influx write --bucket telegraf --file /tmp/telegraf.data
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
-
 
   - name: Install telegraf
     yum:
@@ -205,17 +104,6 @@
       enabled: yes
       state: started
 
-
-  - name: Remove influxdb datasource if upgrading influxdb
-    grafana_datasource:
-      url_username: admin
-      url_password: admin
-      grafana_url: "http://localhost:3000"
-      name: "InfluxDB"
-      ds_type: "influxdb"
-      ds_url: "http://localhost:8086"
-      state: absent
-    when: influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb"
 
   - name: Check if InfluxDB datasource exists in grafana
     uri:
@@ -236,22 +124,7 @@
       ds_type: "influxdb"
       ds_url: "http://localhost:8086"
       database: "telegraf"
-    when: influxdb_package == "influxdb" and grafana_ds.status == 404
-
-  - name: Create influxdb datasource (for influxdb2)
-    grafana_datasource:
-      url_username: admin
-      url_password: admin
-      grafana_url: "http://localhost:3000"
-      name: "InfluxDB"
-      ds_type: "influxdb"
-      ds_url: "http://localhost:8086"
-      database: "telegraf"
-      additional_json_data:
-        httpHeaderName1: "Authorization"
-      additional_secure_json_data:
-        httpHeaderValue1: "Token {{ shell_influx_token.stdout }}"
-    when: influxdb_package == "influxdb2" and grafana_ds.status == 404
+    when: grafana_ds.status == 404
 
 
   - name: Create directory /usr/local/telegraf
@@ -325,38 +198,6 @@
       regexp: '^#   # ignore_protocol_stats = false'
       line: '  ignore_protocol_stats = true'
 
-  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - [[outputs.influxdb]] - influxdb2 only
-    lineinfile:
-      path: /etc/telegraf/telegraf.conf
-      regexp: '^\[\[outputs.influxdb\]\]'
-      line: '# [[outputs.influxdb]]'
-    when: influxdb_package == "influxdb2"
-
-  - name: Update telegraf base configuration /etc/telegraf/telegraf.conf - [[outputs.influxdb_v2]] - influxdb2 only
-    replace:
-      path: /etc/telegraf/telegraf.conf
-      regexp: '^# # Configuration for sending metrics to InfluxDB$\n^# \[\[outputs.influxdb_v2\]\]$\n[\s\S]*^#   bucket = \"\"$\n^#$\n^#'
-      replace: |-
-        # Configuration for sending metrics to InfluxDB
-        [[outputs.influxdb_v2]]
-        ## The URLs of the InfluxDB cluster nodes.
-        ##
-        ## Multiple URLs can be specified for a single cluster, only ONE of the
-        ## urls will be written to each interval.
-        ##   ex: urls = ["https://us-west-2-1.aws.cloud2.influxdata.com"]
-        urls = ["http://127.0.0.1:8086"]
-
-        ## Token for authentication.
-        token = "{{ shell_influx_token.stdout }}"
-
-        ## Organization is the name of the organization you wish to write to; must exist.
-        organization = "utm"
-
-        ## Destination bucket to write into.
-        bucket = "telegraf"
-
-        #
-    when: influxdb_package == "influxdb2"
 
   - name: Add /etc/telegraf/telegraf.d/utm.conf
     copy:
@@ -384,7 +225,7 @@
     service:
       name: telegraf
       state: restarted
-    when: telegraf_cfg.changed or (influxdb_package == "influxdb2" and shell_check_upgrade.stdout == "influxdb")
+    when: telegraf_cfg.changed
 
 
   - name: Create directory /usr/share/grafana/public/img/utm
