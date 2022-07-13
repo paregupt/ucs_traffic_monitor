@@ -14,7 +14,7 @@ These instruction should allow you to use ansible to deploy UTM.  Also, if like 
 
 <br>
 
-- For production deployment, you should have a access to a Redhat based Linux system (Redhat, CentOS, Oracle Linux).  Installation tests took place on CentOS.
+- For production deployment, you should have a access to a Redhat based Linux system (Redhat, CentOS, Oracle Linux).  Installation tests took place on CentOS 7 and Oracle Linux 8.
 
 - You must have an ssh access to this system and a user that is allowed to run commands as root (sudo)
 
@@ -27,10 +27,10 @@ These instruction should allow you to use ansible to deploy UTM.  Also, if like 
 
 - If you want to be up and running faster, for testing purposes, you can use tool like Vagrant to provision a "local" VM and deploy the UTM stack on it.  In fact, the ansible-install playbooks and been tested this way.  The actual test environnement was :
     
-    - Ubuntu 20.04 running under WSL 1 on Windows 10 (2004)
-    - Vagrant 2.2.10
+    - Ubuntu 20.04 running under WSL 1 on Windows 10 (21H1)
+    - Vagrant 2.2.19
 
-- You must have a functionnal ansible installation (tested on 2.9.6)
+- You must have a functionnal ansible installation (tested on 2.9.27)
 
 <br>
 

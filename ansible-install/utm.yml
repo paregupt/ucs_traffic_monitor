@@ -16,25 +16,28 @@
     vars:
       packages:
       - "@Development tools"
-      - python36
-      - python36-pip
-      - python-setuptools 
-
-  - name: Update pip itself (required by netmiko)
-    pip: 
-      name: pip
-      executable: pip3.6
-      state: latest
+      - python3
+      - python3-setuptools
     
-  - name: Install ucsmsdk and netmiko package via pip
-    pip:
-      name: "{{ packages }}"
-      executable: pip3.6
-      state: latest
-    vars:
-      packages:
-      - ucsmsdk
-      - netmiko
+
+  - name: Update pip itself (required by netmiko) using shell (ansible module is failing on CentOS7)
+    shell:
+      cmd: python3 -m pip install pip==21.3.1 -U  # Required to use python 3.6
+    register: shell_pip_install
+    changed_when: '"Requirement already satisfied: pip==21.3.1" not in shell_pip_install.stdout'
+
+  - name: Install ucsmsdk via pip using shell (ansible module is failing on CentOS7)
+    shell:
+      cmd: python3 -m pip install ucsmsdk
+    register: shell_pip_install
+    changed_when: '"Requirement already satisfied: ucsmsdk" not in shell_pip_install.stdout'
+
+  - name: Install netmiko==4.0.0 via pip using shell (ansible module is failing on CentOS7)
+    shell:
+      cmd: python3 -m pip install netmiko==4.0.0  # Required to use python 3.6
+    register: shell_pip_install
+    changed_when: '"Requirement already satisfied: netmiko==4.0.0" not in shell_pip_install.stdout'
+
 
   - name: Enable service chronyd
     service:
@@ -74,8 +77,8 @@
   - name: Add YUM repository influxdb.repo (will be use for influxdb and telegraf)
     yum_repository:
       name: influxdb
-      description: https://docs.influxdata.com/influxdb/v1.8/introduction/install/ 
-      baseurl: https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable/
+      description: InfluxDB Repository - RHEL $releasever
+      baseurl: https://repos.influxdata.com/rhel/$releasever/$basearch/stable/
       gpgcheck: yes
       gpgkey: https://repos.influxdata.com/influxdb.key
 
@@ -89,7 +92,6 @@
       name: influxdb
       enabled: yes
       state: started
-
 
   - name: Install telegraf
     yum:
@@ -194,7 +196,7 @@
     lineinfile:
       path: /etc/telegraf/telegraf.conf
       regexp: '^#   # ignore_protocol_stats = false'
-      line: '    ignore_protocol_stats = true'
+      line: '  ignore_protocol_stats = true'
 
 
   - name: Add /etc/telegraf/telegraf.d/utm.conf
@@ -248,8 +250,6 @@
     with_items:
       - agenty-flowcharting-panel
       - grafana-piechart-panel
-      - larona-epict-panel
-      - michaeldmoore-multistat-panel
     register: grafana_plugin
 
   - name: Restart grafana service (if plugins has been installed or configuration has changed)
