@@ -25,6 +25,14 @@
       cmd: python3 -m pip install pip==21.3.1 -U  # Required to use python 3.6
     register: shell_pip_install
     changed_when: '"Requirement already satisfied: pip==21.3.1" not in shell_pip_install.stdout'
+    when: ansible_distribution_major_version | int < 9
+
+  - name: Install pip
+    shell:
+      cmd: python3 -m ensurepip --default-pip
+    register: shell_pip_install
+    changed_when: '"Requirement already satisfied: pip" not in shell_pip_install.stdout'
+    when: ansible_distribution_major_version | int >= 9
 
   - name: Install ucsmsdk via pip using shell (ansible module is failing on CentOS7)
     shell:
@@ -64,8 +72,15 @@
 
   - name: Install grafana (grafana-enterprise)
     yum:
-      name: grafana-enterprise
-      state: latest
+      name: grafana-enterprise-10.1.10-1
+      # 9.5.20-1  : OK
+      # 10.0.13-1 : OK
+      # 10.1.10-1 : OK
+      # 10.2.0-1  : Service Profile "None"
+      # 10.2.8-1  : UCS Traffic Monitoring - error parsing query: found [, expected identifier, string, number, bool at line 1, char 291
+      # 10.3.7-1  : UCS Traffic Monitoring - error parsing query: found [, expected identifier, string, number, bool at line 1, char 291
+      # 10.4+     : Warning : agenty-flowcharting-panel (angular)
+      state: present
 
   - name: Enable service grafana-server
     service:
@@ -80,7 +95,7 @@
       description: InfluxDB Repository - RHEL $releasever
       baseurl: https://repos.influxdata.com/rhel/$releasever/$basearch/stable/
       gpgcheck: yes
-      gpgkey: https://repos.influxdata.com/influxdb.key
+      gpgkey: https://repos.influxdata.com/influxdata-archive_compat.key
 
   - name: Install influxdb
     yum:
@@ -97,6 +112,18 @@
     yum:
       name: telegraf
       state: latest
+
+  - name: Ensure that outputs influxdb is enable
+    replace:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^# (\[\[outputs.influxdb\]\])$'
+      replace: '\1'
+
+  - name: Ensure that outputs influxdb_v2 is disable
+    replace:
+      path: /etc/telegraf/telegraf.conf
+      regexp: '^(\[\[outputs.influxdb_v2\]\])$'
+      replace: '# \1'
 
   - name: Enable service telegraf
     service:
@@ -242,7 +269,6 @@
       mode: '0644'
     with_fileglob:
       - ../images/*
-
 
   - name: Install/update Grafana piechart panel plugin
     grafana_plugin:
