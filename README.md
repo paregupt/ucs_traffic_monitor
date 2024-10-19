@@ -3,6 +3,14 @@ Full-blown traffic monitoring of Cisco UCS servers using Grafana, InfluxDB and T
 
 PS: Please help decide UTM enhancements by these polls: https://github.com/paregupt/ucs_traffic_monitor/discussions
 
+# Sister Projects
+## Looking for something similar to monitor Cisco MDS Switches?
+[Click here to check out MDS Traffic Monitoring (MTM)](https://github.com/paregupt/mds_traffic_monitor)
+
+## Looking for something similar to monitor Cisco Nexus Switches?
+[Click here to check out Nexus Traffic Monitoring (NTM)](https://github.com/paregupt/nexus_traffic_monitor)
+
+# Use cases
 Locations Dashboard
 ![enter image description here](https://www.since2k7.com/wp-content/uploads/2020/07/utm_0.4-1.png)
 
@@ -34,7 +42,7 @@ and much more...
 - **Data storage**: [InfluxDB](https://github.com/influxdata/influxdb), a time-series database
 - **Visualization**: [Grafana](https://github.com/grafana/grafana)
 
-## Installation
+# Installation
 - Tested OS: CentOS 7.x. Should work on other OS also.
 - Python version: Version 3 only. Should be able to work on Python 2 also with minor modification.
 
@@ -42,7 +50,7 @@ Two options:
 - DIY Installation: Self install the required packages (or take a look to [ansible-install](ansible-install) folder where you could let the machine work for you)
 - OVA - Required packages are pre-installed on CentOS 7.6 OVA
 
-### DIY Installation
+## DIY Installation
 1. Install Telegraf
 1. Install InfluxDB
 1. Install Grafana. Install following plugins:
@@ -54,7 +62,7 @@ Two options:
     1. Cisco UCSM Python SDK
     1. netmiko library
     
-### OVA installation
+## OVA installation
 [Download OVA from releases page](https://github.com/paregupt/ucs_traffic_monitor/releases).
 This is a CentOS 7.6 based OVA. Deployment is same as any other OVA that you have deployed before. [Click here for detailed installation instructions of the UTM OVA](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/#Installing_UTM_using_OVA). The OVA is based on v0.3. Upgrading to the latest must be your first step.
 
@@ -100,10 +108,8 @@ Import the [dashboards](https://github.com/paregupt/ucs_traffic_monitor/tree/mas
 
 For detailed steps-by-step instructions, especially if you do not have prior experience with Grafana, InfluxDB and Telegraf, check out: [Cisco UCS monitoring using Grafana, InfluxDB, Telegraf – UTM Installation](https://www.since2k7.com/blog/2020/02/29/cisco-ucs-monitoring-using-grafana-influxdb-telegraf-utm-installation/)
 
-## Looking for something similar to monitor Cisco MDS Switches?
-[Click here to check out Cisco MDS Traffic Monitoring (MTM)](https://github.com/paregupt/mds_traffic_monitor)
 
-## Credits
+# Credits
 - My wife (Dimple) and kids (Manan and Kiara) while I took away precious weekend hours from you and invested in the development of UTM.
 - Folks in the Cisco UCS business unit and TAC, who knowingly or unknowingly helped me to build UTM and also for awesome content on ciscolive.com.
 - Colleagues and friends in Cisco (Art, Craig, Eugene, Mark and a long list of people) for the inspiration. 
